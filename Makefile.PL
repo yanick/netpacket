@@ -2,7 +2,7 @@
 #
 # Makefile for Net::Protocol bundle
 #
-# $Id: Makefile.PL,v 1.2 1998/10/08 02:42:03 tpot Exp $
+# $Id: Makefile.PL,v 1.4 2001/07/29 23:23:42 tpot Exp $
 #
 
 use ExtUtils::MakeMaker;
@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME => 'NetPacket',
     DISTNAME => 'NetPacket',
-    VERSION => 0.01,
+    VERSION => 0.03,
     dist => {
 	'COMPRESS' => 'gzip -9f',
 	'SUFFIX' => 'gz'

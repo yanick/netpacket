@@ -2,13 +2,22 @@
 # NetPacket::TCP - Decode and encode TCP (Transmission Control
 # Protocol) packets. 
 #
-# Comments/suggestions to tpot@acsys.anu.edu.au
+# Comments/suggestions to tpot@samba.org
 #
-# $Id: TCP.pm,v 1.9 1999/04/25 01:42:00 tpot Exp $
+# Encode and checksumming part, Stephanie Wehner, atrak@itsx.com
+#
+# $Id: TCP.pm,v 1.16 2001/08/01 02:31:27 tpot Exp $
 #
 
 package NetPacket::TCP;
 
+#
+# Copyright (c) 2001 Tim Potter.
+#
+# This package is free software and is provided "as is" without express 
+# or implied warranty.  It may be used, redistributed and/or modified 
+# under the terms of the Perl Artistic License (see
+# http://www.perl.com/perl/misc/Artistic.html)
 #
 # Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 # the participants in the CRC for Advanced Computational Systems
@@ -24,14 +33,29 @@ package NetPacket::TCP;
 # and costs any user may incur as a result of using, copying or
 # modifying the Software.
 #
+# Copyright (c) 2001 Stephanie Wehner
+#
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use NetPacket;
 
 my $myclass;
+
+# TCP Flags
+
+use constant FIN => 0x01;
+use constant SYN => 0x02;
+use constant RST => 0x04;
+use constant PSH => 0x08;
+use constant ACK => 0x10;
+use constant URG => 0x20;
+use constant ECE => 0x40;
+use constant CWR => 0x80;
+
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.01";
+    $VERSION = "0.03";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -41,12 +65,12 @@ BEGIN {
 # Items to export into callers namespace by default
 # (move infrequently used names to @EXPORT_OK below)
 
-    @EXPORT = qw(
+    @EXPORT = qw(FIN SYN RST PSH ACK URG ECE CWR
     );
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(tcp_strip
+    @EXPORT_OK = qw(tcp_strip 
     );
 
 # Tags:
@@ -98,14 +122,18 @@ sub decode {
 
 	# Extract flags
 	
-	$self->{hlen} = $tmp >> 12;
-	$self->{reserved} = $tmp & 0x0fc0 >> 6;
-	$self->{flags} = $tmp & 0x003f;
+	$self->{hlen} = ($tmp & 0xf000) >> 12;
+	$self->{reserved} = ($tmp & 0x0f00) >> 8;
+	$self->{flags} = $tmp & 0x00ff;
 	
 	# Decode variable length header and remaining data
 
 	my $olen = $self->{hlen} - 5;
 	$olen = 0, if ($olen < 0);  # Check for bad hlen
+
+        # Option length is number of 32 bit words
+
+        $olen = $olen * 4;
 
 	($self->{options}, $self->{data}) = unpack("a" . $olen . 
 						   "a*", $self->{options});
@@ -122,7 +150,59 @@ sub decode {
 #
 
 sub encode {
-    die("Not implemented");
+
+    my $self = shift;
+    my ($ip) = @_;
+    my ($packet,$tmp);
+
+    # First of all, fix the checksum
+    $self->checksum($ip);
+
+    $tmp = $self->{hlen} << 12;
+    $tmp = $tmp | (0x0f00 & ($self->{reserved} << 8));
+    $tmp = $tmp | (0x00ff & $self->{flags});
+
+    # Put the packet together
+    $packet = pack('n n N N n n n n a* a*',
+            $self->{src_port}, $self->{dest_port}, $self->{seqnum},
+            $self->{acknum}, $tmp, $self->{winsize}, $self->{cksum},
+            $self->{urg}, $self->{options},$self->{data});
+
+    return($packet);
+
+}
+
+#
+# TCP Checksum
+#
+
+sub checksum {
+
+    my $self = shift;
+    my ($ip) = @_;
+    my ($packet,$zero,$tcplen,$tmp);
+    my ($src_ip, $dest_ip,$proto,$count);
+
+    $zero = 0;
+    $proto = 6;
+    $tcplen = ($self->{hlen} * 4)+ length($self->{data});
+
+    $tmp = $self->{hlen} << 12;
+    $tmp = $tmp | (0x0f00 & ($self->{reserved} << 8));
+    $tmp = $tmp | (0x00ff & $self->{flags});
+
+    # Pack pseudo-header for tcp checksum
+
+    $src_ip = gethostbyname($ip->{src_ip});
+    $dest_ip = gethostbyname($ip->{dest_ip});
+
+    $packet = pack('a4a4nnnnNNnnnna*a*',
+            $src_ip,$dest_ip,$proto,$tcplen,
+            $self->{src_port}, $self->{dest_port}, $self->{seqnum},
+            $self->{acknum}, $tmp, $self->{winsize}, $zero,
+            $self->{urg}, $self->{options},$self->{data});
+
+    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
 }
 
 #
@@ -145,7 +225,7 @@ Protocol) packets.
   use NetPacket::TCP;
 
   $tcp_obj = NetPacket::TCP->decode($raw_pkt);
-  $tcp_pkt = NetPacket::TCP->encode(params...);   # Not implemented
+  $tcp_pkt = NetPacket::TCP->encode($ip_pkt);
   $tcp_data = NetPacket::TCP::strip($raw_pkt);
 
 =head1 DESCRIPTION
@@ -164,10 +244,11 @@ instance data.  This method will quite happily decode garbage input.
 It is the responsibility of the programmer to ensure valid packet data
 is passed to this method.
 
-=item C<NetPacket::TCP-E<gt>encode(param =E<gt> value)>
+=item C<NetPacket::TCP-E<gt>encode($ip_obj)>
 
-Return a TCP packet encoded with the instance data specified.  Not
-implemented.
+Return a TCP packet encoded with the instance data specified. 
+Needs parts of the ip header contained in $ip_obj in order to calculate
+the TCP checksum. 
 
 =back
 
@@ -220,7 +301,7 @@ The 6-bit "reserved" space in the TCP header.
 
 =item flags
 
-Contains the urg, ack, psh, rst, syn and fin flags for this packet.
+Contains the urg, ack, psh, rst, syn, fin, ece and cwr flags for this packet.
 
 =item winsize
 
@@ -250,7 +331,7 @@ The encapsulated data (payload) for this packet.
 
 =item default
 
-none
+FIN SYN RST PSH ACK URG ECE CWR Can be used to set the appropriate flag.
 
 =item exportable
 
@@ -278,7 +359,7 @@ All the above exportable items.
 
 The following script is a primitive pop3 sniffer.
 
-  #!/usr/bin/perl
+  #!/usr/bin/perl -w
 
   use strict;
   use Net::PcapUtils;
@@ -298,11 +379,49 @@ The following script is a primitive pop3 sniffer.
 
   Net::PcapUtils::loop(\&process_pkt, FILTER => 'tcp');
 
+The following uses NetPacket together with Net::Divert to add a syn
+flag to all TCP packets passing through:
+
+  #!/usr/bin/perl
+
+  use Net::Divert;
+  use NetPacket::IP qw(IP_PROTO_TCP);
+  use NetPacket::TCP;
+
+
+  $divobj = Net::Divert->new('yourhostname',9999);
+
+  $divobj->getPackets(\&alterPacket);
+
+  sub alterPacket {
+      my($packet,$fwtag) = @_;
+
+      # decode the IP header
+      $ip_obj = NetPacket::IP->decode($packet);
+
+      # check if this is a TCP packet
+      if($ip_obj->{proto} == IP_PROTO_TCP) {
+
+          # decode the TCP header
+          $tcp_obj = NetPacket::TCP->decode($ip_obj->{data});
+
+          # set the syn flag
+          $tcp_obj->{flags} |= SYN;
+
+          # construct the new ip packet
+          $ip_obj->{data} = $tcp_obj->encode($ip_obj);
+          $packet = $ip_obj->encode;
+
+      }
+
+      # write it back out
+      $divobj->putPacket($packet,$fwtag);
+   }
+
+
 =head1 TODO
 
 =over
-
-=item Implement encode() function
 
 =item Assembly of TCP fragments into a data stream
 
@@ -313,6 +432,13 @@ The following script is a primitive pop3 sniffer.
 =back
 
 =head1 COPYRIGHT
+
+  Copyright (c) 2001 Tim Potter.
+
+  This package is free software and is provided "as is" without express 
+  or implied warranty.  It may be used, redistributed and/or modified 
+  under the terms of the Perl Artistic License (see
+  http://www.perl.com/perl/misc/Artistic.html)
 
   Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
   the participants in the CRC for Advanced Computational Systems
@@ -330,7 +456,9 @@ The following script is a primitive pop3 sniffer.
 
 =head1 AUTHOR
 
-Tim Potter E<lt>tpot@acsys.anu.edu.auE<gt>
+Tim Potter E<lt>tpot@samba.orgE<gt>
+
+Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
 

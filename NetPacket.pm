@@ -1,13 +1,22 @@
 #
 # NetPacket - Base class for NetPacket::* object hierarchy.
 #
-# Comments/suggestions to tpot@acsys.anu.edu.au
+# Comments/suggestions to tpot@samba.org
 #
-# $Id: NetPacket.pm,v 1.5 1999/04/25 01:44:49 tpot Exp $
+# Checksumming added by Stephanie Wehner, atrak@itsx.com
+#
+# $Id: NetPacket.pm,v 1.9 2001/07/29 23:45:34 tpot Exp $
 #
 
 package NetPacket;
 
+#
+# Copyright (c) 2001 Tim Potter.
+#
+# This package is free software and is provided "as is" without express 
+# or implied warranty.  It may be used, redistributed and/or modified 
+# under the terms of the Perl Artistic License (see
+# http://www.perl.com/perl/misc/Artistic.html)
 #
 # Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 # the participants in the CRC for Advanced Computational Systems
@@ -23,6 +32,8 @@ package NetPacket;
 # and costs any user may incur as a result of using, copying or
 # modifying the Software.
 #
+# Copyright (c) 2001 Stephanie Wehner
+#
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -30,7 +41,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.01";
+    $VERSION = "0.03";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -45,7 +56,7 @@ BEGIN {
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(
+    @EXPORT_OK = qw(in_cksum htons htonl ntohs ntohl
     );
 
 # Tags:
@@ -54,6 +65,67 @@ BEGIN {
     ALL         => [@EXPORT, @EXPORT_OK],
 );
 
+}
+
+#
+# Utility functions useful for all modules
+#
+
+# Calculate IP checksum
+
+sub in_cksum {
+
+    my ($packet) = @_;
+    my ($plen, $short, $num,  $count, $chk);
+
+    $plen = length($packet);
+    $num = int($plen / 2);
+    $chk = 0;
+    $count = $plen;
+
+    foreach $short (unpack("S$num", $packet)) {
+        $chk += $short;
+        $count = $count - 2;
+    }
+
+    if($count == 1) {
+        $chk += unpack("C", substr($packet, $plen -1, 1));
+    }
+
+    # add the two halves together (CKSUM_CARRY -> libnet)
+    $chk = ($chk >> 16) + ($chk & 0xffff);
+    return(~(($chk >> 16) + $chk) & 0xffff);
+}
+
+# Network/host byte order conversion routines.  Network byte order is
+# defined as being big-endian.
+
+sub htons
+{
+    my ($in) = @_;
+
+    return(unpack('n*', pack('S*', $in)));
+}
+
+sub htonl
+{
+    my ($in) = @_;
+
+    return(unpack('N*', pack('L*', $in)));
+}
+
+sub ntohl
+{
+    my ($in) = @_;
+
+    return(unpack('L*', pack('N*', $in)));
+}
+
+sub ntohs
+{
+    my ($in) = @_;
+
+    return(unpack('S*', pack('n*', $in)));
 }
 
 #
@@ -152,6 +224,13 @@ however contains header fields and a payload.
 
 =head1 COPYRIGHT
 
+  Copyright (c) 2001 Tim Potter.
+
+  This package is free software and is provided "as is" without express 
+  or implied warranty.  It may be used, redistributed and/or modified 
+  under the terms of the Perl Artistic License (see
+  http://www.perl.com/perl/misc/Artistic.html)
+
   Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
   the participants in the CRC for Advanced Computational Systems
   ('ACSys').
@@ -166,10 +245,11 @@ however contains header fields and a payload.
   and costs any user may incur as a result of using, copying or
   modifying the Software.
 
-
 =head1 AUTHOR
 
-Tim Potter E<lt>tpot@acsys.anu.edu.auE<gt>
+Tim Potter E<lt>tpot@samba.orgE<gt>
+
+Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
 

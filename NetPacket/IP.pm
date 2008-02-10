@@ -1,13 +1,22 @@
 #
 # NetPacket::IP - Decode and encode IP (Internet Protocol) packets. 
 #
-# Comments/suggestions to tpot@acsys.anu.edu.au
+# Comments/suggestions to tpot@samba.org
 #
-# $Id: IP.pm,v 1.9 1999/04/25 01:37:29 tpot Exp $
+# Encoding part by Stephanie Wehner, atrak@itsx.com
+#
+# $Id: IP.pm,v 1.16 2001/07/29 23:45:00 tpot Exp $
 #
 
 package NetPacket::IP;
 
+#
+# Copyright (c) 2001 Tim Potter.
+#
+# This package is free software and is provided "as is" without express 
+# or implied warranty.  It may be used, redistributed and/or modified 
+# under the terms of the Perl Artistic License (see
+# http://www.perl.com/perl/misc/Artistic.html)
 #
 # Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 # the  participants in the CRC for Advanced Computational Systems
@@ -23,14 +32,17 @@ package NetPacket::IP;
 # and costs any user may incur as a result of using, copying or
 # modifying the Software.
 #
+# Copyright (c) 2001 Stephanie Wehner
+#
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use NetPacket;
 
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.01";
+    $VERSION = "0.03";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -50,6 +62,7 @@ BEGIN {
 		    IP_PROTO_IPIP IP_PROTO_TCP IP_PROTO_UDP
 		    IP_VERSION_IPv4
 		    IP_FLAG_MOREFRAGS IP_FLAG_DONTFRAG IP_FLAG_CONGESTION
+                    IP_MAXPACKET
     );
 
 # Tags:
@@ -89,6 +102,9 @@ use constant IP_VERSION_IPv4 => 4;     # IP version 4
 use constant IP_FLAG_MOREFRAGS  => 1;     # More fragments coming
 use constant IP_FLAG_DONTFRAG   => 2;     # Don't fragment me
 use constant IP_FLAG_CONGESTION => 4;     # Congestion present
+
+# Maximum IP Packet size
+use constant IP_MAXPACKET => 65535;
 
 # Convert 32-bit IP address to dotted quad notation
 
@@ -140,6 +156,10 @@ sub decode {
 	my $olen = $self->{hlen} - 5;
 	$olen = 0, if ($olen < 0);  # Check for bad hlen
 
+	# Option length is number of 32 bit words
+
+        $olen = $olen * 4;
+
 	($self->{options}, $self->{data}) = unpack("a" . $olen .
 						   "a*", $self->{options});
 
@@ -174,7 +194,42 @@ sub strip {
 #
 
 sub encode {
-    die("Not implemented");
+
+    my $self = shift;
+    my ($hdr,$packet,$zero,$tmp,$offset);
+    my ($src_ip, $dest_ip);
+
+    # create a zero variable
+    $zero = 0;
+
+    # adjust the length of the packet 
+    $self->{len} = ($self->{hlen} * 4) + length($self->{data});
+
+    $tmp = $self->{hlen} & 0x0f;
+    $tmp = $tmp | (($self->{ver} << 4) & 0xf0);
+
+    $offset = $self->{flags} << 13;
+    $offset = $offset | (($self->{foffset} >> 3) & 0x1fff);
+
+    # convert the src and dst ip
+    $src_ip = gethostbyname($self->{src_ip});
+    $dest_ip = gethostbyname($self->{dest_ip});
+
+    # construct header to calculate the checksum
+    $hdr = pack('CCnnnCCna4a4a*', $tmp, $self->{tos},$self->{len}, 
+         $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
+         $zero, $src_ip, $dest_ip, $self->{options});
+
+    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($hdr));
+
+    # make the entire packet
+    $packet = pack('CCnnnCCna4a4a*a*', $tmp, $self->{tos},$self->{len}, 
+         $self->{id}, $self->{foffset}, $self->{ttl}, $self->{proto}, 
+         $self->{cksum}, $src_ip, $dest_ip, $self->{options},
+         $self->{data});
+
+    return($packet);
+
 }
 
 #
@@ -197,7 +252,7 @@ packets.
   use NetPacket::IP;
 
   $ip_obj = NetPacket::IP->decode($raw_pkt);
-  $ip_pkt = NetPacket::IP->encode(params...);   # Not implemented
+  $ip_pkt = NetPacket::IP->encode($ip_obj);
   $ip_data = NetPacket::IP::strip($raw_pkt);
 
 =head1 DESCRIPTION
@@ -216,10 +271,11 @@ instance data.  This method will quite happily decode garbage input.
 It is the responsibility of the programmer to ensure valid packet data
 is passed to this method.
 
-=item C<NetPacket::IP-E<gt>encode(param =E<gt> value)>
+=item C<NetPacket::IP-E<gt>encode()>
 
-Return an IP packet encoded with the instance data specified.  Not
-implemented.
+Return an IP packet encoded with the instance data specified. This
+will infer the total length of the packet automatically from the 
+payload lenth and also adjust the checksum.
 
 =back
 
@@ -349,7 +405,7 @@ All the above exportable items.
 The following script dumps IP frames by IP address and protocol
 to standard output.
 
-  #!/usr/bin/perl
+  #!/usr/bin/perl -w
 
   use strict;
   use Net::PcapUtils;
@@ -369,8 +425,6 @@ to standard output.
 
 =over
 
-=item Implement encode() function
-
 =item IP option decoding - currently stored in binary form.
 
 =item Assembly of received fragments
@@ -378,6 +432,13 @@ to standard output.
 =back
 
 =head1 COPYRIGHT
+
+  Copyright (c) 2001 Tim Potter.
+
+  This package is free software and is provided "as is" without express 
+  or implied warranty.  It may be used, redistributed and/or modified 
+  under the terms of the Perl Artistic License (see
+  http://www.perl.com/perl/misc/Artistic.html)
 
   Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
   the participants in the CRC for Advanced Computational Systems
@@ -395,7 +456,9 @@ to standard output.
 
 =head1 AUTHOR
 
-Tim Potter E<lt>tpot@acsys.anu.edu.auE<gt>
+Tim Potter E<lt>tpot@samba.orgE<gt>
+
+Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
 

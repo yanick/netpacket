@@ -2,13 +2,20 @@
 # NetPacket::ARP - Decode and endode ARP (Address Resolution Protocol)
 # packets. 
 #
-# Comments/suggestions to tpot@acsys.anu.edu.au
+# Comments/suggestions to tpot@samba.org
 #
-# $Id: ARP.pm,v 1.8 1999/04/25 00:50:01 tpot Exp $
+# $Id: ARP.pm,v 1.11 2001/07/29 23:45:00 tpot Exp $
 #
 
 package NetPacket::ARP;
 
+#
+# Copyright (c) 2001 Tim Potter.
+#
+# This package is free software and is provided "as is" without express 
+# or implied warranty.  It may be used, redistributed and/or modified 
+# under the terms of the Perl Artistic License (see
+# http://www.perl.com/perl/misc/Artistic.html)
 #
 # Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 # the participants in the CRC for Advanced Computational Systems
@@ -31,7 +38,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.01";
+    $VERSION = "0.03";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -266,13 +273,13 @@ All the above exportable items.
 
 Print out arp requests on the local network.
 
-#!/usr/bin/perl
+  #!/usr/bin/perl -w
 
-use Net::PcapUtils;
-use NetPacket::Ethernet qw(:types);
-use NetPacket::ARP;
+  use Net::PcapUtils;
+  use NetPacket::Ethernet qw(:types);
+  use NetPacket::ARP;
 
-sub process_pkt {
+  sub process_pkt {
     my ($arg, $hdr, $pkt) = @_;
 
     my $eth_obj = NetPacket::Ethernet->decode($pkt);
@@ -282,7 +289,7 @@ sub process_pkt {
 	print("source hw addr=$arp_obj->{sha}, " .
 	      "dest hw addr=$arp_obj->{tha}\n");
     }
-}
+  }
 
 Net::PcapUtils::loop(\&process_pkt);
 
@@ -300,6 +307,13 @@ Net::PcapUtils::loop(\&process_pkt);
 
 =head1 COPYRIGHT
 
+  Copyright (c) 2001 Tim Potter.
+
+  This package is free software and is provided "as is" without express 
+  or implied warranty.  It may be used, redistributed and/or modified 
+  under the terms of the Perl Artistic License (see
+  http://www.perl.com/perl/misc/Artistic.html)
+
   Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
   the participants in the CRC for Advanced Computational Systems
   ('ACSys').
@@ -316,7 +330,7 @@ Net::PcapUtils::loop(\&process_pkt);
 
 =head1 AUTHOR
 
-Tim Potter E<lt>tpot@acsys.anu.edu.auE<gt>
+Tim Potter E<lt>tpot@samba.orgE<gt>
 
 =cut
 

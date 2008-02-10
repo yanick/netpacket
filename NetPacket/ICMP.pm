@@ -2,13 +2,22 @@
 # NetPacket::ICMP -Decode and encode ICMP (Internet Control Message
 # Protocol) packets.
 #
-# Comments/suggestions to tpot@acsys.anu.edu.au
+# Comments/suggestions to tpot@samba.org
 #
-# $Id: ICMP.pm,v 1.7 1999/04/07 02:18:18 tpot Exp $
+# Encode and checksum by Stephanie Wehner <atrak@itsx.com>
+#
+# $Id: ICMP.pm,v 1.11 2001/07/29 23:45:00 tpot Exp $
 #
 
 package NetPacket::ICMP;
 
+#
+# Copyright (c) 2001 Tim Potter.
+#
+# This package is free software and is provided "as is" without express 
+# or implied warranty.  It may be used, redistributed and/or modified 
+# under the terms of the Perl Artistic License (see
+# http://www.perl.com/perl/misc/Artistic.html)
 #
 # Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 # the participants in the CRC for Advanced Computational Systems
@@ -24,6 +33,8 @@ package NetPacket::ICMP;
 # and costs any user may incur as a result of using, copying or
 # modifying the Software.
 #
+# Copyright (c) 2001 Stephanie Wehner
+#
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -31,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.01";
+    $VERSION = "0.03";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -47,16 +58,44 @@ BEGIN {
 # Other items we are prepared to export if requested
 
     @EXPORT_OK = qw(icmp_strip
+                    ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
+                    ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
+                    ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
+                    ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
+                    ICMP_MASREQ ICMP_MASKREPLY
     );
 
 # Tags:
 
     %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
+    types       => [qw(ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
+                       ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT 
+                       ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
+                       ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
+                       ICMP_MASREQ ICMP_MASKREPLY)],
     strip       => [qw(icmp_strip)],
 );
 
 }
+
+# ICMP Types
+
+use constant ICMP_ECHOREPLY       => 0;
+use constant ICMP_UNREACH         => 3;
+use constant ICMP_SOURCEQUENCH    => 4;
+use constant ICMP_REDIRECT        => 5;
+use constant ICMP_ECHO            => 8;
+use constant ICMP_ROUTERADVERT    => 9;
+use constant ICMP_ROUTERSOLICIT   => 10;
+use constant ICMP_TIMXCEED        => 11;
+use constant ICMP_PARAMPROB       => 12;
+use constant ICMP_TSTAMP          => 13;
+use constant ICMP_TSTAMPREPLY     => 14;
+use constant ICMP_IREQ            => 15;
+use constant ICMP_IREQREPLY       => 16;
+use constant ICMP_MASKREQ         => 17;
+use constant ICMP_MASKREPLY       => 18;
 
 #
 # Decode the packet
@@ -105,8 +144,36 @@ sub strip {
 #
 
 sub encode {
-    die("Not implemented");
+    my $self = shift;
+    my ($ip) = @_;
+    my ($packet);
+    
+    # Checksum the packet
+    $self->checksum();
+
+    # Put the packet together
+    $packet = pack("CCna*", $self->{type}, $self->{code}, 
+                $self->{cksum}, $self->{data});
+
+    return($packet); 
 }
+
+#
+# Calculate ICMP checksum
+
+sub checksum {
+    my $self = shift;
+    my ($ip) = @_;
+    my ($packet,$zero);
+
+    # Put the packet together for checksumming
+    $zero = 0;
+    $packet = pack("CCna*", $self->{type}, $self->{code},
+                $zero, $self->{data});
+
+    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
+}
+
 
 #
 # Module initialisation
@@ -128,7 +195,7 @@ Message Protocol) packets.
   use NetPacket::ICMP;
 
   $icmp_obj = NetPacket::ICMP->decode($raw_pkt);
-  $icmp_pkt = NetPacket::ICMP->encode(params...);   # Not implemented
+  $icmp_pkt = NetPacket::ICMP->encode();
   $icmp_data = NetPacket::ICMP::strip($raw_pkt);
 
 =head1 DESCRIPTION
@@ -147,10 +214,9 @@ instance data.  This method will quite happily decode garbage input.
 It is the responsibility of the programmer to ensure valid packet data
 is passed to this method.
 
-=item C<NetPacket::IGMP-E<gt>encode(param =E<gt> value)>
+=item C<NetPacket::ICMP-E<gt>encode()>
 
-Return an IGMP packet encoded with the instance data specified.  Not
-implemented.
+Return an ICMP packet encoded with the instance data specified. 
 
 =back
 
@@ -158,7 +224,7 @@ implemented.
 
 =over
 
-=item C<NetPacket::IGMP::strip([RAW PACKET])>
+=item C<NetPacket::ICMP::strip([RAW PACKET])>
 
 Return the encapsulated data (or payload) contained in the ICMP
 packet.
@@ -200,7 +266,13 @@ none
 
 =item exportable
 
-none
+Icmp message types: 
+    ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
+    ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
+    ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
+    ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
+    ICMP_MASREQ ICMP_MASKREPLY
+
 
 =item tags
 
@@ -226,8 +298,6 @@ All the above exportable items.
 
 =over
 
-=item Implement encode() function
-
 =item Create constants
 
 =item Write example
@@ -235,6 +305,13 @@ All the above exportable items.
 =back
 
 =head1 COPYRIGHT
+
+  Copyright (c) 2001 Tim Potter.
+
+  This package is free software and is provided "as is" without express 
+  or implied warranty.  It may be used, redistributed and/or modified 
+  under the terms of the Perl Artistic License (see
+  http://www.perl.com/perl/misc/Artistic.html)
 
   Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
   the participants in the CRC for Advanced Computational Systems
@@ -252,7 +329,9 @@ All the above exportable items.
 
 =head1 AUTHOR
 
-Tim Potter E<lt>tpot@acsys.anu.edu.auE<gt>
+Tim Potter E<lt>tpot@samba.orgE<gt>
+
+Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
 

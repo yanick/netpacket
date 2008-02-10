@@ -2,13 +2,20 @@
 # NetPacket::IGMP - Decode and encode IGMP (Internet Group Management
 # Protocol) packets.
 #
-# Comments/suggestions to tpot@acsys.anu.edu.au
+# Comments/suggestions to tpot@samba.org
 #
-# $Id: IGMP.pm,v 1.6 1999/04/25 01:42:00 tpot Exp $
+# $Id: IGMP.pm,v 1.9 2001/07/29 23:45:00 tpot Exp $
 #
 
 package NetPacket::IGMP;
 
+#
+# Copyright (c) 2001 Tim Potter.
+#
+# This package is free software and is provided "as is" without express 
+# or implied warranty.  It may be used, redistributed and/or modified 
+# under the terms of the Perl Artistic License (see
+# http://www.perl.com/perl/misc/Artistic.html)
 #
 # Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 # the participants in the CRC for Advanced Computational Systems
@@ -31,7 +38,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.01";
+    $VERSION = "0.03";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -302,7 +309,7 @@ All the above exportable items.
 The following script dumps UDP frames by IP address and UDP port
 to standard output.
 
-  #!/usr/bin/perl
+  #!/usr/bin/perl -w
 
   use strict;
   use Net::PcapUtils;
@@ -333,6 +340,13 @@ to standard output.
 
 =head1 COPYRIGHT
 
+  Copyright (c) 2001 Tim Potter.
+
+  This package is free software and is provided "as is" without express 
+  or implied warranty.  It may be used, redistributed and/or modified 
+  under the terms of the Perl Artistic License (see
+  http://www.perl.com/perl/misc/Artistic.html)
+
   Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
   the participants in the CRC for Advanced Computational Systems
   ('ACSys').
@@ -349,7 +363,7 @@ to standard output.
 
 =head1 AUTHOR
 
-Tim Potter E<lt>tpot@acsys.anu.edu.auE<gt>
+Tim Potter E<lt>tpot@samba.orgE<gt>
 
 =cut
 

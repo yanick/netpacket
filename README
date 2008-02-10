@@ -1,11 +1,11 @@
 This README file is in -*- text -*- mode, because Emacs likes it that
 way.
 
-This is the first release of a whole bunch of Perl modules which I
-have named NetPacket::*.  These modules do basic disassembly of
-network packets of various Internet protocols.  There are hooks for
-assembly of packets but in this version, I haven't bothered
-implementing them.
+This is the second release, actually numbered 0.03, of a whole bunch of
+Perl modules which I have named NetPacket::*.  These modules do basic
+disassembly of network packets of various Internet protocols.  NetPacket
+0.01 contained hooks for assembly of packets which have been implemented in
+this version by Stephanie Wehner <atrak@itsx.com>.
 
 I've used these scripts for a variety of little jobs such as snooping
 various TCP services, gathering network traffic statistics by
@@ -38,5 +38,5 @@ modules.
 
 
 Tim Potter
-25th April, 1999
-tpot@acsys.anu.edu.au
+30th July, 2001
+tpot@samba.org
