@@ -1,7 +1,7 @@
 This README file is in -*- text -*- mode, because Emacs likes it that
 way.
 
-This is the second release, actually numbered 0.03, of a whole bunch of
+This is the third release, actually numbered 0.04, of a whole bunch of
 Perl modules which I have named NetPacket::*.  These modules do basic
 disassembly of network packets of various Internet protocols.  NetPacket
 0.01 contained hooks for assembly of packets which have been implemented in
@@ -36,7 +36,12 @@ I'd be interested in receiving bug reports, comments or any
 improvements (especially additional protocols) to the NetPacket
 modules.
 
-
 Tim Potter
 30th July, 2001
 tpot@samba.org
+
+History
+-------
+
+v0.04:
+    Checksum offset fix, thanks to J. Hoagland for pointing this out.

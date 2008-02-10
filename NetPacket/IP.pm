@@ -42,7 +42,7 @@ use NetPacket;
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.03";
+    $VERSION = "0.04";
 }
 sub Version () { "$myclass v$VERSION" }
 
@@ -217,7 +217,7 @@ sub encode {
 
     # construct header to calculate the checksum
     $hdr = pack('CCnnnCCna4a4a*', $tmp, $self->{tos},$self->{len}, 
-         $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
+         $self->{id}, $self->{offset}, $self->{ttl}, $self->{proto}, 
          $zero, $src_ip, $dest_ip, $self->{options});
 
     $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($hdr));

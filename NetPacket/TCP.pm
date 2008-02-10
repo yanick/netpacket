@@ -55,7 +55,7 @@ use constant CWR => 0x80;
 
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.03";
+    $VERSION = "0.04";
 }
 sub Version () { "$myclass v$VERSION" }
 

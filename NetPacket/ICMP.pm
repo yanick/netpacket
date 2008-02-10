@@ -42,7 +42,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.03";
+    $VERSION = "0.04";
 }
 sub Version () { "$myclass v$VERSION" }
 
