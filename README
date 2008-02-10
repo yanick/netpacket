@@ -1,0 +1,42 @@
+This README file is in -*- text -*- mode, because Emacs likes it that
+way.
+
+This is the first release of a whole bunch of Perl modules which I
+have named NetPacket::*.  These modules do basic disassembly of
+network packets of various Internet protocols.  There are hooks for
+assembly of packets but in this version, I haven't bothered
+implementing them.
+
+I've used these scripts for a variety of little jobs such as snooping
+various TCP services, gathering network traffic statistics by
+source/destination/protocol, and for unpacking the contents of IP
+tunnels.  They're actually pretty useful.  I recommend fetching and
+installing the Net::Pcap module to actually gather packet data, and
+for writing small scripts based on packet capture, the Net::PcapUtils
+module is also useful.
+
+At present, decoding for the following protocols has been
+implemented.  
+
+	- Ethernet (802.3 and 802.2)
+	- ARP
+	- ICMP
+	- IGMP
+	- IP
+	- UDP
+	- TCP
+
+It's pretty easy to add new protocols.  Just copy one of the existing
+modules and figure out an unpack string which will unpack the
+information in the packet and store the data into fields in the
+namespace of the NetPacket::whatever object.  More information can be
+found in the NetPacket(3) manpage, which is the base class module.
+
+I'd be interested in receiving bug reports, comments or any
+improvements (especially additional protocols) to the NetPacket
+modules.
+
+
+Tim Potter
+25th April, 1999
+tpot@acsys.anu.edu.au
