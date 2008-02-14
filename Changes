@@ -1,6 +1,8 @@
 revision history for NetPacket
 
 wip
+    * Fixed bug 18941 - NetPacket::IP includes trailing 
+        trash bytes in $ip->{data}
     * Fixed bug 7010 - IP flags field lost in IP::encode()
     * Moved history off the README file into this one (Changes)
 

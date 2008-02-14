@@ -163,16 +163,19 @@ sub decode {
 	($self->{options}, $self->{data}) = unpack("a" . $olen .
 						   "a*", $self->{options});
 
+    my $length = $self->{hlen};
+    $length = 5 if $length < 5;  # precaution against bad header
+
+    # truncate data to the length given by the header
+    $self->{data} = substr $self->{data}, 0, $self->{len} - 4 * $length;
+
 	# Convert 32 bit ip addresses to dotted quad notation
 
 	$self->{src_ip} = to_dotquad($self->{src_ip});
 	$self->{dest_ip} = to_dotquad($self->{dest_ip});
     }
 
-    # Return a blessed object
-
-    bless($self, $class);
-    return $self;
+    return bless $self, $class;
 }
 
 #
