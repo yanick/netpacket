@@ -4,7 +4,9 @@ wip
     * Fixed bug 18941 - NetPacket::IP includes trailing 
         trash bytes in $ip->{data}
     * Fixed bug 7010 - IP flags field lost in IP::encode()
+    * Added Build.PL 
     * Moved history off the README file into this one (Changes)
+    * Moved module structure to /lib
 
 0.04
     * Checksum offset fix, thanks to J. Hoagland for pointing this out.
