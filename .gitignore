@@ -8,3 +8,5 @@ META.yml
 *.swp
 *.orig
 *.tar.gz
+*.tar
+Makefile.PL
