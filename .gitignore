@@ -4,3 +4,7 @@ blib
 pm_to_blib
 Build
 Makefile
+META.yml
+*.swp
+*.orig
+*.tar.gz
