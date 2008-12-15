@@ -4,7 +4,7 @@ use Module::Build;
 
 my $builder = Module::Build->new(
     module_name         => 'NetPacket',
-    dist_version        => '0.05',
+    dist_version_from   => 'lib/NetPacket.pm',
     create_makefile_pl  => 'passthrough',
 );
 

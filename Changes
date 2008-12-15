@@ -7,6 +7,9 @@ wip
     * Added Build.PL 
     * Moved history off the README file into this one (Changes)
     * Moved module structure to /lib
+    * Version now gathered from NetPacket.pm
+    * META.yml added to MANIFEST
+    * Added myself (Yanick) as author
 
 0.04
     * Checksum offset fix, thanks to J. Hoagland for pointing this out.

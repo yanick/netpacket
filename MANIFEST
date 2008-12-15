@@ -13,3 +13,4 @@ lib/NetPacket/TCP.pm
 t/ip_encode.t
 Changes
 t/ip_trailing.t
+META.yml

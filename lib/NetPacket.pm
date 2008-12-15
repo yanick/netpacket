@@ -245,11 +245,13 @@ however contains header fields and a payload.
   and costs any user may incur as a result of using, copying or
   modifying the Software.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Tim Potter E<lt>tpot@samba.orgE<gt>
+Tim Potter <tpot@samba.org>
 
-Stephanie Wehner E<lt>atrak@itsx.comE<gt>
+Stephanie Wehner <atrak@itsx.com>
+
+Yanick Champoux <yanick@cpan.org>
 
 =cut
 
