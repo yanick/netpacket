@@ -9,3 +9,4 @@ NetPacket/IGMP.pm
 NetPacket/IP.pm
 NetPacket/UDP.pm
 NetPacket/TCP.pm
+t/ip_encode.t

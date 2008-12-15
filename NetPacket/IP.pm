@@ -217,14 +217,14 @@ sub encode {
 
     # construct header to calculate the checksum
     $hdr = pack('CCnnnCCna4a4a*', $tmp, $self->{tos},$self->{len}, 
-         $self->{id}, $self->{offset}, $self->{ttl}, $self->{proto}, 
+         $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
          $zero, $src_ip, $dest_ip, $self->{options});
 
     $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($hdr));
 
     # make the entire packet
     $packet = pack('CCnnnCCna4a4a*a*', $tmp, $self->{tos},$self->{len}, 
-         $self->{id}, $self->{foffset}, $self->{ttl}, $self->{proto}, 
+         $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
          $self->{cksum}, $src_ip, $dest_ip, $self->{options},
          $self->{data});
 
