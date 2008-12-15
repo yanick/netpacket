@@ -1,0 +1,10 @@
+\.git
+\.swp$
+_build
+blib
+Build
+distrelease.yml
+Makefile
+MANIFEST.SKIP
+NetPacket.*tar
+pm_to_blib
