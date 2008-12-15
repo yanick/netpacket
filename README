@@ -1,11 +1,10 @@
-This README file is in -*- text -*- mode, because Emacs likes it that
-way.
+NetPacket version 0.05
 
-This is the third release, actually numbered 0.04, of a whole bunch of
+This is a whole bunch of
 Perl modules which I have named NetPacket::*.  These modules do basic
 disassembly of network packets of various Internet protocols.  NetPacket
 0.01 contained hooks for assembly of packets which have been implemented in
-this version by Stephanie Wehner <atrak@itsx.com>.
+version 0.04 by Stephanie Wehner <atrak@itsx.com>.
 
 I've used these scripts for a variety of little jobs such as snooping
 various TCP services, gathering network traffic statistics by
@@ -39,9 +38,3 @@ modules.
 Tim Potter
 30th July, 2001
 tpot@samba.org
-
-History
--------
-
-v0.04:
-    Checksum offset fix, thanks to J. Hoagland for pointing this out.
