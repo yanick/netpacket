@@ -1,4 +1,5 @@
 checks:
+    - SaneVersion
     - VCS::WorkingDirClean
     - Manifest
 actions:
