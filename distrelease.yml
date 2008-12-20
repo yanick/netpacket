@@ -5,3 +5,16 @@ actions:
     - GenerateDistribution
     - CPANUpload
     - Github
+distversion:
+    code: |
+        use File::Find::Rule;
+
+        my $module_pattern = [ 
+            qr/\$VERSION\s*=\s*'(.*?)';/,
+            qr/This document(?=ation)? (?=refers to|describes) \S+ version (\S*)/ 
+        ];
+
+        ( 
+            README => qr/NetPacket version (\S+)/,
+            map { $_ => $module_pattern }  File::Find::Rule->file->name('*.pm')->in('lib'),
+        );
