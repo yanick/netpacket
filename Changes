@@ -1,5 +1,8 @@
 revision history for NetPacket
 
+wip
+    * Fixed bug 37931: export of ICMP_MASKREQ
+
 0.41_0
     * Fixed bug 18941 - NetPacket::IP includes trailing 
         trash bytes in $ip->{data}
