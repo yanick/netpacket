@@ -1,6 +1,6 @@
 revision history for NetPacket
 
-wip
+0.41_0
     * Fixed bug 18941 - NetPacket::IP includes trailing 
         trash bytes in $ip->{data}
     * Fixed bug 7010 - IP flags field lost in IP::encode()
