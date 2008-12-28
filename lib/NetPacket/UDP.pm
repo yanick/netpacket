@@ -38,6 +38,7 @@ package NetPacket::UDP;
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
+use NetPacket::IP;
 
 our $VERSION = '0.41_0';
 
