@@ -164,6 +164,7 @@ sub encode {
             $self->{acknum}, $tmp, $self->{winsize}, $self->{cksum},
             $self->{urg}, $self->{options},$self->{data});
 
+
     return($packet);
 
 }
@@ -197,6 +198,9 @@ sub checksum {
             $self->{src_port}, $self->{dest_port}, $self->{seqnum},
             $self->{acknum}, $tmp, $self->{winsize}, $zero,
             $self->{urg}, $self->{options},$self->{data});
+
+    # pad packet if odd-sized
+    $packet .= "\x00" if length( $packet ) % 2;
 
     $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
 }
