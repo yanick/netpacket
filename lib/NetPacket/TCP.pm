@@ -184,6 +184,7 @@ sub checksum {
     $proto = 6;
     $tcplen = ($self->{hlen} * 4)+ length($self->{data});
 
+    no warnings qw/ uninitialized /;
     $tmp = $self->{hlen} << 12;
     $tmp = $tmp | (0x0f00 & ($self->{reserved} << 8));
     $tmp = $tmp | (0x00ff & $self->{flags});

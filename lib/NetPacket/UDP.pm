@@ -145,6 +145,8 @@ sub checksum {
     my $src_ip = gethostbyname($ip->{src_ip});
     my $dest_ip = gethostbyname($ip->{dest_ip});
 
+    no warnings;
+
     my $packet = pack 'a4a4CCnnnnna*' =>
     			# fake ip header part
             $src_ip,     
