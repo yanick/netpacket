@@ -1,7 +1,11 @@
 revision history for NetPacket
 
-wip
+0.41.1
     * Fixed bug 37931: export of ICMP_MASKREQ
+    * Fixed UDP and TCP checksums for odd-sized packets
+    * Fixed import from NetPacket::UDP
+    * Fixed bug 37931: export of ICMP_MASKREQ
+    * Added git repo and bug tracking info to META.yml
 
 0.41_0
     * Fixed bug 18941 - NetPacket::IP includes trailing 
