@@ -132,7 +132,7 @@ sub strip {
     my ($pkt, @rest) = @_;
 
     my $icmp_obj = decode($pkt);
-    return $icmp_obj->data;
+    return $icmp_obj->{data};
 }
 
 #
