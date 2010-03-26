@@ -1,41 +1,13 @@
 #
 # NetPacket::ARP - Decode and endode ARP (Address Resolution Protocol)
 # packets. 
-#
-# Comments/suggestions to tpot@samba.org
-#
-# $Id: ARP.pm,v 1.11 2001/07/29 23:45:00 tpot Exp $
-#
 
 package NetPacket::ARP;
-
-#
-# Copyright (c) 2001 Tim Potter.
-#
-# This package is free software and is provided "as is" without express 
-# or implied warranty.  It may be used, redistributed and/or modified 
-# under the terms of the Perl Artistic License (see
-# http://www.perl.com/perl/misc/Artistic.html)
-#
-# Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
-# the participants in the CRC for Advanced Computational Systems
-# ('ACSys').
-#
-# ACSys makes this software and all associated data and documentation
-# ('Software') available free of charge.  You may make copies of the 
-# Software but you must include all of this notice on any copy.
-#
-# The Software was developed for research purposes and ACSys does not
-# warrant that it is error free or fit for any purpose.  ACSys
-# disclaims any liability for all claims, expenses, losses, damages
-# and costs any user may incur as a result of using, copying or
-# modifying the Software.
-#
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
-our $VERSION = '0.41.1';
+our $VERSION = '0.42.0';
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
@@ -302,26 +274,14 @@ Net::PcapUtils::loop(\&process_pkt);
 
 =head1 COPYRIGHT
 
-  Copyright (c) 2001 Tim Potter.
+This is free software; you can redistribute it and/or modify it 
+under the same terms as the Perl 5 programming language system itself.
 
-  This package is free software and is provided "as is" without express 
-  or implied warranty.  It may be used, redistributed and/or modified 
-  under the terms of the Perl Artistic License (see
-  http://www.perl.com/perl/misc/Artistic.html)
+Copyright (c) 2001 Tim Potter.
 
-  Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
-  the participants in the CRC for Advanced Computational Systems
-  ('ACSys').
-
-  ACSys makes this software and all associated data and documentation
-  ('Software') available free of charge.  You may make copies of the 
-  Software but you must include all of this notice on any copy.
-
-  The Software was developed for research purposes and ACSys does not
-  warrant that it is error free or fit for any purpose.  ACSys
-  disclaims any liability for all claims, expenses, losses, damages
-  and costs any user may incur as a result of using, copying or
-  modifying the Software.
+Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
+the participants in the CRC for Advanced Computational Systems
+('ACSys').
 
 =head1 AUTHOR
 
