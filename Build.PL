@@ -5,6 +5,8 @@ use Module::Build;
 my $builder = Module::Build->new(
     module_name         => 'NetPacket',
     dist_version_from   => 'lib/NetPacket.pm',
+    create_license => 1,
+    license => 'artistic_2',
     create_makefile_pl  => 'passthrough',   
     meta_merge => {
         resources => {
@@ -13,7 +15,6 @@ my $builder = Module::Build->new(
             'http://rt.cpan.org/NoAuth/Bugs.html?Dist=NetPacket',
         },
     },
-
 );
 
 $builder->create_build_script();

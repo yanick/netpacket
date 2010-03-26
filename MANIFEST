@@ -17,3 +17,4 @@ META.yml
 t/bug-37931.t
 t/general.t
 t/checksum.t
+LICENSE
