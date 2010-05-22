@@ -10,6 +10,9 @@ lib/NetPacket/IGMP.pm
 lib/NetPacket/IP.pm
 lib/NetPacket/UDP.pm
 lib/NetPacket/TCP.pm
+lib/NetPacket/IPv6.pm
+lib/NetPacket/ICMPv6.pm
+lib/NetPacket/PFLog.pm
 t/ip_encode.t
 Changes
 t/ip_trailing.t

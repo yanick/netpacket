@@ -231,7 +231,7 @@ none
 
 =item exportable
 
-Icmp message types: 
+ICMP message types: 
     ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
     ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
     ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
@@ -244,6 +244,14 @@ Icmp message types:
 The following tags group together related exportable items.
 
 =over
+
+=item C<:types>
+
+  ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
+  ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
+  ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
+  ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ 
+  ICMP_IREQREPLY ICMP_MASKREQ ICMP_MASKREPLY
 
 =item C<:strip>
 
@@ -259,13 +267,35 @@ All the above exportable items.
 
 =head1 EXAMPLE
 
+The following example prints the ICMP type, code, and checksum 
+fields.
+
+  #!/usr/bin/perl -w
+
+  use strict;
+  use Net::PcapUtils;
+  use NetPacket::Ethernet qw(:strip);
+  use NetPacket::IP qw(:strip);
+  use NetPacket::ICMP;
+
+  sub process_pkt {
+      my ($user, $hdr, $pkt) = @_;
+
+      my $ip_obj = NetPacket::IP->decode(eth_strip($pkt));
+      my $icmp_obj = NetPacket::ICMP->decode(ip_strip($ip_obj));
+
+      print("Type: $icmp_obj->{type}\n");
+      print("Code: $icmp_obj->{code}\n");
+      print("Checksum: $icmp_obj->{cksum}\n\n");
+  }
+
+  Net::PcapUtils::loop(\&process_pkt, FILTER => 'icmp');
+
 =head1 TODO
 
 =over
 
 =item Create constants
-
-=item Write example
 
 =back
 

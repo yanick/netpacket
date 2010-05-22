@@ -243,7 +243,7 @@ is passed to this method.
 
 Return an IP packet encoded with the instance data specified. This
 will infer the total length of the packet automatically from the 
-payload lenth and also adjust the checksum.
+payload length and also adjust the checksum.
 
 =back
 
