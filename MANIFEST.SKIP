@@ -9,3 +9,4 @@ MANIFEST.SKIP
 NetPacket.*tar
 pm_to_blib
 ^MYMETA.yml$
+contrib

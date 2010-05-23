@@ -119,7 +119,7 @@ sub decode {
 	# Decode variable length header options and remaining data in field
 
 	my $olen = $self->{hlen} - 5;
-	$olen = 0, if ($olen < 0);  # Check for bad hlen
+	$olen = 0 if $olen < 0;  # Check for bad hlen
 
 	# Option length is number of 32 bit words
 
