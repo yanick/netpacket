@@ -1,7 +1,10 @@
 revision history for NetPacket
 
-0.42.1
+0.43.0  May 23rd, 2010
     * Fixed UDP checksum. Thanks to Hal Finkel. (RT#56235)
+    * Added Joel Knight's code for IPv6 support from 
+        http://www.packetmischief.ca/code/netpacket/. 
+        Thanks to Doug Farley for the bug report. (RT#57560)
 
 0.42.0 March 25th, 2010
     * Updated license to Artistic 2.0
