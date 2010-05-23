@@ -1,10 +1,12 @@
 revision history for NetPacket
 
 0.42.1
-    * Fix UDP checksum. Thanks to Hal Finkel. (RT#56235)
+    * Fixed UDP checksum. Thanks to Hal Finkel. (RT#56235)
 
 0.42.0 March 25th, 2010
     * Updated license to Artistic 2.0
+    * Fixed bad call to 'data()' in ICMP. Thanks to Ventz Petkov.
+        (RT#52627)
 
 0.41.1
     * Fixed bug 37931: export of ICMP_MASKREQ
