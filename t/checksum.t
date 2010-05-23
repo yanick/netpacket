@@ -42,4 +42,4 @@ my $udp = {
 
 bless $udp, 'NetPacket::UDP';
 
-is NetPacket::UDP::checksum( $udp, $ip ) => 49177, 'UDP padding';
+is NetPacket::UDP::checksum( $udp, $ip ) => 60058, 'UDP padding';

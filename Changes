@@ -1,5 +1,8 @@
 revision history for NetPacket
 
+0.42.1
+    * Fix UDP checksum. Thanks to Hal Finkel. (RT#56235)
+
 0.42.0 March 25th, 2010
     * Updated license to Artistic 2.0
 
