@@ -117,17 +117,12 @@ sub checksum {
     no warnings;
 
     my $packet = pack 'a4a4CCnnnnna*' =>
-    			# fake ip header part
-            $src_ip,     
-	    $dest_ip,
-	    0,
-	    $proto,
-	    		# proper UDP part
-            $self->{src_port}, 
-	    $self->{dest_port}, 
-            $self->{len},
-	    0,
-	    $self->{data};
+
+      # fake ip header part
+      $src_ip, $dest_ip, 0, $proto, $self->{len},
+
+      # proper UDP part
+      $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data};
 
     $packet .= "\x00" if length($packet) % 2;
 
