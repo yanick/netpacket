@@ -33,7 +33,7 @@ use NetPacket;
 my $myclass;
 BEGIN {
     $myclass = __PACKAGE__;
-    $VERSION = "0.02";
+    $VERSION = '0.43.0';
 }
 sub Version () { "$myclass v$VERSION" }
 

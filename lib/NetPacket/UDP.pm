@@ -9,7 +9,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 use NetPacket::IP;
 
-our $VERSION = '0.42.0';
+our $VERSION = '0.43.0';
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
