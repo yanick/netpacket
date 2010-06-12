@@ -3,6 +3,9 @@
 # packets. 
 
 package NetPacket::UDP;
+BEGIN {
+  $NetPacket::UDP::VERSION = '0.43.1';
+}
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -141,6 +144,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::UDP> - Assemble and disassemble UDP (User Datagram Protocol) packets.
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 

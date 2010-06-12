@@ -5,6 +5,9 @@
 # Encode and checksumming part, Stephanie Wehner, atrak@itsx.com
 
 package NetPacket::TCP;
+BEGIN {
+  $NetPacket::TCP::VERSION = '0.43.1';
+}
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -187,6 +190,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::TCP> - Assemble and disassemble TCP (Transmission Control Protocol) packets.
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 

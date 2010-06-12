@@ -4,6 +4,9 @@
 # Encoding part by Stephanie Wehner, atrak@itsx.com
 
 package NetPacket::IP;
+BEGIN {
+  $NetPacket::IP::VERSION = '0.43.1';
+}
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -211,6 +214,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::IP> - Assemble and disassemble IP (Internet Protocol) packets.
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 

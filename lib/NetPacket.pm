@@ -5,6 +5,9 @@
 #
 
 package NetPacket;
+BEGIN {
+  $NetPacket::VERSION = '0.43.1';
+}
 # ABSTRACT: assemble/disassemble network packets at the protocol level
 
 
@@ -111,6 +114,10 @@ __END__
 
 NetPacket - modules to assemble/disassemble network packets at the protocol level.
 
+=head1 VERSION
+
+version 0.43.1
+
 =head1 SYNOPSIS
 
     # NetPacket is a base class only
@@ -210,4 +217,3 @@ Stephanie Wehner <atrak@itsx.com>
 Yanick Champoux <yanick@cpan.org>
 
 =cut
-

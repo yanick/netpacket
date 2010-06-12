@@ -3,6 +3,9 @@
 # Protocol) packets.
 
 package NetPacket::ICMP;
+BEGIN {
+  $NetPacket::ICMP::VERSION = '0.43.1';
+}
 
 
 use strict;
@@ -151,6 +154,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::ICMP> - Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 

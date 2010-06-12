@@ -25,6 +25,9 @@
 # $jwk: IPv6.pm,v 1.15 2009/03/01 19:12:03 jwk Exp $
 
 package NetPacket::IPv6;
+BEGIN {
+  $NetPacket::IPv6::VERSION = '0.43.1';
+}
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -168,6 +171,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::IPv6> - Assembling and disassembling IPv6 (Internet Protocol Version 6) packets.
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 
@@ -367,4 +374,3 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Joel Knight E<lt>knight.joel@gmail.comE<gt>
 
 =cut
-

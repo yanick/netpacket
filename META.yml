@@ -1,0 +1,19 @@
+---
+abstract: 'assemble/disassemble network packets at the protocol level'
+author:
+  - 'Yanick Champoux <yanick@cpan.org>'
+build_requires:
+  Module::Build: 0.3601
+configure_requires:
+  Module::Build: 0.3601
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.101570, CPAN::Meta::Converter version 2.101590'
+license: artistic2
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: NetPacket
+resources:
+  bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=NetPacket
+  homepage: http://search.cpan.org/dist/NetPacket/
+version: 0.43.1

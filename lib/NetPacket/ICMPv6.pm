@@ -25,6 +25,9 @@
 # $jwk: ICMPv6.pm,v 1.16 2009/03/01 20:12:46 jwk Exp $
 
 package NetPacket::ICMPv6;
+BEGIN {
+  $NetPacket::ICMPv6::VERSION = '0.43.1';
+}
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -187,6 +190,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::ICMPv6> - Assemble and disassemble ICMPv6 (Internet Control Message Protocol Version 6) packets. 
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 

@@ -22,6 +22,9 @@
 # $jwk: PFLog.pm,v 1.33 2009/03/02 00:24:54 jwk Exp $
 
 package NetPacket::PFLog;
+BEGIN {
+  $NetPacket::PFLog::VERSION = '0.43.1';
+}
 
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -174,6 +177,10 @@ __END__
 =head1 NAME
 
 C<NetPacket::PFLog> - Assembling and disassembling OpenBSD's Packet Filter log header.
+
+=head1 VERSION
+
+version 0.43.1
 
 =head1 SYNOPSIS
 
@@ -383,4 +390,3 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 Joel Knight E<lt>knight.joel@gmail.comE<gt>
 
 =cut
-
