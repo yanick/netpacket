@@ -9,8 +9,6 @@ use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
-our $VERSION = '0.43.0';
-
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 
@@ -212,8 +210,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::IP> - Assemble and disassemble IP (Internet Protocol)
-packets.
+C<NetPacket::IP> - Assemble and disassemble IP (Internet Protocol) packets.
 
 =head1 SYNOPSIS
 

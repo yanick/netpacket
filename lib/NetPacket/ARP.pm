@@ -7,7 +7,6 @@ package NetPacket::ARP;
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
-our $VERSION = '0.43.0';
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
@@ -108,8 +107,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::ARP> - Assemble and disassemble ARP (Address Resolution
-Protocol) packets.
+C<NetPacket::ARP> - Assemble and disassemble ARP (Address Resolution Protocol) packets.
 
 =head1 SYNOPSIS
 

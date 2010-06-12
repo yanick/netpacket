@@ -23,8 +23,6 @@ use constant URG => 0x20;
 use constant ECE => 0x40;
 use constant CWR => 0x80;
 
-our $VERSION = '0.43.0';
-
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 
@@ -188,8 +186,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::TCP> - Assemble and disassemble TCP (Transmission Control
-Protocol) packets.
+C<NetPacket::TCP> - Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 =head1 SYNOPSIS
 

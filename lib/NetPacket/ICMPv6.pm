@@ -30,13 +30,6 @@ use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
-my $myclass;
-BEGIN {
-    $myclass = __PACKAGE__;
-    $VERSION = '0.43.0';
-}
-sub Version () { "$myclass v$VERSION" }
-
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 
@@ -193,8 +186,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::ICMPv6> - Assemble and disassemble ICMPv6 (Internet Control
-Message Protocol Version 6) packets. 
+C<NetPacket::ICMPv6> - Assemble and disassemble ICMPv6 (Internet Control Message Protocol Version 6) packets. 
 
 =head1 SYNOPSIS
 

@@ -28,13 +28,6 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 use Socket;
 
-my $myclass;
-BEGIN {
-	$myclass = __PACKAGE__;
-	$VERSION = "0.43.0";
-}
-sub Version () { "$myclass v$VERSION" }
-
 BEGIN {
 	@ISA = qw(Exporter NetPacket);
 
@@ -180,8 +173,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::PFLog> - Assembling and disassembling OpenBSD's Packet
-Filter log header.
+C<NetPacket::PFLog> - Assembling and disassembling OpenBSD's Packet Filter log header.
 
 =head1 SYNOPSIS
 

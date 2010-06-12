@@ -9,8 +9,6 @@ use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 
-our $VERSION = '0.43.0';
-
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 
@@ -152,8 +150,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::ICMP> - Assemble and disassemble ICMP (Internet Control
-Message Protocol) packets. 
+C<NetPacket::ICMP> - Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
 
 =head1 SYNOPSIS
 

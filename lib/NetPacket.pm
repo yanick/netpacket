@@ -5,12 +5,12 @@
 #
 
 package NetPacket;
+# ABSTRACT: assemble/disassemble network packets at the protocol level
 
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
-our $VERSION = '0.43.0';
 
 BEGIN {
     @ISA = qw(Exporter);
@@ -105,10 +105,11 @@ sub ntohs
 
 __END__
 
+=pod
+
 =head1 NAME
 
-C<NetPacket> - modules to assemble/disassemble network packets at the
-protocol level.
+NetPacket - modules to assemble/disassemble network packets at the protocol level.
 
 =head1 SYNOPSIS
 

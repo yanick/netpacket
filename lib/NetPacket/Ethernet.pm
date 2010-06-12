@@ -6,8 +6,6 @@ package NetPacket::Ethernet;
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
-our $VERSION = '0.43.0';
-
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 

@@ -8,8 +8,6 @@ package NetPacket::IGMP;
 use strict;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
-our $VERSION = '0.43.0';
-
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 
@@ -145,8 +143,7 @@ __END__
 
 =head1 NAME
 
-C<NetPacket::IGMP> - Assemble and disassemble IGMP (Internet Group
-Mangement Protocol) packets. 
+C<NetPacket::IGMP> - Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
 =head1 SYNOPSIS
 
