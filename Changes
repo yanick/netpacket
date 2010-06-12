@@ -1,5 +1,8 @@
 revision history for NetPacket
 
+{{$NEXT}}
+    * Change a test to use explicit number of tests instead of 'done_testing'.
+
 0.43.0  May 23rd, 2010
     * Fixed UDP checksum. Thanks to Hal Finkel. (RT#56235)
     * Added Joel Knight's code for IPv6 support from 
