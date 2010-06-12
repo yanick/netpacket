@@ -10,3 +10,4 @@ META.yml
 *.tar.gz
 *.tar
 Makefile.PL
+NetPacket-*
