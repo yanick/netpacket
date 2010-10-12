@@ -5,9 +5,10 @@
 # Decodes OpenBSD's pflog(4) packets
 
 package NetPacket::PFLog;
+# ABSTRACT: Assembling and disassembling OpenBSD's Packet Filter log header.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 use Socket;
 
@@ -153,10 +154,6 @@ sub encode {
 
 __END__
 
-
-=head1 NAME
-
-C<NetPacket::PFLog> - Assembling and disassembling OpenBSD's Packet Filter log header.
 
 =head1 SYNOPSIS
 

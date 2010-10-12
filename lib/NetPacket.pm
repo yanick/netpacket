@@ -101,15 +101,9 @@ sub ntohs
 
 1;
 
-# autoloaded methods go after the END token (&& pod) below
-
 __END__
 
 =pod
-
-=head1 NAME
-
-NetPacket - modules to assemble/disassemble network packets at the protocol level.
 
 =head1 SYNOPSIS
 
@@ -190,7 +184,7 @@ however contains header fields and a payload.
 
 =head2 Tags
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
 Copyright (c) 2001 Tim Potter and Stephanie Wehner.
 

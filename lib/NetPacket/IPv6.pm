@@ -11,9 +11,10 @@
 #
 
 package NetPacket::IPv6;
+# ABSTRACT: Assembling and disassembling IPv6 (Internet Protocol Version 6) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
 BEGIN {
@@ -150,10 +151,6 @@ sub encode {
 
 __END__
 
-
-=head1 NAME
-
-C<NetPacket::IPv6> - Assembling and disassembling IPv6 (Internet Protocol Version 6) packets.
 
 =head1 SYNOPSIS
 

@@ -3,10 +3,11 @@
 # Protocol) packets.
 
 package NetPacket::IGMP;
+# ABSTRACT: Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
@@ -140,10 +141,6 @@ sub encode {
 # autoloaded methods go after the END token (&& pod) below
 
 __END__
-
-=head1 NAME
-
-C<NetPacket::IGMP> - Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
 =head1 SYNOPSIS
 

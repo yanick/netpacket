@@ -1,11 +1,8 @@
-#
-# NetPacket::ARP - Decode and endode ARP (Address Resolution Protocol)
-# packets. 
-
 package NetPacket::ARP;
+# ABSTRACT: Assemble and disassemble ARP (Address Resolution Protocol) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 
 BEGIN {
@@ -101,13 +98,7 @@ sub encode {
 
 1;
 
-# autoloaded methods go after the END token (&& pod) below
-
 __END__
-
-=head1 NAME
-
-C<NetPacket::ARP> - Assemble and disassemble ARP (Address Resolution Protocol) packets.
 
 =head1 SYNOPSIS
 

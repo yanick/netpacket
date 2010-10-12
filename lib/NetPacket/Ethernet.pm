@@ -1,10 +1,8 @@
-#
-# NetPacket::Ethernet - Decode and encode ethernet packets.
-
 package NetPacket::Ethernet;
+# ABSTRACT: Assemble and disassemble ethernet packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
@@ -113,10 +111,6 @@ sub encode {
 # autoloaded methods go after the END token (&& pod) below
 
 __END__
-
-=head1 NAME
-
-C<NetPacket::Ethernet> - Assemble and disassemble ethernet packets.
 
 =head1 SYNOPSIS
 

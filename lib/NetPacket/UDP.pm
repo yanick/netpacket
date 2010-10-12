@@ -3,9 +3,10 @@
 # packets. 
 
 package NetPacket::UDP;
+# ABSTRACT: Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 use NetPacket::IP;
 
@@ -137,10 +138,6 @@ sub checksum {
 # autoloaded methods go after the END token (&& pod) below
 
 __END__
-
-=head1 NAME
-
-C<NetPacket::UDP> - Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 =head1 SYNOPSIS
 

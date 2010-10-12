@@ -4,9 +4,10 @@
 # Encoding part by Stephanie Wehner, atrak@itsx.com
 
 package NetPacket::IP;
+# ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
 BEGIN {
@@ -207,10 +208,6 @@ sub encode {
 # autoloaded methods go after the END token (&& pod) below
 
 __END__
-
-=head1 NAME
-
-C<NetPacket::IP> - Assemble and disassemble IP (Internet Protocol) packets.
 
 =head1 SYNOPSIS
 

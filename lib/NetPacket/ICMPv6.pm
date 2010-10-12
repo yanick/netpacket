@@ -8,9 +8,10 @@
 # RFC2463 - ICMPv6 Specification
 
 package NetPacket::ICMPv6;
+#ABSTRACT: Assemble and disassemble ICMPv6 (Internet Control Message Protocol Version 6) packets. 
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
 BEGIN {
@@ -166,10 +167,6 @@ sub _get_extra_field {
 
 __END__
 
-
-=head1 NAME
-
-C<NetPacket::ICMPv6> - Assemble and disassemble ICMPv6 (Internet Control Message Protocol Version 6) packets. 
 
 =head1 SYNOPSIS
 

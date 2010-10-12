@@ -5,9 +5,10 @@
 # Encode and checksumming part, Stephanie Wehner, atrak@itsx.com
 
 package NetPacket::TCP;
+# ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
 my $myclass;
@@ -183,10 +184,6 @@ sub checksum {
 # autoloaded methods go after the END token (&& pod) below
 
 __END__
-
-=head1 NAME
-
-C<NetPacket::TCP> - Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 =head1 SYNOPSIS
 

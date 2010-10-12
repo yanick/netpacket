@@ -1,12 +1,8 @@
-#
-# NetPacket::ICMP -Decode and encode ICMP (Internet Control Message
-# Protocol) packets.
-
 package NetPacket::ICMP;
-
+# ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw( @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
 
 BEGIN {
@@ -147,10 +143,6 @@ sub checksum {
 # autoloaded methods go after the END token (&& pod) below
 
 __END__
-
-=head1 NAME
-
-C<NetPacket::ICMP> - Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
 
 =head1 SYNOPSIS
 
