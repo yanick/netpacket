@@ -4,11 +4,12 @@
 
 package NetPacket::UDP;
 BEGIN {
-  $NetPacket::UDP::VERSION = '0.43.1';
+  $NetPacket::UDP::VERSION = '0.43.2';
 }
+# ABSTRACT: Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 use NetPacket::IP;
 
@@ -139,15 +140,17 @@ sub checksum {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+
+
+=pod
 
 =head1 NAME
 
-C<NetPacket::UDP> - Assemble and disassemble UDP (User Datagram Protocol) packets.
+NetPacket::UDP - Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 =head1 VERSION
 
-version 0.43.1
+version 0.43.2
 
 =head1 SYNOPSIS
 
@@ -322,14 +325,18 @@ sub alterPacket
 
 =head1 COPYRIGHT
 
-This is free software; you can redistribute it and/or modify it 
-under the same terms as the Perl 5 programming language system itself.
-
 Copyright (c) 2001 Tim Potter.
 
 Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 the participants in the CRC for Advanced Computational Systems
 ('ACSys').
+
+This module is free software.  You can redistribute it and/or
+modify it under the terms of the Artistic License 2.0.
+
+This program is distributed in the hope that it will be useful,
+but without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.
 
 =head1 AUTHOR
 
@@ -340,3 +347,7 @@ Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 Yanick Champoux <yanick@cpan.org>
 
 =cut
+
+
+__END__
+

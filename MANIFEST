@@ -2,9 +2,10 @@ Build.PL
 Changes
 LICENSE
 MANIFEST
+META.json
 META.yml
 README
-dist.ini
+SIGNATURE
 lib/NetPacket.pm
 lib/NetPacket/ARP.pm
 lib/NetPacket/Ethernet.pm
@@ -16,6 +17,7 @@ lib/NetPacket/IPv6.pm
 lib/NetPacket/PFLog.pm
 lib/NetPacket/TCP.pm
 lib/NetPacket/UDP.pm
+t/000-report-versions.t
 t/bug-37931.t
 t/checksum.t
 t/general.t

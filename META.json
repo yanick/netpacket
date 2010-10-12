@@ -1,0 +1,104 @@
+{
+   "abstract" : "assemble/disassemble network packets at the protocol level",
+   "author" : [
+      "Yanick Champoux <yanick@cpan.org>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.102341, CPAN::Meta::Converter version 2.101590",
+   "license" : [
+      "artistic_2"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "NetPacket",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Socket" : 0,
+            "constant" : 0,
+            "vars" : 0
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Carp" : 0,
+            "Scalar::Util" : 0,
+            "Test::More" : "0.94",
+            "perl" : "5.004"
+         }
+      }
+   },
+   "provides" : {
+      "NetPacket" : {
+         "file" : "lib/NetPacket.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::ARP" : {
+         "file" : "lib/NetPacket/ARP.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::Ethernet" : {
+         "file" : "lib/NetPacket/Ethernet.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::ICMP" : {
+         "file" : "lib/NetPacket/ICMP.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::ICMPv6" : {
+         "file" : "lib/NetPacket/ICMPv6.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::IGMP" : {
+         "file" : "lib/NetPacket/IGMP.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::IP" : {
+         "file" : "lib/NetPacket/IP.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::IPv6" : {
+         "file" : "lib/NetPacket/IPv6.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::PFLog" : {
+         "file" : "lib/NetPacket/PFLog.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::TCP" : {
+         "file" : "lib/NetPacket/TCP.pm",
+         "version" : "v0.43.2"
+      },
+      "NetPacket::UDP" : {
+         "file" : "lib/NetPacket/UDP.pm",
+         "version" : "v0.43.2"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "mailto" : "bug-netpacket at rt.cpan.org",
+         "web" : "http://rt.cpan.org/Public/Dist/Display.html?Name=NetPacket"
+      },
+      "homepage" : "http://search.cpan.org/dist/NetPacket/",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/yanick/netpacket.git",
+         "web" : "http://github.com/yanick/netpacket/tree"
+      }
+   },
+   "version" : "0.43.2"
+}
+

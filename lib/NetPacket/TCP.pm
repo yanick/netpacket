@@ -6,11 +6,12 @@
 
 package NetPacket::TCP;
 BEGIN {
-  $NetPacket::TCP::VERSION = '0.43.1';
+  $NetPacket::TCP::VERSION = '0.43.2';
 }
+# ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
 
 my $myclass;
@@ -185,15 +186,17 @@ sub checksum {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+
+
+=pod
 
 =head1 NAME
 
-C<NetPacket::TCP> - Assemble and disassemble TCP (Transmission Control Protocol) packets.
+NetPacket::TCP - Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 =head1 VERSION
 
-version 0.43.1
+version 0.43.2
 
 =head1 SYNOPSIS
 
@@ -393,7 +396,6 @@ flag to all TCP packets passing through:
       $divobj->putPacket($packet,$fwtag);
    }
 
-
 =head1 TODO
 
 =over
@@ -408,14 +410,18 @@ flag to all TCP packets passing through:
 
 =head1 COPYRIGHT
 
-This is free software; you can redistribute it and/or modify it 
-under the same terms as the Perl 5 programming language system itself.
-
 Copyright (c) 2001 Tim Potter and Stephanie Wehner.
 
 Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
 the participants in the CRC for Advanced Computational Systems
 ('ACSys').
+
+This module is free software.  You can redistribute it and/or
+modify it under the terms of the Artistic License 2.0.
+
+This program is distributed in the hope that it will be useful,
+but without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.
 
 =head1 AUTHOR
 
@@ -425,4 +431,7 @@ Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
 
-# any real autoloaded methods go after this line
+
+__END__
+
+

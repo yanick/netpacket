@@ -1,5 +1,9 @@
 revision history for NetPacket
 
+0.43.2    2010-10-11 21:21:23 America/Montreal
+    * Change the COPYRIGHT sections of the pods to match the Artistic 2.0
+        license. (RT#60954)
+
 0.43.1    2010-06-11 21:45:15 America/Montreal
     * Change a test to use explicit number of tests instead of 'done_testing'.
 
