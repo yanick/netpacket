@@ -10,11 +10,8 @@ lib/NetPacket.pm
 lib/NetPacket/ARP.pm
 lib/NetPacket/Ethernet.pm
 lib/NetPacket/ICMP.pm
-lib/NetPacket/ICMPv6.pm
 lib/NetPacket/IGMP.pm
 lib/NetPacket/IP.pm
-lib/NetPacket/IPv6.pm
-lib/NetPacket/PFLog.pm
 lib/NetPacket/TCP.pm
 lib/NetPacket/UDP.pm
 t/000-report-versions.t

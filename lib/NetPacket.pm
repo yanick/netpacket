@@ -182,7 +182,10 @@ however contains header fields and a payload.
 
 =back
 
-=head2 Tags
+=head1 SEE ALSO
+
+Joel Knight has a patch for NetPacket for IPv6 support available
+at http://www.packetmischief.ca/code/netpacket/.
 
 =head1 COPYRIGHT AND LICENSE
 
