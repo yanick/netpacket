@@ -5,7 +5,7 @@
 
 package NetPacket::IP;
 BEGIN {
-  $NetPacket::IP::VERSION = '0.43.2';
+  $NetPacket::IP::VERSION = '1.0.0';
 }
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
@@ -220,7 +220,7 @@ NetPacket::IP - Assemble and disassemble IP (Internet Protocol) packets.
 
 =head1 VERSION
 
-version 0.43.2
+version 1.0.0
 
 =head1 SYNOPSIS
 

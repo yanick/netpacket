@@ -1,5 +1,10 @@
 revision history for NetPacket
 
+1.0.0     2010-10-17 13:42:15 America/Montreal
+    * Remove modules NetPacket::ICMPv6, NetPacket::IPv6 and NetPacket::PFLog
+        as the license of the patch clashes with the license of the
+        distribution. (RT#62197)
+
 0.43.2    2010-10-11 21:21:23 America/Montreal
     * Change the COPYRIGHT sections of the pods to match the Artistic 2.0
         license. (RT#60954)

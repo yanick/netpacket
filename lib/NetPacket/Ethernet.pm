@@ -1,6 +1,6 @@
 package NetPacket::Ethernet;
 BEGIN {
-  $NetPacket::Ethernet::VERSION = '0.43.2';
+  $NetPacket::Ethernet::VERSION = '1.0.0';
 }
 # ABSTRACT: Assemble and disassemble ethernet packets.
 
@@ -123,7 +123,7 @@ NetPacket::Ethernet - Assemble and disassemble ethernet packets.
 
 =head1 VERSION
 
-version 0.43.2
+version 1.0.0
 
 =head1 SYNOPSIS
 

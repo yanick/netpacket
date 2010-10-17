@@ -6,7 +6,7 @@
 
 package NetPacket;
 BEGIN {
-  $NetPacket::VERSION = '0.43.2';
+  $NetPacket::VERSION = '1.0.0';
 }
 # ABSTRACT: assemble/disassemble network packets at the protocol level
 
@@ -114,7 +114,7 @@ NetPacket - assemble/disassemble network packets at the protocol level
 
 =head1 VERSION
 
-version 0.43.2
+version 1.0.0
 
 =head1 SYNOPSIS
 
@@ -193,7 +193,10 @@ however contains header fields and a payload.
 
 =back
 
-=head2 Tags
+=head1 SEE ALSO
+
+Joel Knight has a patch for NetPacket for IPv6 support available
+at http://www.packetmischief.ca/code/netpacket/.
 
 =head1 COPYRIGHT AND LICENSE
 

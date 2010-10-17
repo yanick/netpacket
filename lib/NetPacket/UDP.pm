@@ -4,7 +4,7 @@
 
 package NetPacket::UDP;
 BEGIN {
-  $NetPacket::UDP::VERSION = '0.43.2';
+  $NetPacket::UDP::VERSION = '1.0.0';
 }
 # ABSTRACT: Assemble and disassemble UDP (User Datagram Protocol) packets.
 
@@ -150,7 +150,7 @@ NetPacket::UDP - Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 =head1 VERSION
 
-version 0.43.2
+version 1.0.0
 
 =head1 SYNOPSIS
 
