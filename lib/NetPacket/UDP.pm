@@ -129,13 +129,7 @@ sub checksum {
 
 }
 
-#
-# Module initialisation
-#
-
 1;
-
-# autoloaded methods go after the END token (&& pod) below
 
 __END__
 
@@ -277,38 +271,36 @@ to alter the payload of packets that pass through. All occurences
 of foo will be replaced with bar. This example is easy to test with 
 netcat, but otherwise makes little sense. :) Adapt to your needs:
 
-#!/usr/bin/perl 
+    use Net::Divert;
+    use NetPacket::IP qw(IP_PROTO_UDP);
+    use NetPacket::UDP;
 
-use Net::Divert;
-use NetPacket::IP qw(IP_PROTO_UDP);
-use NetPacket::UDP;
+    $divobj = Net::Divert->new('yourhost',9999);
 
-$divobj = Net::Divert->new('yourhost',9999);
+    $divobj->getPackets(\&alterPacket);
 
-$divobj->getPackets(\&alterPacket);
+    sub alterPacket
+    {
+        my ($data, $fwtag) = @_;
 
-sub alterPacket
-{
-    my ($data, $fwtag) = @_;
+        $ip_obj = NetPacket::IP->decode($data);
 
-    $ip_obj = NetPacket::IP->decode($data);
+        if($ip_obj->{proto} == IP_PROTO_UDP) {
 
-    if($ip_obj->{proto} == IP_PROTO_UDP) {
+            # decode the UDP header
+            $udp_obj = NetPacket::UDP->decode($ip_obj->{data});
 
-        # decode the UDP header
-        $udp_obj = NetPacket::UDP->decode($ip_obj->{data});
+            # replace foo in the payload with bar
+            $udp_obj->{data} =~ s/foo/bar/g;
 
-        # replace foo in the payload with bar
-        $udp_obj->{data} =~ s/foo/bar/g;
+            # reencode the packet
+            $ip_obj->{data} = $udp_obj->encode($ip_obj);
+            $data = $ip_obj->encode;
 
-        # reencode the packet
-        $ip_obj->{data} = $udp_obj->encode($ip_obj);
-        $data = $ip_obj->encode;
+        }
 
+        $divobj->putPacket($data,$fwtag);
     }
-
-    $divobj->putPacket($data,$fwtag);
-}
 
 =head1 COPYRIGHT
 

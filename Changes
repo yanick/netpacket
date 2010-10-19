@@ -1,6 +1,7 @@
 revision history for NetPacket
 
 {{$NEXT}}
+    * Make the example verbatim in pod in NetPacket::UDP (rt#62097)
 
 1.0.0     2010-10-17 13:42:15 America/Montreal
     * Remove modules NetPacket::ICMPv6, NetPacket::IPv6 and NetPacket::PFLog
