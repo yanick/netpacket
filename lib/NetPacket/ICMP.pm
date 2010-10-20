@@ -1,6 +1,6 @@
 package NetPacket::ICMP;
 BEGIN {
-  $NetPacket::ICMP::VERSION = '1.0.0';
+  $NetPacket::ICMP::VERSION = '1.0.1';
 }
 # ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
 
@@ -155,7 +155,7 @@ NetPacket::ICMP - Assemble and disassemble ICMP (Internet Control Message Protoc
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

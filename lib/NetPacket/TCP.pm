@@ -6,7 +6,7 @@
 
 package NetPacket::TCP;
 BEGIN {
-  $NetPacket::TCP::VERSION = '1.0.0';
+  $NetPacket::TCP::VERSION = '1.0.1';
 }
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
@@ -196,7 +196,7 @@ NetPacket::TCP - Assemble and disassemble TCP (Transmission Control Protocol) pa
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

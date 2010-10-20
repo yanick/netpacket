@@ -4,7 +4,7 @@
 
 package NetPacket::IGMP;
 BEGIN {
-  $NetPacket::IGMP::VERSION = '1.0.0';
+  $NetPacket::IGMP::VERSION = '1.0.1';
 }
 # ABSTRACT: Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
@@ -153,7 +153,7 @@ NetPacket::IGMP - Assemble and disassemble IGMP (Internet Group Mangement Protoc
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 

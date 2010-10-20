@@ -6,7 +6,7 @@
 
 package NetPacket;
 BEGIN {
-  $NetPacket::VERSION = '1.0.0';
+  $NetPacket::VERSION = '1.0.1';
 }
 # ABSTRACT: assemble/disassemble network packets at the protocol level
 
@@ -114,7 +114,7 @@ NetPacket - assemble/disassemble network packets at the protocol level
 
 =head1 VERSION
 
-version 1.0.0
+version 1.0.1
 
 =head1 SYNOPSIS
 
