@@ -5,6 +5,7 @@ MANIFEST
 META.json
 META.yml
 README
+README.mkdn
 SIGNATURE
 lib/NetPacket.pm
 lib/NetPacket/ARP.pm

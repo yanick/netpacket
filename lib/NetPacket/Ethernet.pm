@@ -1,6 +1,9 @@
 package NetPacket::Ethernet;
 BEGIN {
-  $NetPacket::Ethernet::VERSION = '1.0.1';
+  $NetPacket::Ethernet::AUTHORITY = 'cpan:yanick';
+}
+BEGIN {
+  $NetPacket::Ethernet::VERSION = '1.1.0';
 }
 # ABSTRACT: Assemble and disassemble ethernet packets.
 
@@ -46,6 +49,10 @@ use constant ETH_TYPE_RARP      => 0x8035;
 use constant ETH_TYPE_SNMP      => 0x814c;
 use constant ETH_TYPE_IPv6      => 0x86dd;
 use constant ETH_TYPE_PPP       => 0x880b;
+use constant ETH_TYPE_802_1Q    => 0x8100;
+use constant ETH_TYPE_IPX       => 0x8137;
+use constant ETH_TYPE_PPPOED    => 0x8863;
+use constant ETH_TYPE_PPPOES    => 0x8864;
 
 #
 # Decode the packet
@@ -123,7 +130,7 @@ NetPacket::Ethernet - Assemble and disassemble ethernet packets.
 
 =head1 VERSION
 
-version 1.0.1
+version 1.1.0
 
 =head1 SYNOPSIS
 

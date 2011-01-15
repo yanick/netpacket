@@ -1,5 +1,8 @@
 revision history for NetPacket
 
+1.1.0     2011-01-15 12:51:13 America/Montreal
+    * Add a few Ethernet types. (thanks to Sergey) (RT#64799)
+
 1.0.1     2010-10-19 20:02:04 America/Montreal
     * Make the example verbatim in pod in NetPacket::UDP (rt#62097)
 
