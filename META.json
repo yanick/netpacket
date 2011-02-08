@@ -42,35 +42,35 @@
    "provides" : {
       "NetPacket" : {
          "file" : "lib/NetPacket.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::ARP" : {
          "file" : "lib/NetPacket/ARP.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::Ethernet" : {
          "file" : "lib/NetPacket/Ethernet.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::ICMP" : {
          "file" : "lib/NetPacket/ICMP.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::IGMP" : {
          "file" : "lib/NetPacket/IGMP.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::IP" : {
          "file" : "lib/NetPacket/IP.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::TCP" : {
          "file" : "lib/NetPacket/TCP.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "NetPacket::UDP" : {
          "file" : "lib/NetPacket/UDP.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       }
    },
    "release_status" : "stable",
@@ -86,7 +86,7 @@
          "web" : "http://github.com/yanick/netpacket/tree"
       }
    },
-   "version" : "1.1.0",
+   "version" : "1.1.1",
    "x_authority" : "cpan:yanick"
 }
 

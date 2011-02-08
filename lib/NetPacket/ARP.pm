@@ -3,7 +3,7 @@ BEGIN {
   $NetPacket::ARP::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $NetPacket::ARP::VERSION = '1.1.0';
+  $NetPacket::ARP::VERSION = '1.1.1';
 }
 # ABSTRACT: Assemble and disassemble ARP (Address Resolution Protocol) packets.
 
@@ -114,7 +114,7 @@ NetPacket::ARP - Assemble and disassemble ARP (Address Resolution Protocol) pack
 
 =head1 VERSION
 
-version 1.1.0
+version 1.1.1
 
 =head1 SYNOPSIS
 

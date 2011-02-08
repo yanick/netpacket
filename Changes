@@ -1,5 +1,9 @@
 revision history for NetPacket
 
+1.1.1     2011-02-07 19:34:30 America/Montreal
+    * Add the new Ethernet types to the export list. 
+        (thanks to Sergey, again :-) ) (RT#64799)
+
 1.1.0     2011-01-15 12:51:13 America/Montreal
     * Add a few Ethernet types. (thanks to Sergey) (RT#64799)
 

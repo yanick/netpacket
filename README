@@ -2,7 +2,7 @@ NAME
     NetPacket - assemble/disassemble network packets at the protocol level
 
 VERSION
-    version 1.1.0
+    version 1.1.1
 
 SYNOPSIS
         # NetPacket is a base class only
