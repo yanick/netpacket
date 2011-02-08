@@ -7,28 +7,27 @@ use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 BEGIN {
     @ISA = qw(Exporter NetPacket);
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
+    @EXPORT = qw();
 
-    @EXPORT = qw(
-    );
+    my @eth_types = qw/ ETH_TYPE_IP        
+                        ETH_TYPE_ARP       
+                        ETH_TYPE_APPLETALK 
+                        ETH_TYPE_RARP      
+                        ETH_TYPE_SNMP      
+                        ETH_TYPE_IPv6      
+                        ETH_TYPE_PPP       
+                        ETH_TYPE_802_1Q    
+                        ETH_TYPE_IPX       
+                        ETH_TYPE_PPPOED    
+                        ETH_TYPE_PPPOES    /;
 
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(eth_strip 
-		    ETH_TYPE_IP ETH_TYPE_ARP ETH_TYPE_APPLETALK
-		    ETH_TYPE_SNMP ETH_TYPE_IPv6 ETH_TYPE_PPP
-    );
-
-# Tags:
+    @EXPORT_OK = ( 'eth_strip', @eth_types ); 
 
     %EXPORT_TAGS = (
-    ALL         => [@EXPORT, @EXPORT_OK],
-    strip       => [qw(eth_strip)],
-    types       => [qw(ETH_TYPE_IP ETH_TYPE_ARP ETH_TYPE_APPLETALK
-		       ETH_TYPE_SNMP ETH_TYPE_IPv6 ETH_TYPE_PPP)],
-);
-
+        ALL         => [@EXPORT, @EXPORT_OK],
+        strip       => [qw(eth_strip)],
+        types       => \@eth_types,
+    );
 }
 
 #

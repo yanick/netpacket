@@ -18,6 +18,7 @@ lib/NetPacket/UDP.pm
 t/000-report-versions.t
 t/bug-37931.t
 t/checksum.t
+t/ethernet.t
 t/general.t
 t/icmp.t
 t/ip_encode.t
