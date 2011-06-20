@@ -1,6 +1,8 @@
 revision history for NetPacket
 
 {{$NEXT}}
+    [BUG FIXES]
+    * Add a INSTALL file
 
 1.1.1     2011-02-07 19:34:30 America/Montreal
     * Add the new Ethernet types to the export list. 
