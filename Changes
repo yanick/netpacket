@@ -1,56 +1,60 @@
 revision history for NetPacket
 
-1.1.1     2011-02-07 19:34:30 America/Montreal
-    * Add the new Ethernet types to the export list. 
-        (thanks to Sergey, again :-) ) (RT#64799)
+1.1.2 2011-06-20
+ [BUG FIXES]
+ - Add a INSTALL file
 
-1.1.0     2011-01-15 12:51:13 America/Montreal
-    * Add a few Ethernet types. (thanks to Sergey) (RT#64799)
+1.1.1 2011-02-07T19:34:30Z
+ - Add the new Ethernet types to the export list.  (thanks to Sergey, again
+   :-) ) (RT#64799)
 
-1.0.1     2010-10-19 20:02:04 America/Montreal
-    * Make the example verbatim in pod in NetPacket::UDP (rt#62097)
+1.1.0 2011-01-15T12:51:13Z
+ - Add a few Ethernet types. (thanks to Sergey) (RT#64799)
 
-1.0.0     2010-10-17 13:42:15 America/Montreal
-    * Remove modules NetPacket::ICMPv6, NetPacket::IPv6 and NetPacket::PFLog
-        as the license of the patch clashes with the license of the
-        distribution. (RT#62197)
+1.0.1 2010-10-19T20:02:04Z
+ - Make the example verbatim in pod in NetPacket::UDP (rt#62097)
 
-0.43.2    2010-10-11 21:21:23 America/Montreal
-    * Change the COPYRIGHT sections of the pods to match the Artistic 2.0
-        license. (RT#60954)
-
-0.43.1    2010-06-11 21:45:15 America/Montreal
-    * Change a test to use explicit number of tests instead of 'done_testing'.
-
-0.43.0  May 23rd, 2010
-    * Fixed UDP checksum. Thanks to Hal Finkel. (RT#56235)
-    * Added Joel Knight's code for IPv6 support from 
-        http://www.packetmischief.ca/code/netpacket/. 
-        Thanks to Doug Farley for the bug report. (RT#57560)
-
-0.42.0 March 25th, 2010
-    * Updated license to Artistic 2.0
-    * Fixed bad call to 'data()' in ICMP. Thanks to Ventz Petkov.
-        (RT#52627)
-
-0.41.1
-    * Fixed bug 37931: export of ICMP_MASKREQ
-    * Fixed UDP and TCP checksums for odd-sized packets
-    * Fixed import from NetPacket::UDP
-    * Fixed bug 37931: export of ICMP_MASKREQ
-    * Added git repo and bug tracking info to META.yml
+1.0.0 2010-10-17T13:42:15Z
+ - Remove modules NetPacket::ICMPv6, NetPacket::IPv6 and NetPacket::PFLog
+   as the license of the patch clashes with the license of the
+   distribution. (RT#62197)
 
 0.41_0
-    * Fixed bug 18941 - NetPacket::IP includes trailing 
-        trash bytes in $ip->{data}
-    * Fixed bug 7010 - IP flags field lost in IP::encode()
-    * Added Build.PL 
-    * Moved history off the README file into this one (Changes)
-    * Moved module structure to /lib
-    * Version now gathered from NetPacket.pm
-    * META.yml added to MANIFEST
-    * Added myself (Yanick) as author
-    * Switched to major.minor.revision version notation
+ - Fixed bug 18941 - NetPacket::IP includes trailing  trash bytes in
+   $ip->{data}
+ - Fixed bug 7010 - IP flags field lost in IP::encode()
+ - Added Build.PL 
+ - Moved history off the README file into this one (Changes)
+ - Moved module structure to /lib
+ - Version now gathered from NetPacket.pm
+ - META.yml added to MANIFEST
+ - Added myself (Yanick) as author
+ - Switched to major.minor.revision version notation
+
+0.43.2 2010-10-11T21:21:23Z
+ - Change the COPYRIGHT sections of the pods to match the Artistic 2.0
+   license. (RT#60954)
+
+0.43.1 2010-06-11T21:45:15Z
+ - Change a test to use explicit number of tests instead of 'done_testing'.
+
+0.43.0 May 23rd, 2010
+ - Fixed UDP checksum. Thanks to Hal Finkel. (RT#56235)
+ - Added Joel Knight's code for IPv6 support from 
+   http://www.packetmischief.ca/code/netpacket/.  Thanks to Doug Farley for
+   the bug report. (RT#57560)
+
+0.42.0 March 25th, 2010
+ - Updated license to Artistic 2.0
+ - Fixed bad call to 'data()' in ICMP. Thanks to Ventz Petkov. (RT#52627)
+
+0.41.1
+ - Fixed bug 37931: export of ICMP_MASKREQ
+ - Fixed UDP and TCP checksums for odd-sized packets
+ - Fixed import from NetPacket::UDP
+ - Fixed bug 37931: export of ICMP_MASKREQ
+ - Added git repo and bug tracking info to META.yml
 
 0.04
-    * Checksum offset fix, thanks to J. Hoagland for pointing this out.
+ - Checksum offset fix, thanks to J. Hoagland for pointing this out.
+
