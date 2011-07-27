@@ -1,20 +1,24 @@
 revision history for NetPacket
 
+1.2.0 2011-07-26
+ [ENHANCEMENTS]
+ - Add support for Ethernet VLAN (thanks to Kai Chan)
+
 1.1.2 2011-06-20
  [BUG FIXES]
  - Add a INSTALL file
 
-1.1.1 2011-02-07T19:34:30Z
+1.1.1 2011-02-07
  - Add the new Ethernet types to the export list.  (thanks to Sergey, again
    :-) ) (RT#64799)
 
-1.1.0 2011-01-15T12:51:13Z
+1.1.0 2011-01-15
  - Add a few Ethernet types. (thanks to Sergey) (RT#64799)
 
-1.0.1 2010-10-19T20:02:04Z
+1.0.1 2010-10-19
  - Make the example verbatim in pod in NetPacket::UDP (rt#62097)
 
-1.0.0 2010-10-17T13:42:15Z
+1.0.0 2010-10-17
  - Remove modules NetPacket::ICMPv6, NetPacket::IPv6 and NetPacket::PFLog
    as the license of the patch clashes with the license of the
    distribution. (RT#62197)
@@ -31,20 +35,20 @@ revision history for NetPacket
  - Added myself (Yanick) as author
  - Switched to major.minor.revision version notation
 
-0.43.2 2010-10-11T21:21:23Z
+0.43.2 2010-10-11
  - Change the COPYRIGHT sections of the pods to match the Artistic 2.0
    license. (RT#60954)
 
-0.43.1 2010-06-11T21:45:15Z
+0.43.1 2010-06-11
  - Change a test to use explicit number of tests instead of 'done_testing'.
 
-0.43.0 May 23rd, 2010
+0.43.0 2010-05-23
  - Fixed UDP checksum. Thanks to Hal Finkel. (RT#56235)
  - Added Joel Knight's code for IPv6 support from 
    http://www.packetmischief.ca/code/netpacket/.  Thanks to Doug Farley for
    the bug report. (RT#57560)
 
-0.42.0 March 25th, 2010
+0.42.0 2010-03-25
  - Updated license to Artistic 2.0
  - Fixed bad call to 'data()' in ICMP. Thanks to Ventz Petkov. (RT#52627)
 

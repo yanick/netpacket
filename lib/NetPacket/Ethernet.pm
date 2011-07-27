@@ -3,7 +3,7 @@ BEGIN {
   $NetPacket::Ethernet::AUTHORITY = 'cpan:yanick';
 }
 BEGIN {
-  $NetPacket::Ethernet::VERSION = '1.1.2';
+  $NetPacket::Ethernet::VERSION = '1.2.0';
 }
 # ABSTRACT: Assemble and disassemble ethernet packets.
 
@@ -54,6 +54,14 @@ use constant ETH_TYPE_PPPOED    => 0x8863;
 use constant ETH_TYPE_PPPOES    => 0x8864;
 
 #
+# VLAN Tag field masks
+#
+
+use constant VLAN_MASK_PCP => 0xE000;
+use constant VLAN_MASK_CFI => 0x1000;
+use constant VLAN_MASK_VID => 0x0FFF;
+
+#
 # Decode the packet
 #
 
@@ -71,16 +79,30 @@ sub decode {
 
     if (defined($pkt)) {
 
-	my($sm_lo, $sm_hi, $dm_lo, $dm_hi);
+        my($sm_lo, $sm_hi, $dm_lo, $dm_hi, $tcid);
 
-	($dm_hi, $dm_lo, $sm_hi, $sm_lo, $self->{type}, $self->{data}) = 
-	    unpack('NnNnna*' , $pkt);
+        ($dm_hi, $dm_lo, $sm_hi, $sm_lo, $self->{type}) = unpack('NnNnn' ,
+$pkt);
 
-	# Convert MAC addresses to hex string to avoid representation
-	# problems
+        # Check for 802.1Q VLAN tag and unpack to account for 4-byte offset
+        if ($self->{type} == ETH_TYPE_802_1Q) {
+            $self->{tpid} = ETH_TYPE_802_1Q;
 
-	$self->{src_mac} = sprintf("%08x%04x", $sm_hi, $sm_lo);
-	$self->{dest_mac} = sprintf("%08x%04x", $dm_hi, $dm_lo);
+            ( $tcid, $self->{type}, $self->{data} ) = unpack('x14nna*' , $pkt);
+
+            # Break down VLAN tag TCI into: PCP, CFI, VID
+            $self->{pcp} = $tcid & VLAN_MASK_PCP >> 13;
+            $self->{cfi} = $tcid & VLAN_MASK_CFI >> 12;
+            $self->{vid} = $tcid & VLAN_MASK_VID;
+        }
+        else {
+            ( $self->{data} ) = unpack('x14a*' , $pkt);
+        }
+
+        # Convert MAC addresses to hex string to avoid representation problems
+
+        $self->{src_mac} = sprintf "%08x%04x", $sm_hi, $sm_lo;
+        $self->{dest_mac} = sprintf "%08x%04x", $dm_hi, $dm_lo;
     }
 
     # Return a blessed object
@@ -129,7 +151,7 @@ NetPacket::Ethernet - Assemble and disassemble ethernet packets.
 
 =head1 VERSION
 
-version 1.1.2
+version 1.2.0
 
 =head1 SYNOPSIS
 
