@@ -1,5 +1,10 @@
 revision history for NetPacket
 
+1.3.0 2011-11-13
+ [ENHANCEMENTS]
+ - 'parse_tcp_options()' method added to NetPacket::TCP (patch by Tom
+   Linden) [RT#71320]
+
 1.2.0 2011-07-26
  [ENHANCEMENTS]
  - Add support for Ethernet VLAN (thanks to Kai Chan)

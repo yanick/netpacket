@@ -5,10 +5,10 @@
 
 package NetPacket::IP;
 BEGIN {
-  $NetPacket::IP::AUTHORITY = 'cpan:yanick';
+  $NetPacket::IP::AUTHORITY = 'cpan:YANICK';
 }
-BEGIN {
-  $NetPacket::IP::VERSION = '1.2.0';
+{
+  $NetPacket::IP::VERSION = '1.3.0';
 }
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
@@ -223,7 +223,7 @@ NetPacket::IP - Assemble and disassemble IP (Internet Protocol) packets.
 
 =head1 VERSION
 
-version 1.2.0
+version 1.3.0
 
 =head1 SYNOPSIS
 

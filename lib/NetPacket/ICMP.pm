@@ -1,9 +1,9 @@
 package NetPacket::ICMP;
 BEGIN {
-  $NetPacket::ICMP::AUTHORITY = 'cpan:yanick';
+  $NetPacket::ICMP::AUTHORITY = 'cpan:YANICK';
 }
-BEGIN {
-  $NetPacket::ICMP::VERSION = '1.2.0';
+{
+  $NetPacket::ICMP::VERSION = '1.3.0';
 }
 # ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
 
@@ -158,7 +158,7 @@ NetPacket::ICMP - Assemble and disassemble ICMP (Internet Control Message Protoc
 
 =head1 VERSION
 
-version 1.2.0
+version 1.3.0
 
 =head1 SYNOPSIS
 

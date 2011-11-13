@@ -6,10 +6,10 @@
 
 package NetPacket::TCP;
 BEGIN {
-  $NetPacket::TCP::AUTHORITY = 'cpan:yanick';
+  $NetPacket::TCP::AUTHORITY = 'cpan:YANICK';
 }
-BEGIN {
-  $NetPacket::TCP::VERSION = '1.2.0';
+{
+  $NetPacket::TCP::VERSION = '1.3.0';
 }
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
@@ -181,6 +181,85 @@ sub checksum {
     $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
 }
 
+sub parse_tcp_options {
+  #
+  # dissect tcp options header. see:
+  # http://www.networksorcery.com/enp/protocol/tcp.htm#Options
+  #
+  # we create an byte array from the options header
+  # and iterate through that. If we find an option
+  # kind number we act accordingly (sometimes it has
+  # a fixed length, sometimes a variable one).
+  # once we've got the option stored, we shift the
+  # bytes we fetched away from the byte array and
+  # re-enter the loop.
+
+  my $self = shift;
+
+  my $opts = $self->{options};
+  my @bytes = split //, $opts;
+  my %options;
+  my $size;
+ ENTRY:
+  $size = $#bytes;
+  foreach my $byte (@bytes) {
+    my $kind = unpack('C', $byte);
+    if($kind == 2) {
+      # MSS.
+      # next byte is size, set to 4
+      # next 2 bytes are mss value 16 bit unsigned short
+      $options{mss} = unpack('n', $bytes[2] . $bytes[3]);
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      goto ENTRY;
+    }
+    elsif ($kind == 1) {
+      # a noop
+      shift @bytes;
+      goto ENTRY;
+    }
+    elsif ($kind == 3) {
+      # Windows Scale Factor
+      # next byte is size, set to 3
+      # next byte is shift count, 8 bit unsigned
+      $options{ws} = unpack('C', $bytes[2]);
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      goto ENTRY;
+    }
+    elsif ($kind == 4) {
+      # SACK Permitted
+      # next byte is length
+      $options{sack} = unpack('C', $bytes[1]);
+      shift @bytes;
+      shift @bytes;
+      goto ENTRY;
+    }
+    elsif ($kind == 8) {
+      # timestamp
+      # next byte is length, set to 10
+      # next 4 byte is timestamp, 32 bit unsigned int
+      # next 4 byte is timestamp echo reply, 32 bit unsigned int 
+      $options{ts} = unpack('N', join '', @bytes[2..5]); 
+      $options{er} = unpack('n', join '', @bytes[6,7,8,9]); 
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      shift @bytes;
+      goto ENTRY;
+    }
+  }
+  return wantarray ? %options : \%options;
+}
 #
 # Module initialisation
 #
@@ -199,7 +278,7 @@ NetPacket::TCP - Assemble and disassemble TCP (Transmission Control Protocol) pa
 
 =head1 VERSION
 
-version 1.2.0
+version 1.3.0
 
 =head1 SYNOPSIS
 
@@ -230,6 +309,15 @@ is passed to this method.
 Return a TCP packet encoded with the instance data specified. 
 Needs parts of the ip header contained in $ip_obj in order to calculate
 the TCP checksum. 
+
+=item C<$packet->parse_tcp_options>
+
+Returns a hash (or a hash ref in scalar context) contaning the packet's options.
+
+For now the method only recognizes well-known and widely
+used options (MSS, noop, windows scale factor, SACK permitted,
+timestamp).
+If the packet contains options unknown to the method, it may fail.
 
 =back
 

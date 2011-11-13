@@ -4,10 +4,10 @@
 
 package NetPacket::IGMP;
 BEGIN {
-  $NetPacket::IGMP::AUTHORITY = 'cpan:yanick';
+  $NetPacket::IGMP::AUTHORITY = 'cpan:YANICK';
 }
-BEGIN {
-  $NetPacket::IGMP::VERSION = '1.2.0';
+{
+  $NetPacket::IGMP::VERSION = '1.3.0';
 }
 # ABSTRACT: Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
@@ -156,7 +156,7 @@ NetPacket::IGMP - Assemble and disassemble IGMP (Internet Group Mangement Protoc
 
 =head1 VERSION
 
-version 1.2.0
+version 1.3.0
 
 =head1 SYNOPSIS
 

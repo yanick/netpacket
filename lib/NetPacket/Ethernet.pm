@@ -1,9 +1,9 @@
 package NetPacket::Ethernet;
 BEGIN {
-  $NetPacket::Ethernet::AUTHORITY = 'cpan:yanick';
+  $NetPacket::Ethernet::AUTHORITY = 'cpan:YANICK';
 }
-BEGIN {
-  $NetPacket::Ethernet::VERSION = '1.2.0';
+{
+  $NetPacket::Ethernet::VERSION = '1.3.0';
 }
 # ABSTRACT: Assemble and disassemble ethernet packets.
 
@@ -151,7 +151,7 @@ NetPacket::Ethernet - Assemble and disassemble ethernet packets.
 
 =head1 VERSION
 
-version 1.2.0
+version 1.3.0
 
 =head1 SYNOPSIS
 

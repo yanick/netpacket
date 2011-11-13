@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.64.
+signed via the Module::Signature module, version 0.68.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,24 +14,24 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 9fcf135d0e07b435c1e4079dd87ff4e687198654 Build.PL
-SHA1 65087ea5b61338a8d8633e5ab53256477f49b2ca Changes
+SHA1 d552046804703d0a4ae1c01c9ff7de76ad35f749 Build.PL
+SHA1 b8b41609285b45c87fd5f119f1d5baf16d121b3a Changes
 SHA1 29b0b7b9d088441a05d8786d0dc4bb3bd558d205 INSTALL
-SHA1 fa6e44d3372502992b6f871b615edc033606b2d7 LICENSE
+SHA1 7e3315d45bf2c2bf96cdf8bd0dfac221e6e641f9 LICENSE
 SHA1 478b16e5cba6c6811d80345400e08f98893f8034 MANIFEST
-SHA1 b85cc6d66d585b6851111124d2509ccfb6072816 META.json
-SHA1 8111dcf39d0d31276b4c5990bbae6d66b7b32770 META.yml
-SHA1 0c6963c11f8aaed52a562503072bc5e9013a9868 README
-SHA1 a976b5b7a6ea4cc835029d6dd1c90e74e7af2ea4 README.mkdn
-SHA1 dc3d6f608a07eac9a349ccefeac090808e20315c lib/NetPacket.pm
-SHA1 a889640b16d3ea0cbf2b248687abd0cf024c3bf0 lib/NetPacket/ARP.pm
-SHA1 872afd6e0352a76629732f705e556fe9df87718a lib/NetPacket/Ethernet.pm
-SHA1 0c8d467ac4c717a5a90e46a926780050054a7666 lib/NetPacket/ICMP.pm
-SHA1 f8b0d335e25c82e987970f938636cfef5ce95ae5 lib/NetPacket/IGMP.pm
-SHA1 a810c5b56396606c07d4ec004c9e8446ca633c93 lib/NetPacket/IP.pm
-SHA1 fedec0973bbf28311f921aa4674aa7f8b989c9ba lib/NetPacket/TCP.pm
-SHA1 128d59aad300c4d1d282343060b5610548e20be1 lib/NetPacket/UDP.pm
-SHA1 050aa113e828a52db3c86065c0c0ed50198b7ce8 t/000-report-versions.t
+SHA1 0f92e5721d3c80e495a0adc14c343fd58d658951 META.json
+SHA1 0350c8c5545cc1377ac68b55d9c67b96ad751d06 META.yml
+SHA1 063f8342ed75585c2bededa2c6d5efe9e0ad92cf README
+SHA1 7dde6e5b4e58b9f1e9fbd7c60432c211bbaa1eb7 README.mkdn
+SHA1 b86c1cfd4bf42803da9b693f1571a2827c5b4d77 lib/NetPacket.pm
+SHA1 dbfe911cb4bc7b7c89f30479451afd67882b5081 lib/NetPacket/ARP.pm
+SHA1 b7c6bd5c90aaddfebf12c7dadc046a387e47e1ed lib/NetPacket/Ethernet.pm
+SHA1 6e4124f72ce5818599d46edf7eafabc0af22835c lib/NetPacket/ICMP.pm
+SHA1 5a8bdd6fbda564644becbb9e08d1c640a74917e0 lib/NetPacket/IGMP.pm
+SHA1 c2d7ffdb6921f90d298b301c59f88f8e8521054f lib/NetPacket/IP.pm
+SHA1 0a5fe57aea3ab8abf40442d63e4a83e7402787f2 lib/NetPacket/TCP.pm
+SHA1 95b7fe053b6325415074b7d2ddbe0d0af3086b7e lib/NetPacket/UDP.pm
+SHA1 473906254ecd96009795d4b7fbc82fac48c03ecd t/000-report-versions.t
 SHA1 2f95a288a42eed0173859c5bb9d37caee7e4b26b t/bug-37931.t
 SHA1 721a206d861139f8f73081b8d337bfcdce4247e5 t/checksum.t
 SHA1 1a8ee75b43167c0a2d1d6e512743bb56d02ce9e8 t/ethernet.t
@@ -39,12 +39,12 @@ SHA1 4ae3b86ce2b7dc5faaf06a566aa0c5c80bb7d326 t/general.t
 SHA1 58f7294a0c74eedb982f75b1c8e8bc9fa5395288 t/icmp.t
 SHA1 a22909fb4a8ce8621107618ef50c6f92a7a6d36a t/ip_encode.t
 SHA1 1d4a9e2b54461f15aab9557a081db42eaef2c4b0 t/ip_trailing.t
-SHA1 4ee10569d37d2463ffe0a89771607ad32031f4d2 t/tcp.t
+SHA1 3092c7c3b99c321c00435d662b1256ec341782ae t/tcp.t
 SHA1 540bff42594ee78beb63a7316a4478bc58d7e37b t/udp-checksum.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.11 (GNU/Linux)
 
-iEYEARECAAYFAk4vZCIACgkQ34Hwf+GwC4yKnQCg+D0YxcNpEOXaPiwsW9H4YdVn
-lakAniIMH6xX/JCzk8n2IUYnU97585pH
-=NkZ4
+iEYEARECAAYFAk7ALhMACgkQ34Hwf+GwC4zIuQCgiU2wR29FrffiTtNU9gsZ0dM9
+jU4AmgNcB8JIeRBHA2uJa8+HZu/ulMN1
+=Ppnt
 -----END PGP SIGNATURE-----

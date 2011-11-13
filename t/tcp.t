@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;                      # last test to print
+use Test::More tests => 4;
 
 use NetPacket::Ethernet;
 use NetPacket::IP;
@@ -65,7 +65,26 @@ $tcp = NetPacket::TCP->decode( $ip->{data}, $ip );
 
 like $tcp->{data} => qr/^HTTP.*4624$/ms, 'TCP payload';
 
+is_deeply scalar $tcp->parse_tcp_options, {
+    er => 1420,
+    ts => 811717733,
+}, 'options';
 
+$datagram = binarize( <<'END_DATAGRAM');
+d3 55 00 50 85 cf 98 36 00 00 00 00 a0 02 16 d0
+9b 76 00 00 02 04 05 b4 04 02 08 0a 85 82 12 6d
+00 00 00 00 01 03 03 04
+END_DATAGRAM
+
+$tcp = NetPacket::TCP->decode( $datagram );
+
+is_deeply scalar $tcp->parse_tcp_options, {
+    er => 0,
+    ts => 2239894125,
+    mss => 1460,
+    ws => 4,
+    sack => 2,
+}, 'options';
 
 sub binarize {
     my $string = shift;
