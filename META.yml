@@ -20,28 +20,28 @@ name: NetPacket
 provides:
   NetPacket:
     file: lib/NetPacket.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::ARP:
     file: lib/NetPacket/ARP.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::Ethernet:
     file: lib/NetPacket/Ethernet.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::ICMP:
     file: lib/NetPacket/ICMP.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::IGMP:
     file: lib/NetPacket/IGMP.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::IP:
     file: lib/NetPacket/IP.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::TCP:
     file: lib/NetPacket/TCP.pm
-    version: v1.3.0
+    version: v1.3.1
   NetPacket::UDP:
     file: lib/NetPacket/UDP.pm
-    version: v1.3.0
+    version: v1.3.1
 requires:
   constant: 0
   strict: 0
@@ -51,5 +51,5 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=NetPacket
   homepage: http://search.cpan.org/dist/NetPacket/
   repository: https://github.com/yanick/netpacket.git
-version: 1.3.0
+version: 1.3.1
 x_authority: cpan:YANICK
