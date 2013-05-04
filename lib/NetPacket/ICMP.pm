@@ -62,7 +62,7 @@ use constant ICMP_MASKREPLY       => 18;
 
 sub decode {
     my $class = shift;
-    my($pkt, $parent, @rest) = @_;
+    my($pkt, $parent) = @_;
     my $self = {};
 
     # Class fields
@@ -92,7 +92,7 @@ undef &icmp_strip;
 *icmpstrip = \&strip;
 
 sub strip {
-    my ($pkt, @rest) = @_;
+    my ($pkt) = @_;
 
     my $icmp_obj = decode($pkt);
     return $icmp_obj->{data};

@@ -82,7 +82,7 @@ sub to_dotquad {
 
 sub decode {
     my $class = shift;
-    my($pkt, $parent, @rest) = @_;
+    my($pkt, $parent) = @_;
     my $self = {};
 
     # Class fields

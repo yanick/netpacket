@@ -90,7 +90,7 @@ sub to_dotquad {
 
 sub decode {
     my $class = shift;
-    my($pkt, $parent, @rest) = @_;
+    my($pkt, $parent) = @_;
     my $self = {};
 
     # Class fields
@@ -150,7 +150,7 @@ undef &ip_strip;           # Create ip_strip alias
 *ip_strip = \&strip;
 
 sub strip {
-    my ($pkt, @rest) = @_;
+    my ($pkt) = @_;
 
     my $ip_obj = NetPacket::IP->decode($pkt);
     return $ip_obj->{data};

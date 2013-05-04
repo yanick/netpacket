@@ -30,4 +30,3 @@ t/ip_trailing.t
 t/tcp.t
 t/udp-checksum.t
 t/udp.t
-xt/release/unused-vars.t

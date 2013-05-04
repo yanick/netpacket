@@ -61,7 +61,7 @@ use constant VLAN_MASK_VID => 0x0FFF;
 
 sub decode {
     my $class = shift;
-    my($pkt, $parent, @rest) = @_;
+    my($pkt, $parent) = @_;
     my $self = {};
 
     # Class fields
@@ -113,7 +113,7 @@ undef &eth_strip;        # Create eth_strip alias
 *eth_strip = \&strip;
 
 sub strip {
-    my ($pkt, @rest) = @_;
+    my ($pkt) = @_;
 
     my $eth_obj = NetPacket::Ethernet->decode($pkt);
     return $eth_obj->{data};

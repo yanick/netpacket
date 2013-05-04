@@ -55,7 +55,7 @@ undef &tcp_strip;
 *tcp_strip = \&strip;
 
 sub strip {
-    my ($pkt, @rest) = @_;
+    my ($pkt) = @_;
 
     my $tcp_obj = NetPacket::TCP->decode($pkt);
     return $tcp_obj->{data};
@@ -67,7 +67,7 @@ sub strip {
 
 sub decode {
     my $class = shift;
-    my($pkt, $parent, @rest) = @_;
+    my($pkt, $parent) = @_;
     my $self = {};
 
     # Class fields
@@ -147,7 +147,7 @@ sub checksum {
     my $self = shift;
     my ($ip) = @_;
     my ($packet,$zero,$tcplen,$tmp);
-    my ($src_ip, $dest_ip,$proto,$count);
+    my ($src_ip, $dest_ip,$proto);
 
     $zero = 0;
     $proto = 6;
