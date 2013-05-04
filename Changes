@@ -1,12 +1,11 @@
 revision history for NetPacket
 
-{{$NEXT}}
- [API CHANGES]
-
+1.3.2 2013-05-03
  [BUG FIXES]
  - Fix NetPacket::UDP's strip. (RT#85038, reported by Stan Schwertly)
 
- [ENHANCEMENTS]
+ [STATISTICS]
+ - code churn: 12 files changed, 71 insertions(+), 21 deletions(-)
 
 1.3.1 2011-11-23
  [BUG FIXES]

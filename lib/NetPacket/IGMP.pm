@@ -3,6 +3,12 @@
 # Protocol) packets.
 
 package NetPacket::IGMP;
+BEGIN {
+  $NetPacket::IGMP::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $NetPacket::IGMP::VERSION = '1.3.2';
+}
 # ABSTRACT: Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
 
@@ -140,7 +146,15 @@ sub encode {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::IGMP - Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
+
+=head1 VERSION
+
+version 1.3.2
 
 =head1 SYNOPSIS
 
@@ -315,11 +329,13 @@ This program is distributed in the hope that it will be useful,
 but without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
 
-
 =head1 AUTHOR
 
 Tim Potter E<lt>tpot@samba.orgE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line
