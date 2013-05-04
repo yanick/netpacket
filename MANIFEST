@@ -1,4 +1,6 @@
+AUTHOR_PLEDGE
 Build.PL
+CONTRIBUTORS
 Changes
 INSTALL
 LICENSE
@@ -16,7 +18,8 @@ lib/NetPacket/IGMP.pm
 lib/NetPacket/IP.pm
 lib/NetPacket/TCP.pm
 lib/NetPacket/UDP.pm
-t/000-report-versions.t
+t/00-compile.t
+t/000-report-versions-tiny.t
 t/bug-37931.t
 t/checksum.t
 t/ethernet.t
@@ -26,3 +29,5 @@ t/ip_encode.t
 t/ip_trailing.t
 t/tcp.t
 t/udp-checksum.t
+t/udp.t
+xt/release/unused-vars.t
