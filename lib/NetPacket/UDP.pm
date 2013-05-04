@@ -69,10 +69,7 @@ undef &udp_strip;
 *udp_strip = \&strip;
 
 sub strip {
-    my ($pkt, @rest) = @_;
-
-    my $tcp_obj = decode($pkt);
-    return $tcp_obj->data;
+    return decode(__PACKAGE__,shift)->{data};
 }   
 
 #
