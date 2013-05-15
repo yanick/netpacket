@@ -262,7 +262,7 @@ sub parse_tcp_options {
       # next 4 byte is timestamp, 32 bit unsigned int
       # next 4 byte is timestamp echo reply, 32 bit unsigned int 
       $options{ts} = unpack('N', join '', @bytes[2..5]); 
-      $options{er} = unpack('n', join '', @bytes[6,7,8,9]); 
+      $options{er} = unpack('N', join '', @bytes[6,7,8,9]);
       shift @bytes;
       shift @bytes;
       shift @bytes;
