@@ -294,7 +294,7 @@ Return a TCP packet encoded with the instance data specified.
 Needs parts of the ip header contained in $ip_obj in order to calculate
 the TCP checksum. 
 
-=item C<$packet->parse_tcp_options>
+=item C<$packet-E<gt>parse_tcp_options>
 
 Returns a hash (or a hash ref in scalar context) contaning the packet's options.
 
