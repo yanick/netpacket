@@ -232,6 +232,30 @@ sub parse_tcp_options {
       shift @bytes;
       goto ENTRY;
     }
+    elsif ($kind == 5) {
+      # SACK Blocks
+      # next byte is length, 2 + (number of blocks * 8)
+      # in every block,
+      # former 4 bytes is SACK left edge, 32 bit unsigned int
+      # latter 4 bytes is SACK right edge, 32 bit unsigned int
+      my $block_num = (unpack('C', $bytes[1]) - 2) / 8;
+      shift @bytes;
+      shift @bytes;
+      my @sack_blocks;
+      for (1..$block_num) {
+        push @sack_blocks, [unpack('N', join '', @bytes[0..3]),
+                            unpack('N', join '', @bytes[4..7])];
+        shift @bytes;
+        shift @bytes;
+        shift @bytes;
+        shift @bytes;
+        shift @bytes;
+        shift @bytes;
+        shift @bytes;
+        shift @bytes;
+      }
+      $options{sack_blocks} = \@sack_blocks;
+    }
     elsif ($kind == 8) {
       # timestamp
       # next byte is length, set to 10
@@ -299,7 +323,7 @@ the TCP checksum.
 Returns a hash (or a hash ref in scalar context) contaning the packet's options.
 
 For now the method only recognizes well-known and widely
-used options (MSS, noop, windows scale factor, SACK permitted,
+used options (MSS, noop, windows scale factor, SACK permitted, SACK,
 timestamp).
 If the packet contains options unknown to the method, it may fail.
 
