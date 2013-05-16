@@ -5,6 +5,12 @@
 # Encode and checksumming part, Stephanie Wehner, atrak@itsx.com
 
 package NetPacket::TCP;
+BEGIN {
+  $NetPacket::TCP::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $NetPacket::TCP::VERSION = '1.3.3';
+}
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 use strict;
@@ -288,6 +294,16 @@ sub parse_tcp_options {
 
 __END__
 
+=pod
+
+=head1 NAME
+
+NetPacket::TCP - Assemble and disassemble TCP (Transmission Control Protocol) packets.
+
+=head1 VERSION
+
+version 1.3.3
+
 =head1 SYNOPSIS
 
   use NetPacket::TCP;
@@ -495,7 +511,6 @@ flag to all TCP packets passing through:
       $divobj->putPacket($packet,$fwtag);
    }
 
-
 =head1 TODO
 
 =over
@@ -530,4 +545,3 @@ Tim Potter E<lt>tpot@samba.orgE<gt>
 Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
-
