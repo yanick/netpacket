@@ -4,6 +4,7 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
+ - Parse SACK option and fix TSecr parsing. (GH#1, Robin Lee)
 
  [DOCUMENTATION]
 
