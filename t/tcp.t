@@ -66,7 +66,7 @@ $tcp = NetPacket::TCP->decode( $ip->{data}, $ip );
 like $tcp->{data} => qr/^HTTP.*4624$/ms, 'TCP payload';
 
 is_deeply scalar $tcp->parse_tcp_options, {
-    er => 1420,
+    er => 93077622,
     ts => 811717733,
 }, 'options';
 
