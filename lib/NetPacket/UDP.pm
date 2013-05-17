@@ -77,23 +77,18 @@ sub strip {
 #
 
 sub encode {
-    my $class = shift;
-    my $self = {};
-    bless($self, $class);
-    my ($udp, $ip) = @_;
-    my ($packet);
+    my ($self, $ip) = @_;
  
-    # Adjust the length accodingly
-    $udp->{len} = 8 + length($udp->{data});
+    # Adjust the length accordingly
+    $self->{len} = 8 + length($self->{data});
 
     # First of all, fix the checksum
     $self->checksum($ip);
 
     # Put the packet together
-    $packet = pack("nnnna*", $udp->{src_port},$udp->{dest_port},
-                $udp->{len}, $udp->{cksum}, $udp->{data});
+    return pack("nnnna*", $self->{src_port},$self->{dest_port},
+                $self->{len}, $self->{cksum}, $self->{data});
 
-    return($packet); 
 }
 
 # 
@@ -136,7 +131,7 @@ __END__
   use NetPacket::UDP;
 
   $udp_obj = NetPacket::UDP->decode($raw_pkt);
-  $udp_pkt = NetPacket::UDP->encode($l4_obj, $l3_obj);
+  $udp_pkt = $udp_obj->encode($l3_obj);
   $udp_data = NetPacket::UDP::strip($raw_pkt);
 
 =head1 DESCRIPTION
@@ -155,9 +150,9 @@ instance data.  This method will quite happily decode garbage input.
 It is the responsibility of the programmer to ensure valid packet data
 is passed to this method.
 
-=item C<NetPacket::UDP-E<gt>encode($l4_obj, $l3_obj)>
+=item C<$udp_packet-<gt>encode($l3_obj)>
 
-Return a UDP packet encoded with the instance data specified in $l4_obj. Needs
+Return the encoded version of the UDP packet object. Needs
 part of the IP header contained (src_ip and dest_ip specifically) in $l3_obj, 
 in order to calculate the UDP checksum. The length field will also be set 
 automatically based on values provided.

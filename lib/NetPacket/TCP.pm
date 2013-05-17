@@ -293,7 +293,7 @@ __END__
   use NetPacket::TCP;
 
   $tcp_obj = NetPacket::TCP->decode($raw_pkt);
-  $tcp_pkt = NetPacket::TCP->encode($ip_pkt);
+  $tcp_pkt = $tcp_obj->encode($ip_pkt);
   $tcp_data = NetPacket::TCP::strip($raw_pkt);
 
 =head1 DESCRIPTION
