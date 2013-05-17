@@ -77,20 +77,21 @@ sub strip {
 #
 
 sub encode {
-
-    my $self = shift;
-    my ($ip) = @_;
+    my $class = shift;
+    my $self = {};
+    bless($self, $class);
+    my ($udp, $ip) = @_;
     my ($packet);
-
+ 
     # Adjust the length accodingly
-    $self->{len} = 8 + length($self->{data});
+    $udp->{len} = 8 + length($udp->{data});
 
     # First of all, fix the checksum
     $self->checksum($ip);
 
     # Put the packet together
-    $packet = pack("nnnna*", $self->{src_port},$self->{dest_port},
-                $self->{len}, $self->{cksum}, $self->{data});
+    $packet = pack("nnnna*", $udp->{src_port},$udp->{dest_port},
+                $udp->{len}, $udp->{cksum}, $udp->{data});
 
     return($packet); 
 }
@@ -135,7 +136,7 @@ __END__
   use NetPacket::UDP;
 
   $udp_obj = NetPacket::UDP->decode($raw_pkt);
-  $udp_pkt = NetPacket::UDP->encode($ip_obj);
+  $udp_pkt = NetPacket::UDP->encode($l4_obj, $l3_obj);
   $udp_data = NetPacket::UDP::strip($raw_pkt);
 
 =head1 DESCRIPTION
@@ -154,11 +155,12 @@ instance data.  This method will quite happily decode garbage input.
 It is the responsibility of the programmer to ensure valid packet data
 is passed to this method.
 
-=item C<NetPacket::UDP-E<gt>encode($ip_obj)>
+=item C<NetPacket::UDP-E<gt>encode($l4_obj, $l3_obj)>
 
-Return a UDP packet encoded with the instance data specified. Needs parts 
-of the IP header contained in $ip_obj, the IP object, in order to calculate 
-the UDP checksum. The length field will also be set automatically.
+Return a UDP packet encoded with the instance data specified in $l4_obj. Needs
+part of the IP header contained (src_ip and dest_ip specifically) in $l3_obj, 
+in order to calculate the UDP checksum. The length field will also be set 
+automatically based on values provided.
 
 =back
 
@@ -204,6 +206,24 @@ The checksum value for this packet.
 =item data
 
 The encapsulated data (payload) for this packet.
+
+=back
+
+=head2 IP data
+
+The IP data for the $l3_obj object consists of the following fields.
+Additional items may be supplied as well as passing the whole
+object returned by NetPacket::IP->decode but are unnecessary.
+
+=over
+
+=item src_ip
+
+The source IP for the datagram
+
+=item dest_ip
+
+The destination IP for the datagram
 
 =back
 
@@ -291,7 +311,7 @@ netcat, but otherwise makes little sense. :) Adapt to your needs:
             $udp_obj->{data} =~ s/foo/bar/g;
 
             # reencode the packet
-            $ip_obj->{data} = $udp_obj->encode($ip_obj);
+            $ip_obj->{data} = $udp_obj->encode($udp_obj, $ip_obj);
             $data = $ip_obj->encode;
 
         }
