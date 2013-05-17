@@ -6,6 +6,7 @@ revision history for NetPacket
  [BUG FIXES]
 
  [DOCUMENTATION]
+ - Fixing NetPacked::UDP documentation. (RT#85361, Ben Magistro)
 
  [ENHANCEMENTS]
 
