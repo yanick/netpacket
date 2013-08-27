@@ -3,6 +3,12 @@
 # packets. 
 
 package NetPacket::UDP;
+BEGIN {
+  $NetPacket::UDP::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $NetPacket::UDP::VERSION = '1.4.0';
+}
 # ABSTRACT: Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 use strict;
@@ -125,6 +131,16 @@ sub checksum {
 1;
 
 __END__
+
+=pod
+
+=head1 NAME
+
+NetPacket::UDP - Assemble and disassemble UDP (User Datagram Protocol) packets.
+
+=head1 VERSION
+
+version 1.4.0
 
 =head1 SYNOPSIS
 

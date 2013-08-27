@@ -1,4 +1,10 @@
 package NetPacket::USBMon;
+BEGIN {
+  $NetPacket::USBMon::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $NetPacket::USBMon::VERSION = '1.4.0';
+}
 
 use strict;
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
@@ -137,6 +143,16 @@ sub decode
 
 __END__
 
+=pod
+
+=head1 NAME
+
+NetPacket::USBMon
+
+=head1 VERSION
+
+version 1.4.0
+
 =head1 SYNOPSIS
 
   use NetPacket::USBMon;
@@ -273,7 +289,6 @@ Isochronous packet response rate.
 =item start_frame
 
 Only applicable to isochronous transfers.
-
 
 =item xfer_flags
 
