@@ -11,5 +11,6 @@ use NetPacket::ICMP;
 use NetPacket::IGMP;
 use NetPacket::IP;
 use NetPacket::TCP;
+use NetPacket::USBMon;
 
 pass;

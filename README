@@ -24,6 +24,7 @@ implemented.
 	- IP
 	- UDP
 	- TCP
+	- USBMon
 
 It's pretty easy to add new protocols.  Just copy one of the existing
 modules and figure out an unpack string which will unpack the
