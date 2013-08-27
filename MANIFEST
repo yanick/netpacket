@@ -30,3 +30,4 @@ t/ip_trailing.t
 t/tcp.t
 t/udp-checksum.t
 t/udp.t
+t/usbmon.t

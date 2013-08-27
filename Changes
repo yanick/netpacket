@@ -9,6 +9,7 @@ revision history for NetPacket
  - Fixing NetPacked::UDP documentation. (RT#85361, Ben Magistro)
 
  [ENHANCEMENTS]
+ - New NetPacket::USBMon. (GH#2, lkundrak)
 
  [NEW FEATURES]
 
