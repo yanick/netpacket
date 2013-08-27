@@ -6,14 +6,22 @@ revision history for NetPacket
  [BUG FIXES]
 
  [DOCUMENTATION]
+
+ [ENHANCEMENTS]
+
+ [NEW FEATURES]
+
+ [STATISTICS]
+
+1.4.0 2013-08-26
+ [DOCUMENTATION]
  - Fixing NetPacked::UDP documentation. (RT#85361, Ben Magistro)
 
  [ENHANCEMENTS]
  - New NetPacket::USBMon. (GH#2, lkundrak)
 
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 8 files changed, 595 insertions(+), 16 deletions(-)
 
 1.3.3 2013-05-15
  [BUG FIXES]
