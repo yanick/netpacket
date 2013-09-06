@@ -4,7 +4,6 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
- - Test was using Errno constant and failing on some platforms.
 
  [DOCUMENTATION]
 
@@ -13,6 +12,13 @@ revision history for NetPacket
  [NEW FEATURES]
 
  [STATISTICS]
+
+1.4.1 2013-09-05
+ [BUG FIXES]
+ - Test was using Errno constant and failing on some platforms.
+
+ [STATISTICS]
+ - code churn: 2 files changed, 15 insertions(+), 7 deletions(-)
 
 1.4.0 2013-08-26
  [DOCUMENTATION]
