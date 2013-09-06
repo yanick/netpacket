@@ -4,6 +4,7 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
+ - Test was using Errno constant and failing on some platforms.
 
  [DOCUMENTATION]
 
