@@ -5,7 +5,6 @@ author:
   - 'Stephanie Wehner <atrak@itsx.com>'
   - 'Yanick Champoux <yanick@cpan.org>'
 build_requires:
-  Errno: 0
   File::Spec: 0
   IO::Handle: 0
   IPC::Open3: 0
@@ -14,7 +13,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300037, CPAN::Meta::Converter version 2.120921'
 license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -23,31 +22,31 @@ name: NetPacket
 provides:
   NetPacket:
     file: lib/NetPacket.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::ARP:
     file: lib/NetPacket/ARP.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::Ethernet:
     file: lib/NetPacket/Ethernet.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::ICMP:
     file: lib/NetPacket/ICMP.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::IGMP:
     file: lib/NetPacket/IGMP.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::IP:
     file: lib/NetPacket/IP.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::TCP:
     file: lib/NetPacket/TCP.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::UDP:
     file: lib/NetPacket/UDP.pm
-    version: v1.4.0
+    version: v1.4.1
   NetPacket::USBMon:
     file: lib/NetPacket/USBMon.pm
-    version: v1.4.0
+    version: v1.4.1
 requires:
   constant: 0
   strict: 0
@@ -57,7 +56,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=NetPacket
   homepage: http://search.cpan.org/dist/NetPacket/
   repository: https://github.com/yanick/netpacket.git
-version: 1.4.0
+version: 1.4.1
 x_authority: cpan:YANICK
 x_contributors:
   - 'Ben Magistro <koncept1@gmail.com>'

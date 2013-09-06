@@ -6,7 +6,7 @@
       "Yanick Champoux <yanick@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300037, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "artistic_2"
    ],
@@ -41,7 +41,6 @@
       },
       "test" : {
          "requires" : {
-            "Errno" : "0",
             "File::Spec" : "0",
             "IO::Handle" : "0",
             "IPC::Open3" : "0",
@@ -52,39 +51,39 @@
    "provides" : {
       "NetPacket" : {
          "file" : "lib/NetPacket.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::ARP" : {
          "file" : "lib/NetPacket/ARP.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::Ethernet" : {
          "file" : "lib/NetPacket/Ethernet.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::ICMP" : {
          "file" : "lib/NetPacket/ICMP.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::IGMP" : {
          "file" : "lib/NetPacket/IGMP.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::IP" : {
          "file" : "lib/NetPacket/IP.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::TCP" : {
          "file" : "lib/NetPacket/TCP.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::UDP" : {
          "file" : "lib/NetPacket/UDP.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       },
       "NetPacket::USBMon" : {
          "file" : "lib/NetPacket/USBMon.pm",
-         "version" : "v1.4.0"
+         "version" : "v1.4.1"
       }
    },
    "release_status" : "stable",
@@ -100,7 +99,7 @@
          "web" : "https://github.com/yanick/netpacket"
       }
    },
-   "version" : "1.4.0",
+   "version" : "1.4.1",
    "x_authority" : "cpan:YANICK",
    "x_contributors" : [
       "Ben Magistro <koncept1@gmail.com>",
