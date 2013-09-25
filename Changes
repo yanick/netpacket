@@ -4,19 +4,25 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
- - Dist::Zilla::Plugin::Test::Compile was causing test to potentially hang
-   on Windows. (reported by Karen Etheridge)
 
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
 
- [MISC]
- - Tidy up the changelog. (GH#3, Neil Bowers)
-
  [NEW FEATURES]
 
  [STATISTICS]
+
+1.4.2 2013-09-25
+ [BUG FIXES]
+ - Dist::Zilla::Plugin::Test::Compile was causing test to potentially hang
+   on Windows. (reported by Karen Etheridge)
+
+ [MISC]
+ - Tidy up the changelog. (GH#3, Neil Bowers)
+
+ [STATISTICS]
+ - code churn: 2 files changed, 46 insertions(+), 20 deletions(-)
 
 1.4.1 2013-09-05
  [BUG FIXES]
@@ -81,7 +87,6 @@ revision history for NetPacket
    as the license of the patch clashes with the license of the
    distribution. (RT#62197)
 
-
 0.43.2 2010-10-11
  - Change the COPYRIGHT sections of the pods to match the Artistic 2.0
    license. (RT#60954)
@@ -117,7 +122,6 @@ revision history for NetPacket
  - META.yml added to MANIFEST
  - Added myself (Yanick) as author
  - Switched to major.minor.revision version notation
-
 
 0.04 2003-05-21
  - Checksum offset fix, thanks to J. Hoagland for pointing this out.
