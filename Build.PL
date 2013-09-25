@@ -19,7 +19,7 @@ my %module_build_args = (
     "Yanick Champoux <yanick\@cpan.org>"
   ],
   "dist_name" => "NetPacket",
-  "dist_version" => "1.4.1",
+  "dist_version" => "1.4.2",
   "license" => "artistic_2",
   "module_name" => "NetPacket",
   "recommends" => {},

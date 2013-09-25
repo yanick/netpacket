@@ -3,7 +3,7 @@ BEGIN {
   $NetPacket::USBMon::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $NetPacket::USBMon::VERSION = '1.4.1';
+  $NetPacket::USBMon::VERSION = '1.4.2';
 }
 
 use strict;
@@ -151,7 +151,7 @@ NetPacket::USBMon
 
 =head1 VERSION
 
-version 1.4.1
+version 1.4.2
 
 =head1 SYNOPSIS
 

@@ -1,5 +1,16 @@
 revision history for NetPacket
 
+1.4.2 2013-09-25
+ [BUG FIXES]
+ - Dist::Zilla::Plugin::Test::Compile was causing test to potentially hang
+   on Windows. (reported by Karen Etheridge)
+
+ [MISC]
+ - Tidy up the changelog. (GH#3, Neil Bowers)
+
+ [STATISTICS]
+ - code churn: 2 files changed, 46 insertions(+), 20 deletions(-)
+
 1.4.1 2013-09-05
  [BUG FIXES]
  - Test was using Errno constant and failing on some platforms.
@@ -63,18 +74,6 @@ revision history for NetPacket
    as the license of the patch clashes with the license of the
    distribution. (RT#62197)
 
-0.41_0
- - Fixed bug 18941 - NetPacket::IP includes trailing  trash bytes in
-   $ip->{data}
- - Fixed bug 7010 - IP flags field lost in IP::encode()
- - Added Build.PL 
- - Moved history off the README file into this one (Changes)
- - Moved module structure to /lib
- - Version now gathered from NetPacket.pm
- - META.yml added to MANIFEST
- - Added myself (Yanick) as author
- - Switched to major.minor.revision version notation
-
 0.43.2 2010-10-11
  - Change the COPYRIGHT sections of the pods to match the Artistic 2.0
    license. (RT#60954)
@@ -92,13 +91,30 @@ revision history for NetPacket
  - Updated license to Artistic 2.0
  - Fixed bad call to 'data()' in ICMP. Thanks to Ventz Petkov. (RT#52627)
 
-0.41.1
+0.41.1 2009-01-06
  - Fixed bug 37931: export of ICMP_MASKREQ
  - Fixed UDP and TCP checksums for odd-sized packets
  - Fixed import from NetPacket::UDP
  - Fixed bug 37931: export of ICMP_MASKREQ
  - Added git repo and bug tracking info to META.yml
 
-0.04
+0.41.0_0 2008-12-20
+ - Fixed bug 18941 - NetPacket::IP includes trailing  trash bytes in
+   $ip->{data}
+ - Fixed bug 7010 - IP flags field lost in IP::encode()
+ - Added Build.PL 
+ - Moved history off the README file into this one (Changes)
+ - Moved module structure to /lib
+ - Version now gathered from NetPacket.pm
+ - META.yml added to MANIFEST
+ - Added myself (Yanick) as author
+ - Switched to major.minor.revision version notation
+
+0.04 2003-05-21
  - Checksum offset fix, thanks to J. Hoagland for pointing this out.
+
+0.03 2001-07-30
+
+0.01 1999-04-24
+ - First release by TIMPOTTER
 

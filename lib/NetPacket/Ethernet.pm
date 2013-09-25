@@ -3,7 +3,7 @@ BEGIN {
   $NetPacket::Ethernet::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $NetPacket::Ethernet::VERSION = '1.4.1';
+  $NetPacket::Ethernet::VERSION = '1.4.2';
 }
 # ABSTRACT: Assemble and disassemble ethernet packets.
 
@@ -149,7 +149,7 @@ NetPacket::Ethernet - Assemble and disassemble ethernet packets.
 
 =head1 VERSION
 
-version 1.4.1
+version 1.4.2
 
 =head1 SYNOPSIS
 

@@ -8,7 +8,7 @@ BEGIN {
   $NetPacket::IP::AUTHORITY = 'cpan:YANICK';
 }
 {
-  $NetPacket::IP::VERSION = '1.4.1';
+  $NetPacket::IP::VERSION = '1.4.2';
 }
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
@@ -221,7 +221,7 @@ NetPacket::IP - Assemble and disassemble IP (Internet Protocol) packets.
 
 =head1 VERSION
 
-version 1.4.1
+version 1.4.2
 
 =head1 SYNOPSIS
 
