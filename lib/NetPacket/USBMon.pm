@@ -1,4 +1,5 @@
 package NetPacket::USBMon;
+#ABSTRACT: Assemble and disassemble USB packets captured via Linux USBMon interface.
 
 use 5.10.0;
 
@@ -138,6 +139,7 @@ sub decode
 1;
 
 __END__
+
 
 =head1 SYNOPSIS
 
