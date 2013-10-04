@@ -1,5 +1,7 @@
 package NetPacket::USBMon;
 
+use 5.10.0;
+
 use strict;
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
