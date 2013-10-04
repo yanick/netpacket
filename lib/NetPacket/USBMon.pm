@@ -1,4 +1,10 @@
 package NetPacket::USBMon;
+BEGIN {
+  $NetPacket::USBMon::AUTHORITY = 'cpan:YANICK';
+}
+{
+  $NetPacket::USBMon::VERSION = '1.4.3';
+}
 #ABSTRACT: Assemble and disassemble USB packets captured via Linux USBMon interface.
 
 use 5.10.0;
@@ -140,6 +146,15 @@ sub decode
 
 __END__
 
+=pod
+
+=head1 NAME
+
+NetPacket::USBMon - Assemble and disassemble USB packets captured via Linux USBMon interface.
+
+=head1 VERSION
+
+version 1.4.3
 
 =head1 SYNOPSIS
 
@@ -277,7 +292,6 @@ Isochronous packet response rate.
 =item start_frame
 
 Only applicable to isochronous transfers.
-
 
 =item xfer_flags
 
