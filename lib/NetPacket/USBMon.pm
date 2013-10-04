@@ -64,7 +64,7 @@ sub decode
         $s, $interval, $start_frame, $xfer_flags, $ndesc, $rest) =
         unpack('a8CCCCS<CCa8l<i<I<I<a8l<l<L<L<a*', $packet);
 
-    # Try to grok quads. We may loose some address information with 32-bit
+    # Try to grok quads. We may lose some address information with 32-bit
     # Perl parsing 64-bit captures, or timestamp after 2038. Still the best
     # we can do.
     eval {
