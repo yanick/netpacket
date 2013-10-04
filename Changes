@@ -4,6 +4,7 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
+ - Unpack data in LittleEndian format. (GH#4, k0da)
 
  [DOCUMENTATION]
 
