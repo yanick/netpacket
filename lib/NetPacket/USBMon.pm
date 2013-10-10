@@ -72,8 +72,8 @@ sub decode
       $ts_sec = unpack ('Q<', $ts_sec);
     };
     if ($@) {
-      ($id) = unpack ('LL', $id);
-      ($ts_sec) = unpack ('LL', $ts_sec);
+      ($id) = unpack ('L<L<', $id);
+      ($ts_sec) = unpack ('L<L<', $ts_sec);
     }
 
     my $self = {
