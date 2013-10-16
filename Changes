@@ -4,6 +4,8 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
+ - NetPacket::USBMon: also handle big endian perl without quad type. 
+    (GH#5, Andreas Schwab)
 
  [DOCUMENTATION]
 
