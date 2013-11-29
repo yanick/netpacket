@@ -305,7 +305,7 @@ netcat, but otherwise makes little sense. :) Adapt to your needs:
             # replace foo in the payload with bar
             $udp_obj->{data} =~ s/foo/bar/g;
 
-            # reencode the packet
+            # re-encode the packet
             $ip_obj->{data} = $udp_obj->encode($udp_obj, $ip_obj);
             $data = $ip_obj->encode;
 
