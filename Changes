@@ -4,9 +4,6 @@ revision history for NetPacket
  [API CHANGES]
 
  [BUG FIXES]
- - NetPacket::USBMon: also handle big endian perl without quad type. 
-    (GH#5, Andreas Schwab)
- - Typo fix in comments. (GH#6, fschlich)
 
  [DOCUMENTATION]
 
@@ -15,6 +12,15 @@ revision history for NetPacket
  [NEW FEATURES]
 
  [STATISTICS]
+
+1.4.4 2013-11-30
+ [BUG FIXES]
+ - NetPacket::USBMon: also handle big endian perl without quad type. 
+   (GH#5, Andreas Schwab)
+ - Typo fix in comments. (GH#6, fschlich)
+
+ [STATISTICS]
+ - code churn: 3 files changed, 13 insertions(+), 4 deletions(-)
 
 1.4.3 2013-10-03
  [BUG FIXES]
