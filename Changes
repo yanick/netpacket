@@ -8,6 +8,7 @@ revision history for NetPacket
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Addition of NetPacket::IPX. (Daniel Collins)
 
  [NEW FEATURES]
 

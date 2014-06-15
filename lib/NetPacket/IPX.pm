@@ -2,6 +2,8 @@ use strict;
 use warnings;
 
 package NetPacket::IPX;
+# ABSTRACT: Assemble and disassemble IPX packets
+
 use parent qw(NetPacket);
 
 use Carp;
@@ -127,10 +129,6 @@ sub _addr_from_string
 __END__
 
 =pod
-
-=head1 NAME
-
-NetPacket::IPX - Assemble and disassemble IPX packets.
 
 =head1 SYNOPSIS
 

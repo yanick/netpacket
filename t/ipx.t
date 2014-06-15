@@ -5,11 +5,9 @@ use warnings;
 
 use Test::More;
 
-unless(use_ok("NetPacket::IPX"))
-{
-	done_testing();
-	exit(1);
-}
+plan tests => 14;
+
+use_ok 'NetPacket::IPX';
 
 my $packet = ""
 	."\xFF\xFF" # "checksum"
@@ -68,5 +66,3 @@ my $packet = ""
 }
 
 is(NetPacket::IPX::strip($packet), "\x00some \n\xFFdata", "NetPacket::IPX::strip() extracts the packet payload");
-
-done_testing();
