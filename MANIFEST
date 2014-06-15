@@ -15,6 +15,7 @@ lib/NetPacket/Ethernet.pm
 lib/NetPacket/ICMP.pm
 lib/NetPacket/IGMP.pm
 lib/NetPacket/IP.pm
+lib/NetPacket/IPX.pm
 lib/NetPacket/TCP.pm
 lib/NetPacket/UDP.pm
 lib/NetPacket/USBMon.pm
@@ -27,6 +28,7 @@ t/general.t
 t/icmp.t
 t/ip_encode.t
 t/ip_trailing.t
+t/ipx.t
 t/tcp.t
 t/udp-checksum.t
 t/udp.t
