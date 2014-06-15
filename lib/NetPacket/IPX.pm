@@ -2,8 +2,11 @@ use strict;
 use warnings;
 
 package NetPacket::IPX;
+BEGIN {
+  $NetPacket::IPX::AUTHORITY = 'cpan:YANICK';
+}
 # ABSTRACT: Assemble and disassemble IPX packets
-
+$NetPacket::IPX::VERSION = '1.5.0';
 use parent qw(NetPacket);
 
 use Carp;
@@ -129,6 +132,14 @@ sub _addr_from_string
 __END__
 
 =pod
+
+=head1 NAME
+
+NetPacket::IPX - Assemble and disassemble IPX packets
+
+=head1 VERSION
+
+version 1.5.0
 
 =head1 SYNOPSIS
 

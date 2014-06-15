@@ -5,8 +5,11 @@
 #
 
 package NetPacket;
+BEGIN {
+  $NetPacket::AUTHORITY = 'cpan:YANICK';
+}
 # ABSTRACT: assemble/disassemble network packets at the protocol level
-
+$NetPacket::VERSION = '1.5.0';
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
@@ -105,6 +108,14 @@ __END__
 
 =pod
 
+=head1 NAME
+
+NetPacket - assemble/disassemble network packets at the protocol level
+
+=head1 VERSION
+
+version 1.5.0
+
 =head1 SYNOPSIS
 
     # NetPacket is a base class only
@@ -202,7 +213,6 @@ This program is distributed in the hope that it will be useful,
 but without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
 
-
 =head1 AUTHORS
 
 Tim Potter <tpot@samba.org>
@@ -212,4 +222,3 @@ Stephanie Wehner <atrak@itsx.com>
 Yanick Champoux <yanick@cpan.org>
 
 =cut
-

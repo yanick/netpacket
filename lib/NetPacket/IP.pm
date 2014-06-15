@@ -4,8 +4,11 @@
 # Encoding part by Stephanie Wehner, atrak@itsx.com
 
 package NetPacket::IP;
+BEGIN {
+  $NetPacket::IP::AUTHORITY = 'cpan:YANICK';
+}
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
-
+$NetPacket::IP::VERSION = '1.5.0';
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 use NetPacket;
@@ -214,7 +217,15 @@ sub encode {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::IP - Assemble and disassemble IP (Internet Protocol) packets.
+
+=head1 VERSION
+
+version 1.5.0
 
 =head1 SYNOPSIS
 
@@ -422,5 +433,8 @@ Tim Potter E<lt>tpot@samba.orgE<gt>
 Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line

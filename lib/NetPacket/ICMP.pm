@@ -1,6 +1,9 @@
 package NetPacket::ICMP;
+BEGIN {
+  $NetPacket::ICMP::AUTHORITY = 'cpan:YANICK';
+}
 # ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
-
+$NetPacket::ICMP::VERSION = '1.5.0';
 use strict;
 use vars qw( @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
 
@@ -142,7 +145,15 @@ sub checksum {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::ICMP - Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
+
+=head1 VERSION
+
+version 1.5.0
 
 =head1 SYNOPSIS
 
@@ -227,7 +238,6 @@ ICMP message types:
     ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
     ICMP_MASKREQ ICMP_MASKREPLY
 
-
 =item tags
 
 The following tags group together related exportable items.
@@ -303,7 +313,6 @@ This program is distributed in the hope that it will be useful,
 but without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
 
-
 =head1 AUTHOR
 
 Tim Potter E<lt>tpot@samba.orgE<gt>
@@ -311,5 +320,8 @@ Tim Potter E<lt>tpot@samba.orgE<gt>
 Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line

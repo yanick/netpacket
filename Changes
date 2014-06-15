@@ -1,19 +1,12 @@
 revision history for NetPacket
 
-{{$NEXT}}
- [API CHANGES]
-
- [BUG FIXES]
-
- [DOCUMENTATION]
-
+1.5.0 2014-06-15
  [ENHANCEMENTS]
  - Addition of NetPacket::IPX. (Daniel Collins)
  - NetPacket::Ethernet implements 'encode'. (RT#93928, Guido Hungerbuehler)
 
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 7 files changed, 337 insertions(+), 13 deletions(-)
 
 1.4.4 2013-11-30
  [BUG FIXES]
