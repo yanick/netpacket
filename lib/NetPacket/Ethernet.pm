@@ -124,7 +124,13 @@ sub strip {
 #
 
 sub encode {
-    die("Not implemented");
+    my ($self) = shift; 
+
+    (my $dest = $self->{src_mac}) =~ s/://g;
+    (my $src = $self->{dest_mac}) =~ s/://g;
+
+    my $frame = pack('H12H12n a*', $dest, $src, 0x0800, $self->{data});
+    return $frame;
 }
 
 #

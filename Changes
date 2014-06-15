@@ -9,6 +9,7 @@ revision history for NetPacket
 
  [ENHANCEMENTS]
  - Addition of NetPacket::IPX. (Daniel Collins)
+ - NetPacket::Ethernet implements 'encode'. (RT#93928, Guido Hungerbuehler)
 
  [NEW FEATURES]
 

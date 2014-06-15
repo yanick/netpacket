@@ -182,21 +182,28 @@ sub encode {
     $src_ip = gethostbyname($self->{src_ip});
     $dest_ip = gethostbyname($self->{dest_ip});
 
-    # construct header to calculate the checksum
-    $hdr = pack('CCnnnCCna4a4a*', $tmp, $self->{tos},$self->{len}, 
-         $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
-         $zero, $src_ip, $dest_ip, $self->{options});
+    my $fmt = 'CCnnnCCna4a4a*';
+    my @pkt = ($tmp, $self->{tos},$self->{len}, 
+               $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
+               $zero, $src_ip, $dest_ip); 
+    # change format and package in case of IP options 
+    if(defined $self->{options}){ 
+        $fmt = 'CCnnnCCna4a4a*a*'; 
+        push(@pkt, $self->{options}); 
+    }
 
+    # construct header to calculate the checksum
+    $hdr = pack($fmt, @pkt);
     $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($hdr));
+    $pkt[7] = $self->{cksum};
 
     # make the entire packet
-    $packet = pack('CCnnnCCna4a4a*a*', $tmp, $self->{tos},$self->{len}, 
-         $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
-         $self->{cksum}, $src_ip, $dest_ip, $self->{options},
-         $self->{data});
+    if(defined $self->{data}){
+        push(@pkt, $self->{data}); 
+    } 
+    $packet = pack($fmt, @pkt);
 
     return($packet);
-
 }
 
 #
