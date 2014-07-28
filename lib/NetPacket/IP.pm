@@ -230,7 +230,7 @@ sub decode {
 
 	($tmp, $self->{tos},$self->{len}, $self->{id}, $self->{foffset},
 	 $self->{ttl}, $self->{proto}, $self->{cksum}, $self->{src_ip},
-	 $self->{dest_ip}, $self->{options}) = unpack('CCnnnCCnNNa*' , $pkt);
+	 $self->{dest_ip}, $self->{options}) = unpack('CCnnnCCna4a4a*' , $pkt);
 
 	# Extract bit fields
 	
@@ -257,11 +257,6 @@ sub decode {
 
     # truncate data to the length given by the header
     $self->{data} = substr $self->{data}, 0, $self->{len} - 4 * $length;
-
-	# Convert 32 bit ip addresses to dotted quad notation
-
-	$self->{src_ip} = to_dotquad($self->{src_ip});
-	$self->{dest_ip} = to_dotquad($self->{dest_ip});
     }
 
     return bless $self, $class;
@@ -343,10 +338,15 @@ sub new {
 	   die "missing proto arg" unless (exists $args{proto});
 	   $self->{proto} = $args{proto};
 	}
+    } else {
+	die "missing proto arg" unless (exists $args{proto});
+	$self->{proto} = $args{proto};
     }
 
     $self->{src_ip} = gethostbyname($args{src_ip});
     $self->{dest_ip} = gethostbyname($args{dest_ip});
+
+    $self->{_parent} = undef;
 
     # now give payload protocol a chance to calculate pseudo-header
     $payload->checksum($self) if ($payload && ! exists $args{cksum});
@@ -374,6 +374,37 @@ sub new {
 
 
 #
+# Compute checksum (some duplication of encode())
+#
+
+sub checksum {
+    my $self = shift;
+    my ($hdr,$tmp,$cksum,$offset,$options);
+
+    if (! exists $self->{cksum}) {
+	$tmp = $self->{hlen} & 0x0f;
+	$tmp |= (($self->{ver} << 4) & 0xf0);
+
+	$offset = $self->{flags} << 13;
+	$offset |= (($self->{foffset} >> 3) & 0x1fff);
+
+	$options = (exists $self->{options} ? $self->{options} : '');
+
+	my $fmt = 'CCnnnCCna4a4a*a*';
+	my @pkt = ($tmp, $self->{tos},$self->{len}, 
+                   $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
+                   0, $self->{src_ip}, $self->{dest_ip}, $options); 
+
+	# construct header to calculate the checksum
+	$hdr = pack($fmt, @pkt);
+
+	$self->{cksum} = htons(in_cksum($hdr));
+    }
+    return $self->{cksum};
+}
+
+
+#
 # Encode a packet
 #
 
@@ -387,23 +418,16 @@ sub encode {
     $offset = $self->{flags} << 13;
     $offset |= (($self->{foffset} >> 3) & 0x1fff);
 
-    # use the provided checksum if it exists
-    $cksum = (exists $self->{cksum} ? $self->{cksum} : 0);
+    $self->checksum() if (! exists $self->{cksum});
 
     $options = (exists $self->{options} ? $self->{options} : '');
 
     my $fmt = 'CCnnnCCna4a4a*a*';
     my @pkt = ($tmp, $self->{tos},$self->{len}, 
                $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
-               $cksum, $self->{src_ip}, $self->{dest_ip}, $options); 
+               $self->{cksum}, $self->{src_ip}, $self->{dest_ip}, $options); 
 
-    # construct header to calculate the checksum
     $hdr = pack($fmt, @pkt);
-
-    # if we weren't given a checksum, paste one in
-    if (! exists $self->{cksum}) {
-	substr($hdr, 10, 2) = pack('n', htons(in_cksum($hdr)));
-    }
 
     # make the entire packet
     $packet = $hdr . (exists $self->{data} ? $self->{data} : $self->{payload}->encode());
