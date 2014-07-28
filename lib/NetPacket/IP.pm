@@ -291,7 +291,7 @@ sub id {
 # Construct a packet
 #
 
-my @required = qw(proto src_ip dest_ip data);
+my @required = qw(src_ip dest_ip);
 
 sub new {
     my $class = shift;
@@ -300,8 +300,23 @@ sub new {
 
     $self = {};
 
+    bless $self, $class;
+
+    my $payload = undef;
+
     for my $arg (@required) {
 	die "argument $arg not specified" unless (exists $args{$arg});
+    }
+
+    if (exists $args{data}) {
+        die "can't specify both data and payload" if (exists $args{payload});
+	$self->{data} = $args{data};
+    } elsif (exists $args{payload}) {
+	die "payload must be UDP, TCP, or ICMP."
+		unless (ref($args{payload}) =~ m/^NetPacket::(TCP|UDP|ICMP)$/);
+	$self->{payload} = $payload = $args{payload};
+    } else {
+	die "argument data or payload not specified";
     }
 
     $self->{options} = (exists $args{options} ? $args{options} : '');
@@ -313,10 +328,28 @@ sub new {
     $self->{ver} = (exists $args{ver} ? $args{ver} : IP_VERSION_IPv4);
     $self->{ttl} = (exists $args{ttl} ? $args{ttl} : IPDEFTTL);
     $self->{tos} = (exists $args{tos} ? $args{tos} : IPTOS_CLASS_DEFAULT);
-    $self->{proto} = $args{proto};
+
+    # infer the protocol type from the payload class
+    if (defined $payload) {
+	if (ref($payload) eq 'NetPacket::UDP') {
+	   $self->{proto} = IP_PROTO_UDP;
+	} elsif (ref($payload) eq 'NetPacket::TCP') {
+	   $self->{proto} = IP_PROTO_TCP;
+	} elsif (ref($payload) eq 'NetPacket::ICMP') {
+	   $self->{proto} = IP_PROTO_ICMP;
+	} elsif (ref($payload) eq 'NetPacket::IGMP') {
+	   $self->{proto} = IP_PROTO_IGMP;
+	} else {
+	   die "missing proto arg" unless (exists $args{proto});
+	   $self->{proto} = $args{proto};
+	}
+    }
 
     $self->{src_ip} = gethostbyname($args{src_ip});
     $self->{dest_ip} = gethostbyname($args{dest_ip});
+
+    # now give payload protocol a chance to calculate pseudo-header
+    $payload->checksum($self) if ($payload && ! exists $args{cksum});
 
     # consistency check with version
     die "not valid ipv4 address(es)"
@@ -324,18 +357,19 @@ sub new {
 
     $self->{foffset} = (exists $args{foffset} ? $args{foffset} : 0);
     $self->{flags} = (exists $args{flags} ? $args{flags} : 0);
-    $self->{data} = $args{data};
 
     $self->{id} = (exists $args{id} ? $args{id} : id());
 
     $self->{hlen} = int((20 + length($self->{options})) / 4);
 
     # adjust the length of the packet 
-    $self->{len} = ($self->{hlen} * 4) + length($self->{data});
+    $self->{len} = ($self->{hlen} * 4) + ($payload ? $payload->length() : length($self->{data}));
 
+    # if we were given a checksum, plug it in here... otherwise compute it
+    # during encoding
     $self->{cksum} = $args{cksum} if (exists $args{cksum});
 
-    return bless $self, $class;
+    return $self;
 }
 
 
@@ -372,7 +406,7 @@ sub encode {
     }
 
     # make the entire packet
-    $packet = $hdr . $self->{data};
+    $packet = $hdr . (exists $self->{data} ? $self->{data} : $self->{payload}->encode());
 
     return($packet);
 }

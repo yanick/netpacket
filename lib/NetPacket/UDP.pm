@@ -73,6 +73,38 @@ sub strip {
     return decode(__PACKAGE__,shift)->{data};
 }   
 
+my @required = qw(src_port dest_port data);
+
+sub new {
+    my $class = shift;
+    my (%args) = @_;
+    my $self;
+
+    $self = {};
+
+    bless $self, $class;
+
+    for my $arg (@required) {
+	die "argument $arg not specified" unless (exists $args{$arg});
+    }
+
+    $self->{src_port} = $args{src_port};
+    $self->{dest_port} = $args{dest_port};
+    $self->{data} = $args{data};
+
+    # allow generating wrong checksum
+    $self->{cksum} = $args{cksum} if (exists $args{cksum});
+
+    $self->{len} = (exists $args{len} ? $args{len} : $self->length());
+
+    return $self;
+}
+
+sub length {
+    my $self = shift;
+    return 8 + length($self->{data});
+}
+
 #
 # Encode a packet
 #
@@ -80,16 +112,14 @@ sub strip {
 sub encode {
     my ($self, $ip) = @_;
  
-    # Adjust the length accordingly
-    $self->{len} = 8 + length($self->{data});
-
-    # First of all, fix the checksum
-    $self->checksum($ip);
+    if (! exists $self->{cksum}) {
+	die "need ip packet arg if checksum not already set" unless (defined $ip);
+	$self->checksum($ip);
+    }
 
     # Put the packet together
-    return pack("nnnna*", $self->{src_port},$self->{dest_port},
+    return pack("nnnna*", $self->{src_port}, $self->{dest_port},
                 $self->{len}, $self->{cksum}, $self->{data});
-
 }
 
 # 
@@ -97,30 +127,23 @@ sub encode {
 #
 
 sub checksum {
-
     my( $self, $ip ) = @_;
 
-    my $proto = IP_PROTO_UDP;
+    if (! exists $self->{cksum}) {
+	# Pack pseudo-header for udp checksum
+	my $packet = pack('a4a4CCnnnnna*',
 
-    # Pack pseudo-header for udp checksum
+	  # fake ip header part
+	  $ip->{src_ip}, $ip->{dest_ip}, 0, IP_PROTO_UDP, $self->{len},
 
-    my $src_ip = gethostbyname($ip->{src_ip});
-    my $dest_ip = gethostbyname($ip->{dest_ip});
+	  # proper UDP part
+	  $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data});
 
-    no warnings;
+	$packet .= "\x00" if CORE::length($packet) % 2;
 
-    my $packet = pack 'a4a4CCnnnnna*' =>
-
-      # fake ip header part
-      $src_ip, $dest_ip, 0, $proto, $self->{len},
-
-      # proper UDP part
-      $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data};
-
-    $packet .= "\x00" if length($packet) % 2;
-
-    $self->{cksum} = htons(in_cksum($packet)); 
-
+	$self->{cksum} = htons(in_cksum($packet));
+    }
+    return $self->{cksum};
 }
 
 1;

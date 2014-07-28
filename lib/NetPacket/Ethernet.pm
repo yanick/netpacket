@@ -133,6 +133,8 @@ sub new {
 
     $self = {};
 
+    bless $self, $class;
+
     for my $arg (@required) {
 	die "argument $arg not specified" unless (exists $args{$arg});
     }
@@ -155,7 +157,7 @@ i});
 	$self->{vid} = $args{vid};
     }
 
-    return bless $self, $class;
+    return $self;
 }
 
 
