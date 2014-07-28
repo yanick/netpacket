@@ -7,8 +7,9 @@ package NetPacket::UDP;
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
-use NetPacket::IP;
+use Exporter;
+use NetPacket qw(:ALL);
+use NetPacket::IP qw(IP_PROTO_UDP);
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
@@ -99,7 +100,7 @@ sub checksum {
 
     my( $self, $ip ) = @_;
 
-    my $proto = NetPacket::IP::IP_PROTO_UDP;
+    my $proto = IP_PROTO_UDP;
 
     # Pack pseudo-header for udp checksum
 
@@ -118,7 +119,7 @@ sub checksum {
 
     $packet .= "\x00" if length($packet) % 2;
 
-    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet)); 
+    $self->{cksum} = htons(in_cksum($packet)); 
 
 }
 

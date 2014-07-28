@@ -5,7 +5,8 @@ use 5.10.0;
 
 use strict;
 use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use Exporter;
+use NetPacket qw(:ALL);
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);

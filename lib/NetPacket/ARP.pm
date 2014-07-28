@@ -3,6 +3,7 @@ package NetPacket::ARP;
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use Exporter;
 
 
 BEGIN {

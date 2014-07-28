@@ -9,7 +9,8 @@ package NetPacket::TCP;
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use Exporter;
+use NetPacket qw(:ALL);
 
 my $myclass;
 
@@ -172,7 +173,7 @@ sub checksum {
     # pad packet if odd-sized
     $packet .= "\x00" if length( $packet ) % 2;
 
-    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
+    $self->{cksum} = htons(in_cksum($packet));
 }
 
 sub parse_tcp_options {

@@ -3,6 +3,8 @@ package NetPacket::ICMP;
 
 use strict;
 use vars qw( @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use Exporter;
+use NetPacket qw(:ALL);
 
 
 BEGIN {
@@ -130,7 +132,7 @@ sub checksum {
     $packet = pack("CCna*", $self->{type}, $self->{code},
                 $zero, $self->{data});
 
-    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
+    $self->{cksum} = htons(in_cksum($packet));
 }
 
 

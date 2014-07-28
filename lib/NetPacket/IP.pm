@@ -8,7 +8,8 @@ package NetPacket::IP;
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use Exporter;
+use NetPacket qw(:ALL);
 
 BEGIN {
     @ISA = qw(Exporter NetPacket);
@@ -194,7 +195,7 @@ sub encode {
 
     # construct header to calculate the checksum
     $hdr = pack($fmt, @pkt);
-    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($hdr));
+    $self->{cksum} = htons(in_cksum($hdr));
     $pkt[7] = $self->{cksum};
 
     # make the entire packet
