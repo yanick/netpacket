@@ -23,7 +23,7 @@ BEGIN {
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(ip_strip
+    @EXPORT_OK = qw(ip_strip _round4
 		    IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP
 		    IP_PROTO_IPIP IP_PROTO_TCP IP_PROTO_EGP
 		    IP_PROTO_EGP IP_PROTO_PUP IP_PROTO_UDP
@@ -210,6 +210,14 @@ sub to_dotquad {
     return ("$na.$nb.$nc.$nd");
 }
 
+use Carp;
+
+# round up to next multiple of 4
+sub _round4 {
+    my $num = shift;
+    return int(($num + 3) / 4) * 4;
+}
+
 #
 # Decode the packet
 #
@@ -316,10 +324,6 @@ sub new {
     }
 
     $self->{options} = (exists $args{options} ? $args{options} : '');
-    $tmp = length($self->{options});
-    if ($tmp % 4 > 0) {
-	$self->{options} .= "\x00" x (4 - ($tmp % 4));
-    }
 
     $self->{ver} = (exists $args{ver} ? $args{ver} : IP_VERSION_IPv4);
     $self->{ttl} = (exists $args{ttl} ? $args{ttl} : IPDEFTTL);
@@ -344,8 +348,8 @@ sub new {
 	$self->{proto} = $args{proto};
     }
 
-    $self->{src_ip} = gethostbyname($args{src_ip});
-    $self->{dest_ip} = gethostbyname($args{dest_ip});
+    $self->{src_ip} = scalar gethostbyname($args{src_ip});
+    $self->{dest_ip} = scalar gethostbyname($args{dest_ip});
 
     $self->{_parent} = undef;
 
@@ -361,7 +365,8 @@ sub new {
 
     $self->{id} = (exists $args{id} ? $args{id} : id());
 
-    $self->{hlen} = int((20 + length($self->{options})) / 4);
+    # pad up to nearest 32-bit boundary
+    $self->{hlen} = 5 + _round4(CORE::length($self->{options})) / 4;
 
     # adjust the length of the packet 
     $self->{len} = ($self->{hlen} * 4) + ($payload ? $payload->length() : length($self->{data}));
@@ -390,6 +395,8 @@ sub checksum {
 	$offset |= (($self->{foffset} >> 3) & 0x1fff);
 
 	$options = (exists $self->{options} ? $self->{options} : '');
+
+        $options .= "\x00" x (_round4(CORE::length($options)) - CORE::length($options));
 
 	my $fmt = 'CCnnnCCna4a4a*a*';
 	my @pkt = ($tmp, $self->{tos},$self->{len}, 
@@ -422,6 +429,9 @@ sub encode {
     $self->checksum() if (! exists $self->{cksum});
 
     $options = (exists $self->{options} ? $self->{options} : '');
+
+    # add padding to nearest 32-bit boundary
+    $options .= "\00" x (_round4(CORE::length($options)) - CORE::length($options));
 
     my $fmt = 'CCnnnCCna4a4a*a*';
     my @pkt = ($tmp, $self->{tos},$self->{len}, 
