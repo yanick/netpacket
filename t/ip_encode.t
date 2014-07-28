@@ -41,7 +41,7 @@ my $ip2 = NetPacket::IP->new(
 	payload => $tcp2,
 );
 
-# don't care _frame since new() can't populate this
+# don't compare _frame since new() can't populate this
 delete $tcp->{_frame};
 
 is_deeply($tcp2, $tcp, "deep compare decoded/constructed tcp");
