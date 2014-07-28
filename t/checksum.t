@@ -7,8 +7,8 @@ use NetPacket::TCP;
 use NetPacket::UDP;
 
 my $ip = { 
-	src_ip => '127.0.0.1',
-	dest_ip => '192.168.0.1',
+	src_ip => scalar gethostbyname('127.0.0.1'),
+	dest_ip => scalar gethostbyname('192.168.0.1'),
 };
 
 bless $ip, 'NetPacket::IP';
@@ -21,6 +21,9 @@ my $tcp = {
 	winsize => 32,
 	urg => 0,
 	hlen => 5,
+	flags => 0,
+	reserved => 0,
+	options => '',
 	data => "DEADBEEF",
 };
 
@@ -29,14 +32,13 @@ bless $tcp, 'NetPacket::TCP';
 is NetPacket::TCP::checksum( $tcp, $ip ) => 25303;
 
 $tcp->{data} = "DEADBEEF\x01";
+
+# force recomputation
+delete $tcp->{cksum};
+
 my $odd_checksum = NetPacket::TCP::checksum( $tcp, $ip );
 
 is $odd_checksum => 25046, 'TCP padding done correctly';
-
-$ip = { 
-	src_ip => scalar gethostbyname('127.0.0.1'),
-	dest_ip => scalar gethostbyname('192.168.0.1'),
-};
 
 my $udp = {
 	src_port => 13,

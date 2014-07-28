@@ -19,6 +19,18 @@ my $q = NetPacket::IP->decode( $ip->encode );
 
 is $q->{flags} => $ip->{flags};
 
+my $tcp = NetPacket::TCP->decode( $ip->{data} );
+
+my $tcp2 = NetPacket::TCP->new(
+	src_port => 80,
+	dest_port => 4537,
+	flags => ACK,
+	seqnum => 4226063235,
+	data => "\x00\x00\x00\x00\x00\x00",
+	winsize => 7910,
+	acknum => 3318958082,
+);
+
 my $ip2 = NetPacket::IP->new(
 	src_ip => '96.6.121.42',
 	dest_ip => '192.168.2.11',
@@ -26,18 +38,15 @@ my $ip2 = NetPacket::IP->new(
 	proto => IP_PROTO_TCP,
 	flags => IP_FLAG_DONTFRAG,
 	id => 44545,
-	data => pack('H*', '005011b9fbe49b83c5d3480250101ee63dbd0000000000000000')
+	payload => $tcp2,
 );
 
-# normally checksum calculation is done by encode()
-$ip2->checksum();
+# don't care _frame since new() can't populate this
+delete $tcp->{_frame};
 
-# omit the frame from comparison
-delete $ip->{_frame};
+is_deeply($tcp2, $tcp, "deep compare decoded/constructed tcp");
 
-is_deeply($ip2, $ip, "packet constructor compare");
-
-is $ip2->encode(), $ip->encode(), "packet serialization compare";
+is $ip2->encode(), $ip->encode(), "serialized compare decoded/constructed ip";
 
 __DATA__
 0:25:209:6:219:108:0:19:163:164:237:251:8:0:69:0:0:46
