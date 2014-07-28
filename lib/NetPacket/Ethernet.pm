@@ -121,16 +121,64 @@ sub strip {
 }   
 
 #
-# Encode a packet - not implemented!
+# Construct a packet
+#
+
+my @required = qw(type src_mac dest_mac data);
+
+sub new {
+    my $class = shift;
+    my (%args) = @_;
+    my $self;
+
+    $self = {};
+
+    for my $arg (@required) {
+	die "argument $arg not specified" unless (exists $args{$arg});
+    }
+
+    $args{src_mac} =~ s/://g;
+    $args{dest_mac} =~ s/://g;
+
+    $self->{type} = $args{type};
+    $self->{src_mac} = pack('H12', $args{src_mac});
+    $self->{dest_mac} = pack('H12', $args{dest_mac});
+    $self->{data} = $args{data};
+
+    if (exists $args{vid} || exists $args{pcp} || exists $args{cfi}) {
+	die "vlan encoding requires vid, pcp, and cfi parameters"
+		unless (exists $args{vid} && exists $args{pcp} && exists $args{c
+i});
+
+	$self->{pcp} = $args{pcp};
+	$self->{cfi} = $args{cfi};
+	$self->{vid} = $args{vid};
+    }
+
+    return bless $self, $class;
+}
+
+
+#
+# Encode a packet
 #
 
 sub encode {
-    my ($self) = shift; 
+    my $self = shift; 
+    my ($frame, $vhdr);
 
-    (my $dest = $self->{src_mac}) =~ s/://g;
-    (my $src = $self->{dest_mac}) =~ s/://g;
+    $vhdr = '';
 
-    my $frame = pack('H12H12n a*', $dest, $src, 0x0800, $self->{data});
+    if (exists $self->{vid}) {
+	my $tcid = $self->{vid} & VLAN_MASK_VID;
+	$tcid |= (($self->{pcp} << 13) & VLAN_MASK_PCP);
+	$tcid |= (($self->{cfi} << 12) & VLAN_MASK_CFI);
+
+	$vhdr = pack('nn', ETH_TYPE_802_1Q, $tcid);
+    }
+
+    $frame = pack('a6a6a*na*', $self->{dest_mac}, $self->{src_mac}, $vhdr, $self->{type}, $self->{data});
+
     return $frame;
 }
 
