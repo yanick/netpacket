@@ -7,11 +7,11 @@ package NetPacket::UDP;
 
 use strict;
 use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use Exporter;
 use NetPacket qw(:ALL);
 use NetPacket::IP qw(IP_PROTO_UDP);
 
 BEGIN {
+    require Exporter;
     @ISA = qw(Exporter NetPacket);
 
 # Items to export into callers namespace by default

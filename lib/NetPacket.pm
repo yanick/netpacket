@@ -9,11 +9,11 @@ package NetPacket;
 
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use Exporter;
+use vars;
 
-
+our (@ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
 BEGIN {
+    require Exporter;
     @ISA = qw(Exporter);
 
 # Items to export into callers namespace by default

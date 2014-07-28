@@ -7,11 +7,12 @@ package NetPacket::IP;
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use Exporter;
+use vars;
 use NetPacket qw(:ALL);
 
+our (@ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
 BEGIN {
+    require Exporter;
     @ISA = qw(Exporter NetPacket);
 
 # Items to export into callers namespace by default
@@ -87,7 +88,7 @@ BEGIN {
 		       IPTOS_PREC_ROUTINE)],
     misc        => [qw(MAXTTL IPDEFTTL IPFRAGTTL IPTTLDEC IP_MSS
                        IP_MAXPACKET)],
-);
+    );
 
 }
 

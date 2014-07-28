@@ -8,11 +8,9 @@ package NetPacket::TCP;
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use Exporter;
+use vars;
 use NetPacket qw(:ALL);
-
-my $myclass;
+use NetPacket::IP qw(:ALL);
 
 # TCP Flags
 
@@ -25,7 +23,9 @@ use constant URG => 0x20;
 use constant ECE => 0x40;
 use constant CWR => 0x80;
 
+our (@ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
 BEGIN {
+    require Exporter;
     @ISA = qw(Exporter NetPacket);
 
 # Items to export into callers namespace by default
