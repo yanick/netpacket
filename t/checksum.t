@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 use NetPacket::TCP;
 use NetPacket::UDP;
@@ -48,3 +48,18 @@ my $udp = {
 bless $udp, 'NetPacket::UDP';
 
 is NetPacket::UDP::checksum( $udp, $ip ) => 60058, 'UDP padding';
+
+my $udp2 = NetPacket::UDP->new(
+	src_port => 13,
+	dest_port => 14,
+	data => "foo\x00\x00\x00\x00",
+);
+
+my $ip2 = NetPacket::IP->new(
+	src_ip => '127.0.0.1',
+	dest_ip => '192.168.0.1',
+	payload => $udp
+);
+
+is $udp2->checksum( $ip2 ) => 60058, 'UDP padding (redux)';
+
