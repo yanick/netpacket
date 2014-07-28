@@ -6,10 +6,11 @@ package NetPacket::UDP;
 # ABSTRACT: Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use vars;
 use NetPacket qw(:ALL);
 use NetPacket::IP qw(IP_PROTO_UDP);
 
+our (@ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
 BEGIN {
     require Exporter;
     @ISA = qw(Exporter NetPacket);
