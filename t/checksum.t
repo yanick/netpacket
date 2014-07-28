@@ -34,15 +34,15 @@ my $odd_checksum = NetPacket::TCP::checksum( $tcp, $ip );
 is $odd_checksum => 25046, 'TCP padding done correctly';
 
 $ip = { 
-	src_ip => gethostbyname('127.0.0.1'),
-	dest_ip => gethostbyname('192.168.0.1'),
+	src_ip => scalar gethostbyname('127.0.0.1'),
+	dest_ip => scalar gethostbyname('192.168.0.1'),
 };
 
 my $udp = {
 	src_port => 13,
 	dest_port => 14,
-	len => 8 + 3,
-	data => "foo",
+	len => 8 + 7,
+	data => "foo\x00\x00\x00\x00",
 };
 
 bless $udp, 'NetPacket::UDP';
