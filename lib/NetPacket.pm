@@ -7,28 +7,16 @@
 package NetPacket;
 # ABSTRACT: assemble/disassemble network packets at the protocol level
 
-
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
+use parent 'Exporter';
 
-BEGIN {
-    @ISA = qw(Exporter);
+our @EXPORT = qw(use_network_format $network_format);
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
+our @EXPORT_OK = qw(in_cksum htons htonl ntohs ntohl);
 
-    @EXPORT = qw(
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(in_cksum htons htonl ntohs ntohl
-    );
-
-# Tags:
-
-    %EXPORT_TAGS = (
+our %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
 );
 
