@@ -77,11 +77,14 @@ sub decode {
     # Decode ARP packet
 
     if (defined($pkt)) {
-
 	($self->{htype}, $self->{proto}, $self->{hlen}, $self->{plen},
-	 $self->{opcode}, $self->{sha}, $self->{spa}, $self->{tha},
-	 $self->{tpa}) = 
-	     unpack('nnCCnH12H8H12H8' , $pkt);
+	 $self->{opcode}) = unpack('nnCCn', $pkt);
+
+        my $fmt = sprintf('@8a%da%da%da%d', $self->{hlen}, $self->{plen},
+			  $self->{hlen}, $self->{plen});
+
+	($self->{sha}, $self->{spa}, $self->{tha}, $self->{tpa}) = 
+	     unpack($fmt, $pkt);
 
 	$self->{data} = undef;
     }
@@ -106,11 +109,62 @@ sub strip {
 }
 
 #
+# Construct a packet
+#
+
+my @required = qw(htype proto opcode sha spa tha tpa);
+
+sub new {
+    my $class = shift;
+    my (%args) = @_;
+    my $self;
+
+    for my $arg (@required) {
+	die "argument $arg not specified" unless (exists $args{$arg});
+    }
+
+    warn "arguments 'hlen' and 'plen' are ignored." if (exists $args{hlen} || exists $args{plen});
+
+    die "arguments 'spa' and 'tpa' are inconsistent." if (length($args{spa}) != length($args{tpa}));
+    die "arguments 'sha' and 'tha' are inconsistent." if (length($args{sha}) != length($args{tha}));
+
+    $self = {};
+
+    bless $self, $class;
+
+    $self->{htype} = $args{htype};
+    $self->{proto} = $args{proto};
+    $self->{opcode} = $args{opcode};
+    $self->{hlen} = length($args{sha});
+    $self->{plen} = length($args{spa});
+    $self->{sha} = $args{sha};
+    $self->{tha} = $args{tha};
+    $self->{spa} = $args{spa};
+    $self->{tpa} = $args{tpa};
+
+    $self->{_parent} = $self->{data} = undef;
+
+    return $self;
+}
+
+sub size {
+    my $self = shift;
+    return (3 * 2 + 2 * 1 + 2 * $self->{hlen} + 2 * $self->{plen});
+}
+
+#
 # Encode a packet
 #
 
 sub encode {
-    die("Not implemented");
+    my $self = shift;
+    my $pkt;
+
+    $pkt = pack('nnCCna*a*a*a*', $self->{htype}, $self->{proto}, $self->{hlen},
+		$self->{plen}, $self->{opcode}, $self->{sha}, $self->{spa},
+		$self->{tha}, $self->{tpa});
+
+    return $pkt;
 }
 
 # Module return value
