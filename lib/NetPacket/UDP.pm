@@ -6,32 +6,21 @@ package NetPacket::UDP;
 # ABSTRACT: Assemble and disassemble UDP (User Datagram Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
-use NetPacket::IP;
+use warnings;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+use parent 'NetPacket';
 
 # Items to export into callers namespace by default
 # (move infrequently used names to @EXPORT_OK below)
 
-    @EXPORT = qw(
-    );
+our @EXPORT = qw();
 
-# Other items we are prepared to export if requested
+our @EXPORT_OK = qw(udp_strip);
 
-    @EXPORT_OK = qw(udp_strip
-    );
-
-# Tags:
-
-    %EXPORT_TAGS = (
+our %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     strip       => [qw(udp_strip)],
 );
-
-}
 
 #
 # Decode the packet
