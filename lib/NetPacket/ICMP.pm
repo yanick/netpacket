@@ -22,6 +22,18 @@ BEGIN {
                     ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
                     ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
                     ICMP_MASKREQ ICMP_MASKREPLY
+                    ICMP_UNREACH_NET ICMP_UNREACH_HOST
+                    ICMP_UNREACH_PROTOCOL ICMP_UNREACH_PORT
+                    ICMP_UNREACH_NEEDFRAG ICMP_UNREACH_SRCFAIL
+                    ICMP_UNREACH_NET_UNKNOWN ICMP_UNREACH_HOST_UNKNOWN
+                    ICMP_UNREACH_ISOLATED ICMP_UNREACH_NET_PROHIB
+                    ICMP_UNREACH_HOST_PROHIB ICMP_UNREACH_TOSNET
+                    ICMP_UNREACH_TOSHOST ICMP_UNREACH_FILTER_PROHIB
+                    ICMP_UNREACH_HOST_PRECEDENCE ICMP_UNREACH_PRCEDENCE_CUTOFF
+                    ICMP_REDIRECT_NET ICMP_REDIRECT_HOST
+                    ICMP_REDIRECT_TOSNET ICMP_REDIRECT_TOSHOST
+                    ICMP_TIMXCEED_INTRANS ICMP_TIMXCEED_REASS
+                    ICMP_PARAMPROB_OPTABSENT
     );
 
 # Tags:
@@ -33,6 +45,19 @@ BEGIN {
                        ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
                        ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
                        ICMP_MASKREQ ICMP_MASKREPLY)],
+    codes       => [qw(ICMP_UNREACH_NET ICMP_UNREACH_HOST
+                       ICMP_UNREACH_PROTOCOL ICMP_UNREACH_PORT
+                       ICMP_UNREACH_NEEDFRAG ICMP_UNREACH_SRCFAIL
+                       ICMP_UNREACH_NET_UNKNOWN ICMP_UNREACH_HOST_UNKNOWN
+                       ICMP_UNREACH_ISOLATED ICMP_UNREACH_NET_PROHIB
+                       ICMP_UNREACH_HOST_PROHIB ICMP_UNREACH_TOSNET
+                       ICMP_UNREACH_TOSHOST ICMP_UNREACH_FILTER_PROHIB
+                       ICMP_UNREACH_HOST_PRECEDENCE
+                       ICMP_UNREACH_PRCEDENCE_CUTOFF
+                       ICMP_REDIRECT_NET ICMP_REDIRECT_HOST
+                       ICMP_REDIRECT_TOSNET ICMP_REDIRECT_TOSHOST
+                       ICMP_TIMXCEED_INTRANS ICMP_TIMXCEED_REASS
+                       ICMP_PARAMPROB_OPTABSENT)],
     strip       => [qw(icmp_strip)],
 );
 
@@ -55,6 +80,41 @@ use constant ICMP_IREQ            => 15;
 use constant ICMP_IREQREPLY       => 16;
 use constant ICMP_MASKREQ         => 17;
 use constant ICMP_MASKREPLY       => 18;
+
+# Unreachable Codes
+
+use constant ICMP_UNREACH_NET     => 0;
+use constant ICMP_UNREACH_HOST    => 1;
+use constant ICMP_UNREACH_PROTOCOL => 2;
+use constant ICMP_UNREACH_PORT    => 3;
+use constant ICMP_UNREACH_NEEDFRAG => 4;
+use constant ICMP_UNREACH_SRCFAIL => 5;
+use constant ICMP_UNREACH_NET_UNKNOWN => 6;
+use constant ICMP_UNREACH_HOST_UNKNOWN => 7;
+use constant ICMP_UNREACH_ISOLATED => 8;
+use constant ICMP_UNREACH_NET_PROHIB => 9;
+use constant ICMP_UNREACH_HOST_PROHIB => 10;
+use constant ICMP_UNREACH_TOSNET  => 11;
+use constant ICMP_UNREACH_TOSHOST => 12;
+use constant ICMP_UNREACH_FILTER_PROHIB => 13;
+use constant ICMP_UNREACH_HOST_PRECEDENCE => 14;
+use constant ICMP_UNREACH_PRECEDENCE_CUTOFF => 15;
+
+# Redirect Codes
+
+use constant ICMP_REDIRECT_NET    => 0;
+use constant ICMP_REDIRECT_HOST   => 1;
+use constant ICMP_REDIRECT_TOSNET => 2;
+use constant ICMP_REDIRECT_TOSHOST => 3;
+
+# Time-Exceeded Codes
+
+use constant ICMP_TIMXCEED_INTRANS => 0;
+use constant ICMP_TIMXCEED_REASS  => 1;
+
+# Parameter-Problem Codes
+
+use constant ICMP_PARAMPROB_OPTABSENT => 1;
 
 #
 # Decode the packet
