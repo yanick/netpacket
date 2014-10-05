@@ -8,10 +8,13 @@ package NetPacket::TCP;
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use warnings;
 
-my $myclass;
+use parent 'Exporter';
+
+use NetPacket qw(:ALL);
+use NetPacket::IP qw(:ALL);
+use Carp;
 
 # TCP Flags
 
@@ -24,28 +27,23 @@ use constant URG => 0x20;
 use constant ECE => 0x40;
 use constant CWR => 0x80;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
-
 # Items to export into callers namespace by default
 # (move infrequently used names to @EXPORT_OK below)
 
-    @EXPORT = qw(FIN SYN RST PSH ACK URG ECE CWR
+our @EXPORT = qw(FIN SYN RST PSH ACK URG ECE CWR
     );
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(tcp_strip 
+our @EXPORT_OK = qw(tcp_strip 
     );
 
 # Tags:
 
-    %EXPORT_TAGS = (
+our %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     strip       => [qw(tcp_strip)],  
 );
-
-}
 
 #
 # Strip header from packet and return the data contained in it
@@ -111,17 +109,64 @@ sub decode {
 }
 
 #
+# Construct a packet
+#
+
+my @required = qw(src_port dest_port flags seqnum winsize acknum);
+
+sub new {
+    my $class = shift;
+    my %args = @_;
+    my $self;
+
+    $self = {};
+
+    bless $self, $class;
+
+    for my $arg (@required) {
+	confess "argument $arg not specified" unless (exists $args{$arg});
+    }
+
+    $self->{src_port} = $args{src_port};
+    $self->{dest_port} = $args{dest_port};
+    $self->{flags} = $args{flags};
+    $self->{seqnum} = $args{seqnum};
+    $self->{winsize} = $args{winsize};
+    $self->{acknum} = $args{acknum};
+    $self->{data} = (exists $args{data} ? $args{data} : '');
+    $self->{urg} = (exists $args{urg} ? $args{urg} : 0);
+    $self->{reserved} = (exists $args{reserved} ? $args{reserved} : 0);
+    $self->{options} = (exists $args{options} ? $args{options} : '');
+    $self->{hlen} = 5 + _round4(length($self->{options})) / 4;
+
+    # allow generating wrong checksum
+    $self->{cksum} = $args{cksum} if (exists $args{cksum});
+
+    $self->{_parent} = undef;
+
+    return $self;
+}
+ 
+sub size {
+    my $self = shift;
+    return ($self->{hlen} * 4 + length($self->{data}));
+}
+
+#
 # Encode a packet
 #
 
 sub encode {
 
-    my $self = shift;
-    my ($ip) = @_;
+    my ($self, $ip) = @_;
     my ($packet,$tmp);
 
-    # First of all, fix the checksum
-    $self->checksum($ip);
+    if ( $ip ) {
+        $self->checksum($ip);
+    }
+    elsif( ! exists $self->{cksum}) {
+        croak "need ip packet arg if checksum not already set";
+    }
 
     $tmp = $self->{hlen} << 12;
     $tmp = $tmp | (0x0f00 & ($self->{reserved} << 8));
@@ -131,8 +176,7 @@ sub encode {
     $packet = pack('n n N N n n n n a* a*',
             $self->{src_port}, $self->{dest_port}, $self->{seqnum},
             $self->{acknum}, $tmp, $self->{winsize}, $self->{cksum},
-            $self->{urg}, $self->{options},$self->{data});
-
+            $self->{urg}, $self->{options}, $self->{data});
 
     return($packet);
 
@@ -143,36 +187,33 @@ sub encode {
 #
 
 sub checksum {
+    my ($self, $ip) = @_;
 
-    my $self = shift;
-    my ($ip) = @_;
-    my ($packet,$zero,$tcplen,$tmp);
-    my ($src_ip, $dest_ip,$proto);
+        my ($packet, $tcplen, $tmp, $options);
 
-    $zero = 0;
-    $proto = 6;
-    $tcplen = ($self->{hlen} * 4)+ length($self->{data});
+	$tcplen = ($self->{hlen} * 4) + length($self->{data});
 
-    no warnings qw/ uninitialized /;
-    $tmp = $self->{hlen} << 12;
-    $tmp = $tmp | (0x0f00 & ($self->{reserved} << 8));
-    $tmp = $tmp | (0x00ff & $self->{flags});
+	$tmp = $self->{hlen} << 12;
+	$tmp |= (0x0f00 & ($self->{reserved} << 8));
+	$tmp |= (0x00ff & $self->{flags});
 
-    # Pack pseudo-header for tcp checksum
+	$options = $self->{options};
 
-    $src_ip = gethostbyname($ip->{src_ip});
-    $dest_ip = gethostbyname($ip->{dest_ip});
+	# add padding to 32-bit boundary
+	$options .= "\x00" x (_round4(length($options)) - length($options));
 
-    $packet = pack('a4a4nnnnNNnnnna*a*',
-            $src_ip,$dest_ip,$proto,$tcplen,
-            $self->{src_port}, $self->{dest_port}, $self->{seqnum},
-            $self->{acknum}, $tmp, $self->{winsize}, $zero,
-            $self->{urg}, $self->{options},$self->{data});
+	$packet = pack('a4a4nnnnNNnnnna*a*',
+		       $ip->_src_packed(), $ip->_dest_packed(), IP_PROTO_TCP, $tcplen,
+		       $self->{src_port}, $self->{dest_port}, $self->{seqnum},
+		       $self->{acknum}, $tmp, $self->{winsize}, 0,
+		       $self->{urg}, $options, $self->{data});
 
-    # pad packet if odd-sized
-    $packet .= "\x00" if length( $packet ) % 2;
+	# pad packet if odd-sized
+	$packet .= "\x00" if length( $packet ) % 2;
 
-    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
+	$self->{cksum} = htons(in_cksum($packet));
+    
+    return $self->{cksum};
 }
 
 sub parse_tcp_options {
