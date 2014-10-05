@@ -47,6 +47,8 @@ use constant ETH_TYPE_IPX       => 0x8137;
 use constant ETH_TYPE_PPPOED    => 0x8863;
 use constant ETH_TYPE_PPPOES    => 0x8864;
 
+use constant ETH_HLEN		=> 6;
+
 #
 # VLAN Tag field masks
 #
