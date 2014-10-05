@@ -4,23 +4,20 @@ package NetPacket::USBMon;
 use 5.10.0;
 
 use strict;
-use vars qw(@ISA @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+use parent 'NetPacket';
 
-    @EXPORT_OK = qw(
-                    USB_TYPE_SUBMISSION USB_TYPE_CALLBACK USB_TYPE_ERROR
-                    USB_XFER_TYPE_ISO USB_XFER_TYPE_INTR
-                    USB_XFER_TYPE_CONTROL USB_XFER_TYPE_BULK
-                    USB_FLAG_SETUP_IRRELEVANT USB_FLAG_SETUP_RELEVANT
-                    USB_FLAG_DATA_ERROR USB_FLAG_DATA_INCOMING
-                    USB_FLAG_DATA_OUTGOING USB_FLAG_DATA_PRESENT
-                    USB_TYPE_VENDOR
-    );
+our @EXPORT_OK = qw(
+    USB_TYPE_SUBMISSION USB_TYPE_CALLBACK USB_TYPE_ERROR
+    USB_XFER_TYPE_ISO USB_XFER_TYPE_INTR
+    USB_XFER_TYPE_CONTROL USB_XFER_TYPE_BULK
+    USB_FLAG_SETUP_IRRELEVANT USB_FLAG_SETUP_RELEVANT
+    USB_FLAG_DATA_ERROR USB_FLAG_DATA_INCOMING
+    USB_FLAG_DATA_OUTGOING USB_FLAG_DATA_PRESENT
+    USB_TYPE_VENDOR
+);
 
-    %EXPORT_TAGS =(
+our %EXPORT_TAGS =(
     ALL         => \@EXPORT_OK,
     types       => [qw(USB_TYPE_SUBMISSION USB_TYPE_CALLBACK
                        USB_TYPE_ERROR)],
@@ -31,8 +28,6 @@ BEGIN {
                        USB_FLAG_DATA_OUTGOING USB_FLAG_DATA_PRESENT)],
     setup_types => [qw(USB_TYPE_VENDOR)],
 );
-
-}
 
 use constant USB_TYPE_SUBMISSION        => 'S';
 use constant USB_TYPE_CALLBACK          => 'C';
