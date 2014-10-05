@@ -7,21 +7,21 @@ package NetPacket::IP;
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use Socket qw(AF_INET inet_pton inet_ntop);
+use NetPacket qw(:ALL);
+use Carp;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+our @ISA = qw(Exporter NetPacket);
 
 # Items to export into callers namespace by default
 # (move infrequently used names to @EXPORT_OK below)
 
-    @EXPORT = qw(
+our @EXPORT = qw(to_dotquad from_dotquad use_network_format
     );
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(ip_strip _round4 _src_packed _dest_packed
+our @EXPORT_OK = qw(ip_strip _round4
 		    IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP
 		    IP_PROTO_IPIP IP_PROTO_TCP IP_PROTO_EGP
 		    IP_PROTO_EGP IP_PROTO_PUP IP_PROTO_UDP
@@ -55,7 +55,7 @@ BEGIN {
 
 # Tags:
 
-    %EXPORT_TAGS = (
+our %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     protos      => [qw(IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP IP_PROTO_IPIP
 		       IP_PROTO_TCP IP_PROTO_EGP IP_PROTO_PUP
@@ -87,8 +87,6 @@ BEGIN {
     misc        => [qw(MAXTTL IPDEFTTL IPFRAGTTL IPTTLDEC IP_MSS
                        IP_MAXPACKET)],
     );
-
-}
 
 #
 # Partial list of IP protocol values from RFC 1700
@@ -197,15 +195,29 @@ use constant IP_MAXPACKET => 65535;
 # Convert 32-bit IP address to dotted quad notation
 
 sub to_dotquad {
-    my($net) = @_ ;
-    my($na, $nb, $nc, $nd);
+    return inet_ntop(AF_INET, shift)
+        || croak "not a valid IPv4 address";
+}
 
-    $na = $net >> 24 & 255;
-    $nb = $net >> 16 & 255;
-    $nc = $net >>  8 & 255;
-    $nd = $net & 255;
+sub from_dotquad {
+    return inet_pton(AF_INET, shift)
+        || croak "not a valid dotted quad";
+}
 
-    return ("$na.$nb.$nc.$nd");
+sub _src_packed {
+    my $self = shift;
+    return ($network_format ? $self->{src_ip} : inet_pton(AF_INET, $self->{src_ip}));
+}
+
+sub _dest_packed {
+    my $self = shift;
+    return ($network_format ? $self->{dest_ip} : inet_pton(AF_INET, $self->{dest_ip}));
+}
+
+# round up to next multiple of 4
+sub _round4 {
+    my $num = shift;
+    return int(($num + 3) / 4) * 4;
 }
 
 #
@@ -229,7 +241,7 @@ sub decode {
 
 	($tmp, $self->{tos},$self->{len}, $self->{id}, $self->{foffset},
 	 $self->{ttl}, $self->{proto}, $self->{cksum}, $self->{src_ip},
-	 $self->{dest_ip}, $self->{options}) = unpack('CCnnnCCnNNa*' , $pkt);
+	 $self->{dest_ip}, $self->{options}) = unpack('CCnnnCCna4a4a*' , $pkt);
 
 	# Extract bit fields
 	
@@ -251,16 +263,18 @@ sub decode {
 	($self->{options}, $self->{data}) = unpack("a" . $olen .
 						   "a*", $self->{options});
 
-    my $length = $self->{hlen};
-    $length = 5 if $length < 5;  # precaution against bad header
+        my $length = $self->{hlen};
+        $length = 5 if $length < 5;  # precaution against bad header
 
-    # truncate data to the length given by the header
-    $self->{data} = substr $self->{data}, 0, $self->{len} - 4 * $length;
+        # truncate data to the length given by the header
+        $self->{data} = substr $self->{data}, 0, $self->{len} - 4 * $length;
 
-	# Convert 32 bit ip addresses to dotted quad notation
-
-	$self->{src_ip} = to_dotquad($self->{src_ip});
-	$self->{dest_ip} = to_dotquad($self->{dest_ip});
+	# if we're trying to be v1.x compatible, convert the addresses
+	# back into presentation (human-readable) format
+        unless ($network_format) {
+	    $self->{src_ip} = inet_ntop(AF_INET, $self->{src_ip});
+	    $self->{dest_ip} = inet_ntop(AF_INET, $self->{dest_ip});
+	}
     }
 
     return bless $self, $class;
@@ -280,52 +294,159 @@ sub strip {
     return $ip_obj->{data};
 }   
 
+my $id_builder = int rand(65536);
+
+sub assign_id {
+    $id_builder++ % 65536;
+}
+
+#
+# Construct a packet
+#
+
+my @required = qw(src_ip dest_ip);
+
+sub new {
+    my $class = shift;
+    my (%args) = @_;
+    my ($self, $tmp);
+
+    $self = {};
+
+    bless $self, $class;
+
+    my $payload = undef;
+
+    for my $arg (@required) {
+	confess "argument $arg not specified" unless (exists $args{$arg});
+    }
+
+    if (exists $args{data}) {
+        confess "can't specify both data and payload" if (exists $args{payload});
+	$self->{data} = $args{data};
+    } elsif (exists $args{payload}) {
+	confess "payload must be UDP, TCP, ICMP, or IGMP."
+		unless (ref($args{payload}) =~ m/^NetPacket::(TCP|UDP|ICMP|IGMP)$/);
+	$self->{payload} = $payload = $args{payload};
+    } else {
+	confess "argument data or payload not specified";
+    }
+
+    $self->{options} = (exists $args{options} ? $args{options} : '');
+
+    $self->{ver} = (exists $args{ver} ? $args{ver} : IP_VERSION_IPv4);
+    $self->{ttl} = (exists $args{ttl} ? $args{ttl} : IPDEFTTL);
+    $self->{tos} = (exists $args{tos} ? $args{tos} : IPTOS_CLASS_DEFAULT);
+
+    # infer the protocol type from the payload class
+    if (defined $payload) {
+	if (ref($payload) eq 'NetPacket::UDP') {
+	   $self->{proto} = IP_PROTO_UDP;
+	} elsif (ref($payload) eq 'NetPacket::TCP') {
+	   $self->{proto} = IP_PROTO_TCP;
+	} elsif (ref($payload) eq 'NetPacket::ICMP') {
+	   $self->{proto} = IP_PROTO_ICMP;
+	} elsif (ref($payload) eq 'NetPacket::IGMP') {
+	   $self->{proto} = IP_PROTO_IGMP;
+	} else {
+	   confess "missing proto arg" unless (exists $args{proto});
+	   $self->{proto} = $args{proto};
+	}
+    } else {
+	confess "missing proto arg" unless (exists $args{proto});
+	$self->{proto} = $args{proto};
+    }
+
+    $self->{src_ip} = $args{src_ip};
+    $self->{dest_ip} =$args{dest_ip};
+
+    $self->{_parent} = undef;
+
+    # now give payload protocol a chance to calculate pseudo-header
+    $payload->checksum($self) if ($payload && ! exists $args{cksum});
+
+    $self->{foffset} = (exists $args{foffset} ? $args{foffset} : 0);
+    $self->{flags} = (exists $args{flags} ? $args{flags} : 0);
+
+    $self->{id} = $args{id}  // assign_id();
+
+    # pad up to nearest 32-bit boundary
+    $self->{hlen} = 5 + _round4(length($self->{options})) / 4;
+
+    # adjust the length of the packet 
+    $self->{len} = ($self->{hlen} * 4) + ($payload ? $payload->size : length($self->{data}));
+
+    # if we were given a checksum, plug it in here... otherwise compute it
+    # during encoding
+    $self->{cksum} = $args{cksum} if (exists $args{cksum});
+
+    return $self;
+}
+
+
+#
+# Compute checksum (some duplication of encode())
+#
+
+sub checksum {
+    my $self = shift;
+    my ($hdr,$tmp,$cksum,$offset,$options);
+
+    if (! exists $self->{cksum}) {
+	$tmp = $self->{hlen} & 0x0f;
+	$tmp |= (($self->{ver} << 4) & 0xf0);
+
+	$offset = $self->{flags} << 13;
+	$offset |= (($self->{foffset} >> 3) & 0x1fff);
+
+	$options = (exists $self->{options} ? $self->{options} : '');
+
+        $options .= "\x00" x (_round4(length($options)) - length($options));
+
+	my $fmt = 'CCnnnCCna4a4a*a*';
+	my @pkt = ($tmp, $self->{tos},$self->{len}, 
+                   $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
+                   0, $self->_src_packed(), $self->_dest_packed(), $options); 
+
+	# construct header to calculate the checksum
+	$hdr = pack($fmt, @pkt);
+
+	$self->{cksum} = htons(in_cksum($hdr));
+    }
+    return $self->{cksum};
+}
+
+
 #
 # Encode a packet
 #
 
 sub encode {
-
     my $self = shift;
-    my ($hdr,$packet,$zero,$tmp,$offset);
-    my ($src_ip, $dest_ip);
-
-    # create a zero variable
-    $zero = 0;
-
-    # adjust the length of the packet 
-    $self->{len} = ($self->{hlen} * 4) + length($self->{data});
+    my ($hdr,$packet,$tmp,$cksum,$offset,$options);
 
     $tmp = $self->{hlen} & 0x0f;
-    $tmp = $tmp | (($self->{ver} << 4) & 0xf0);
+    $tmp |= (($self->{ver} << 4) & 0xf0);
 
     $offset = $self->{flags} << 13;
-    $offset = $offset | (($self->{foffset} >> 3) & 0x1fff);
+    $offset |= (($self->{foffset} >> 3) & 0x1fff);
 
-    # convert the src and dst ip
-    $src_ip = gethostbyname($self->{src_ip});
-    $dest_ip = gethostbyname($self->{dest_ip});
+    $self->checksum() if (! exists $self->{cksum});
 
-    my $fmt = 'CCnnnCCna4a4a*';
+    $options = (exists $self->{options} ? $self->{options} : '');
+
+    # add padding to nearest 32-bit boundary
+    $options .= "\00" x (_round4(length($options)) - length($options));
+
+    my $fmt = 'CCnnnCCna4a4a*a*';
     my @pkt = ($tmp, $self->{tos},$self->{len}, 
                $self->{id}, $offset, $self->{ttl}, $self->{proto}, 
-               $zero, $src_ip, $dest_ip); 
-    # change format and package in case of IP options 
-    if(defined $self->{options}){ 
-        $fmt = 'CCnnnCCna4a4a*a*'; 
-        push(@pkt, $self->{options}); 
-    }
+               $self->{cksum}, $self->_src_packed(), $self->_dest_packed(), $options); 
 
-    # construct header to calculate the checksum
     $hdr = pack($fmt, @pkt);
-    $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($hdr));
-    $pkt[7] = $self->{cksum};
 
     # make the entire packet
-    if(defined $self->{data}){
-        push(@pkt, $self->{data}); 
-    } 
-    $packet = pack($fmt, @pkt);
+    $packet = $hdr . (exists $self->{data} ? $self->{data} : $self->{payload}->encode());
 
     return($packet);
 }
