@@ -8,6 +8,7 @@ revision history for NetPacket
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - NetPacket::USBMon refactoring/code clean-up.
 
  [NEW FEATURES]
 
