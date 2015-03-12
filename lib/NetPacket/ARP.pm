@@ -2,35 +2,27 @@ package NetPacket::ARP;
 # ABSTRACT: Assemble and disassemble ARP (Address Resolution Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
+use parent 'NetPacket';
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
-
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
-
-    @EXPORT = qw(
-    );
+our @EXPORT = qw();
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(arp_strip
-		    ARP_OPCODE_REQUEST ARP_OPCODE_REPLY RARP_OPCODE_REQUEST 
-		    RARP_OPCODE_REPLY
-    );
+our @EXPORT_OK = qw(
+    arp_strip
+    ARP_OPCODE_REQUEST ARP_OPCODE_REPLY RARP_OPCODE_REQUEST 
+    RARP_OPCODE_REPLY
+);
 
-# Tags:
-
-    %EXPORT_TAGS = (
+our  %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     opcodes     => [qw(ARP_OPCODE_REQUEST ARP_OPCODE_REPLY RARP_OPCODE_REQUEST 
 		       RARP_OPCODE_REPLY)],
     strip       => [qw(arp_strip)],
 );
 
-}
 
 # 
 # List of opcode values
