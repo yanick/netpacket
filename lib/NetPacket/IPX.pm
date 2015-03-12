@@ -1,8 +1,8 @@
-use strict;
-use warnings;
-
 package NetPacket::IPX;
 # ABSTRACT: Assemble and disassemble IPX packets
+
+use strict;
+use warnings;
 
 use parent qw(NetPacket);
 
