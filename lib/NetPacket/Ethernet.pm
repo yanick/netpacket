@@ -21,7 +21,7 @@ BEGIN {
                         ETH_TYPE_PPPOED    
                         ETH_TYPE_PPPOES    /;
 
-    @EXPORT_OK = ( 'eth_strip', @eth_types ); 
+    @EXPORT_OK = ( 'eth_strip', 'ETH_HLEN', @eth_types ); 
 
     %EXPORT_TAGS = (
         ALL         => [@EXPORT, @EXPORT_OK],
@@ -46,6 +46,8 @@ use constant ETH_TYPE_802_1Q    => 0x8100;
 use constant ETH_TYPE_IPX       => 0x8137;
 use constant ETH_TYPE_PPPOED    => 0x8863;
 use constant ETH_TYPE_PPPOES    => 0x8864;
+
+use constant ETH_HLEN		=> 6;
 
 #
 # VLAN Tag field masks
