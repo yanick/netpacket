@@ -1,19 +1,12 @@
 revision history for NetPacket
 
-{{$NEXT}}
- [API CHANGES]
-
- [BUG FIXES]
-
- [DOCUMENTATION]
-
+1.6.0 2015-03-13
  [ENHANCEMENTS]
  - Clean up inheritance code (Philip Prindeville).
  - Add a truckload of constants (Philip Prindeville).
 
- [NEW FEATURES]
-
  [STATISTICS]
+ - code churn: 12 files changed, 343 insertions(+), 220 deletions(-)
 
 1.5.0 2014-06-15
  [ENHANCEMENTS]

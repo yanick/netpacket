@@ -1,6 +1,9 @@
 package NetPacket::TCP;
+BEGIN {
+  $NetPacket::TCP::AUTHORITY = 'cpan:YANICK';
+}
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
-
+$NetPacket::TCP::VERSION = '1.6.0';
 use strict;
 use warnings;
 
@@ -267,6 +270,16 @@ sub parse_tcp_options {
 
 __END__
 
+=pod
+
+=head1 NAME
+
+NetPacket::TCP - Assemble and disassemble TCP (Transmission Control Protocol) packets.
+
+=head1 VERSION
+
+version 1.6.0
+
 =head1 SYNOPSIS
 
   use NetPacket::TCP;
@@ -474,7 +487,6 @@ flag to all TCP packets passing through:
       $divobj->putPacket($packet,$fwtag);
    }
 
-
 =head1 TODO
 
 =over
@@ -509,4 +521,3 @@ Tim Potter E<lt>tpot@samba.orgE<gt>
 Stephanie Wehner E<lt>atrak@itsx.comE<gt>
 
 =cut
-

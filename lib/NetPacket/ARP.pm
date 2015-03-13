@@ -1,6 +1,9 @@
 package NetPacket::ARP;
+BEGIN {
+  $NetPacket::ARP::AUTHORITY = 'cpan:YANICK';
+}
 # ABSTRACT: Assemble and disassemble ARP (Address Resolution Protocol) packets.
-
+$NetPacket::ARP::VERSION = '1.6.0';
 use strict;
 use warnings;
 
@@ -118,7 +121,15 @@ sub encode {
 
 1;
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::ARP - Assemble and disassemble ARP (Address Resolution Protocol) packets.
+
+=head1 VERSION
+
+version 1.6.0
 
 =head1 SYNOPSIS
 
@@ -301,5 +312,8 @@ merchantability or fitness for a particular purpose.
 Tim Potter E<lt>tpot@samba.orgE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line
