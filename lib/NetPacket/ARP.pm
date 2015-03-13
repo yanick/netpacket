@@ -14,12 +14,20 @@ our @EXPORT_OK = qw(
     arp_strip
     ARP_OPCODE_REQUEST ARP_OPCODE_REPLY RARP_OPCODE_REQUEST 
     RARP_OPCODE_REPLY
-);
+		    ARPHRD_NETROM ARPHRD_ETHER ARPHRD_EETHER ARPHRD_AX25
+		    ARPHRD_PRONET ARPHRD_CHAOS ARPHRD_IEEE802 ARPHRD_ARCNET
+		    ARPHRD_APPLETLK ARPHRD_DLCI ARPHRD_ATM ARPHRD_METRICOM
+		    ARPHRD_IEEE1394 ARPHRD_EUI64 ARPHRD_INFINIBAND
+    );
 
 our  %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     opcodes     => [qw(ARP_OPCODE_REQUEST ARP_OPCODE_REPLY RARP_OPCODE_REQUEST 
 		       RARP_OPCODE_REPLY)],
+    protos      => [qw(ARPHRD_NETROM ARPHRD_ETHER ARPHRD_AX25 ARPHRD_PRONET
+		       ARPHRD_CHAOS ARPHRD_IEEE802 ARPHRD_ARCNET
+		       ARPHRD_APPLETLK ARPHRD_DLCI ARPHRD_ATM ARPHRD_METRICOM
+		       ARPHRD_IEEE1394 ARPHRD_EUI64 ARPHRD_INFINIBAND)],
     strip       => [qw(arp_strip)],
 );
 
@@ -32,6 +40,26 @@ use constant ARP_OPCODE_REQUEST  => 1;
 use constant ARP_OPCODE_REPLY    => 2;
 use constant RARP_OPCODE_REQUEST => 3;
 use constant RARP_OPCODE_REPLY   => 4;
+
+#
+# List of hardware identifiers
+#
+
+use constant ARPHRD_NETROM	=> 0;
+use constant ARPHRD_ETHER	=> 1;
+use constant ARPHRD_EETHER	=> 2;
+use constant ARPHRD_AX25	=> 3;
+use constant ARPHRD_PRONET	=> 4;
+use constant ARPHRD_CHAOS	=> 5;
+use constant ARPHRD_IEEE802	=> 6;
+use constant ARPHRD_ARCNET	=> 7;
+use constant ARPHRD_APPLETLK	=> 8;
+use constant ARPHRD_DLCI	=> 15;
+use constant ARPHRD_ATM		=> 19;
+use constant ARPHRD_METRICOM	=> 23;
+use constant ARPHRD_IEEE1394	=> 24;
+use constant ARPHRD_EUI64	=> 27;
+use constant ARPHRD_INFINIBAND	=> 32;
 
 #
 # Decode the packet
