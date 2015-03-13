@@ -1,26 +1,12 @@
-#
-# NetPacket::IGMP - Decode and encode IGMP (Internet Group Management
-# Protocol) packets.
-
 package NetPacket::IGMP;
 # ABSTRACT: Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
-
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+use parent 'NetPacket';
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
-
-    @EXPORT = qw(
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(igmp_strip
+our @EXPORT_OK = qw(igmp_strip
 		    IGMP_VERSION_RFC998 IGMP_VERSION_RFC1112
 		    IGMP_VERSION_RFC2236 IGMP_VERSION_RFC3376
 		    IGMP_MSG_HOST_MQUERY IGMP_MSG_HOST_MREPORT
@@ -29,12 +15,10 @@ BEGIN {
 		    IGMP_MSG_HOST_MREPORTv3
 		    IGMP_IP_NO_HOSTS IGMP_IP_ALL_HOSTS
 		    IGMP_IP_ALL_ROUTERS
-    );
+);
 
-# Tags:
-
-    %EXPORT_TAGS = (
-    ALL         => [@EXPORT, @EXPORT_OK],
+our %EXPORT_TAGS = (
+    ALL         => [@EXPORT_OK],
     strip       => [qw(igmp_strip)],
     versions    => [qw(IGMP_VERSION_RFC998 IGMP_VERSION_RFC1112
 		       IGMP_VERSION_RFC2236 IGMP_VERSION_RFC3376)],
@@ -45,8 +29,6 @@ BEGIN {
     group_addrs => [qw(IGMP_IP_NO_HOSTS IGMP_IP_ALL_HOSTS
 		      IGMP_IP_ALL_ROUTERS)]  
 );
-
-}
 
 #
 # Version numbers
