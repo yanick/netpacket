@@ -16,7 +16,7 @@ BEGIN {
 
 # Other items we are prepared to export if requested
 
-    @EXPORT_OK = qw(icmp_strip
+    @EXPORT_OK = qw(icmp_strip icmp_infotype
                     ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
                     ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
                     ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
