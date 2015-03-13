@@ -1,27 +1,12 @@
-#
-# NetPacket::IP - Decode and encode IP (Internet Protocol) packets. 
-#
-# Encoding part by Stephanie Wehner, atrak@itsx.com
-
 package NetPacket::IP;
 # ABSTRACT: Assemble and disassemble IP (Internet Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use warnings;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+use parent 'NetPacket';
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
-
-    @EXPORT = qw(
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(ip_strip
+our @EXPORT_OK = qw(ip_strip
 		    IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP
 		    IP_PROTO_IPIP IP_PROTO_TCP IP_PROTO_EGP
 		    IP_PROTO_EGP IP_PROTO_PUP IP_PROTO_UDP
@@ -53,10 +38,8 @@ BEGIN {
                     MAXTTL IPDEFTTL IPFRAGTTL IPTTLDEC IP_MSS IP_MAXPACKET
     );
 
-# Tags:
-
-    %EXPORT_TAGS = (
-    ALL         => [@EXPORT, @EXPORT_OK],
+our %EXPORT_TAGS = (
+    ALL         => [@EXPORT_OK],
     protos      => [qw(IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP IP_PROTO_IPIP
 		       IP_PROTO_TCP IP_PROTO_EGP IP_PROTO_PUP
 		       IP_PROTO_UDP IP_PROTO_IDP IP_PROTO_TP IP_PROTO_DCCP
@@ -87,8 +70,6 @@ BEGIN {
     misc        => [qw(MAXTTL IPDEFTTL IPFRAGTTL IPTTLDEC IP_MSS
                        IP_MAXPACKET)],
     );
-
-}
 
 #
 # Partial list of IP protocol values from RFC 1700
