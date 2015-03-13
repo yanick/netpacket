@@ -1,4 +1,3 @@
-Build.PL
 CONTRIBUTORS
 Changes
 INSTALL
@@ -6,9 +5,12 @@ LICENSE
 MANIFEST
 META.json
 META.yml
+Makefile.PL
 README
 README.mkdn
 SIGNATURE
+cpanfile
+doap.xml
 lib/NetPacket.pm
 lib/NetPacket/ARP.pm
 lib/NetPacket/Ethernet.pm
