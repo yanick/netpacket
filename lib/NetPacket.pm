@@ -1,38 +1,14 @@
-#
-# NetPacket - Base class for NetPacket::* object hierarchy.
-#
-# Checksumming added by Stephanie Wehner, atrak@itsx.com
-#
-
 package NetPacket;
 # ABSTRACT: assemble/disassemble network packets at the protocol level
 
-
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
+use parent 'Exporter';
 
-BEGIN {
-    @ISA = qw(Exporter);
+our @EXPORT_OK = qw(in_cksum htons htonl ntohs ntohl);
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
-
-    @EXPORT = qw(
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(in_cksum htons htonl ntohs ntohl
-    );
-
-# Tags:
-
-    %EXPORT_TAGS = (
-    ALL         => [@EXPORT, @EXPORT_OK],
-);
-
-}
+our %EXPORT_TAGS = ( ALL => \@EXPORT_OK );
 
 #
 # Utility functions useful for all modules

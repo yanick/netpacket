@@ -1,44 +1,34 @@
-#
-# NetPacket::IGMP - Decode and encode IGMP (Internet Group Management
-# Protocol) packets.
-
 package NetPacket::IGMP;
 # ABSTRACT: Assemble and disassemble IGMP (Internet Group Mangement Protocol) packets. 
 
-
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+use parent 'NetPacket';
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
-
-    @EXPORT = qw(
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(igmp_strip
+our @EXPORT_OK = qw(igmp_strip
 		    IGMP_VERSION_RFC998 IGMP_VERSION_RFC1112
+		    IGMP_VERSION_RFC2236 IGMP_VERSION_RFC3376
 		    IGMP_MSG_HOST_MQUERY IGMP_MSG_HOST_MREPORT
+		    IGMP_MSG_HOST_MQUERYv2 IGMP_MSG_HOST_MREPORTv1
+		    IGMP_MSG_HOST_MREPORTv2 IGMP_MSG_HOST_LEAVE
+		    IGMP_MSG_HOST_MREPORTv3
 		    IGMP_IP_NO_HOSTS IGMP_IP_ALL_HOSTS
 		    IGMP_IP_ALL_ROUTERS
-    );
+);
 
-# Tags:
-
-    %EXPORT_TAGS = (
-    ALL         => [@EXPORT, @EXPORT_OK],
+our %EXPORT_TAGS = (
+    ALL         => [@EXPORT_OK],
     strip       => [qw(igmp_strip)],
-    versions    => [qw(IGMP_VERSION_RFC998 IGMP_VERSION_RFC1112)],
-    msgtypes    => [qw(IGMP_HOST_MQUERY IGMP_HOST_MREPORT)],
+    versions    => [qw(IGMP_VERSION_RFC998 IGMP_VERSION_RFC1112
+		       IGMP_VERSION_RFC2236 IGMP_VERSION_RFC3376)],
+    msgtypes    => [qw(IGMP_MSG_HOST_MQUERY IGMP_MSG_HOST_MREPORT
+		       IGMP_MSG_HOST_MQUERYv2 IGMP_MSG_HOST_MREPORTv1
+		       IGMP_MSG_HOST_MREPORTv2 IGMP_MSG_HOST_LEAVE
+		       IGMP_MSG_HOST_MREPORTv3)],
     group_addrs => [qw(IGMP_IP_NO_HOSTS IGMP_IP_ALL_HOSTS
 		      IGMP_IP_ALL_ROUTERS)]  
 );
-
-}
 
 #
 # Version numbers
@@ -46,6 +36,8 @@ BEGIN {
 
 use constant IGMP_VERSION_RFC998  => 0;      # Version 0 of IGMP (obsolete)
 use constant IGMP_VERSION_RFC1112 => 1;      # Version 1 of IGMP
+use constant IGMP_VERSION_RFC2236 => 2;      # Version 2 of IGMP
+use constant IGMP_VERSION_RFC3376 => 3;      # Version 3 of IGMP
 
 #
 # Message types
@@ -53,6 +45,13 @@ use constant IGMP_VERSION_RFC1112 => 1;      # Version 1 of IGMP
 
 use constant IGMP_MSG_HOST_MQUERY  => 1;      # Host membership query
 use constant IGMP_MSG_HOST_MREPORT => 2;      # Host membership report
+
+use constant IGMP_MSG_HOST_MQUERYv2  => 0x11; # Host membership query
+use constant IGMP_MSG_HOST_MREPORTv1 => 0x12; # Host membership report
+use constant IGMP_MSG_HOST_MREPORTv2 => 0x16; # Host membership report
+use constant IGMP_MSG_HOST_LEAVE     => 0x17; # Leave group
+
+use constant IGMP_MSG_HOST_MREPORTv3 => 0x22; # Host membership report
 
 #
 # IGMP IP addresses

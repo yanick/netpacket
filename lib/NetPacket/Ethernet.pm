@@ -2,33 +2,29 @@ package NetPacket::Ethernet;
 # ABSTRACT: Assemble and disassemble ethernet packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+use parent 'NetPacket';
 
-    @EXPORT = qw();
+my @eth_types = qw/ ETH_TYPE_IP        
+                    ETH_TYPE_ARP       
+                    ETH_TYPE_APPLETALK 
+                    ETH_TYPE_RARP      
+                    ETH_TYPE_SNMP      
+                    ETH_TYPE_IPv6      
+                    ETH_TYPE_PPP       
+                    ETH_TYPE_802_1Q    
+                    ETH_TYPE_IPX       
+                    ETH_TYPE_PPPOED    
+                    ETH_TYPE_PPPOES    /;
 
-    my @eth_types = qw/ ETH_TYPE_IP        
-                        ETH_TYPE_ARP       
-                        ETH_TYPE_APPLETALK 
-                        ETH_TYPE_RARP      
-                        ETH_TYPE_SNMP      
-                        ETH_TYPE_IPv6      
-                        ETH_TYPE_PPP       
-                        ETH_TYPE_802_1Q    
-                        ETH_TYPE_IPX       
-                        ETH_TYPE_PPPOED    
-                        ETH_TYPE_PPPOES    /;
+our @EXPORT_OK = ( 'eth_strip', 'ETH_HLEN', @eth_types ); 
 
-    @EXPORT_OK = ( 'eth_strip', @eth_types ); 
-
-    %EXPORT_TAGS = (
-        ALL         => [@EXPORT, @EXPORT_OK],
-        strip       => [qw(eth_strip)],
-        types       => \@eth_types,
-    );
-}
+our %EXPORT_TAGS = (
+    ALL         => [@EXPORT_OK],
+    strip       => [qw(eth_strip)],
+    types       => \@eth_types,
+);
 
 #
 # Partial list of ethernet protocol types from
@@ -46,6 +42,8 @@ use constant ETH_TYPE_802_1Q    => 0x8100;
 use constant ETH_TYPE_IPX       => 0x8137;
 use constant ETH_TYPE_PPPOED    => 0x8863;
 use constant ETH_TYPE_PPPOES    => 0x8864;
+
+use constant ETH_HLEN		=> 6;
 
 #
 # VLAN Tag field masks

@@ -8,6 +8,8 @@ revision history for NetPacket
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Clean up inheritance code (Philip Prindeville).
+ - Add a truckload of constants (Philip Prindeville).
 
  [NEW FEATURES]
 

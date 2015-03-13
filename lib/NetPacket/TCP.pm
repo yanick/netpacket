@@ -1,17 +1,10 @@
-#
-# NetPacket::TCP - Decode and encode TCP (Transmission Control
-# Protocol) packets. 
-#
-# Encode and checksumming part, Stephanie Wehner, atrak@itsx.com
-
 package NetPacket::TCP;
 # ABSTRACT: Assemble and disassemble TCP (Transmission Control Protocol) packets.
 
 use strict;
-use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-use NetPacket;
+use warnings;
 
-my $myclass;
+use parent 'NetPacket';
 
 # TCP Flags
 
@@ -24,28 +17,14 @@ use constant URG => 0x20;
 use constant ECE => 0x40;
 use constant CWR => 0x80;
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
+our @EXPORT = qw(FIN SYN RST PSH ACK URG ECE CWR);
 
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
+our @EXPORT_OK = qw(tcp_strip );
 
-    @EXPORT = qw(FIN SYN RST PSH ACK URG ECE CWR
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(tcp_strip 
-    );
-
-# Tags:
-
-    %EXPORT_TAGS = (
+our %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     strip       => [qw(tcp_strip)],  
 );
-
-}
 
 #
 # Strip header from packet and return the data contained in it
