@@ -23,10 +23,34 @@ BEGIN {
 
     @EXPORT_OK = qw(ip_strip
 		    IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP
-		    IP_PROTO_IPIP IP_PROTO_TCP IP_PROTO_UDP
+		    IP_PROTO_IPIP IP_PROTO_TCP IP_PROTO_EGP
+		    IP_PROTO_EGP IP_PROTO_PUP IP_PROTO_UDP
+		    IP_PROTO_IDP IP_PROTO_TP IP_PROTO_DCCP
+		    IP_PROTO_IPV6 IP_PROTO_ROUTING IP_PROTO_FRAGMENT
+		    IP_PROTO_RSVP IP_PROTO_GRE IP_PROTO_ESP
+		    IP_PROTO_AH IP_PROTO_ICMPV6 IP_PROTO_NONE
+		    IP_PROTO_DSTOPTS IP_PROTO_MTP IP_PROTO_ENCAP
+		    IP_PROTO_PIM IP_PROTO_COMP IP_PROTO_SCTP
+		    IP_PROTO_UDPLITE
 		    IP_VERSION_IPv4
 		    IP_FLAG_MOREFRAGS IP_FLAG_DONTFRAG IP_FLAG_CONGESTION
-                    IP_MAXPACKET
+		    IPTOS_ECN_MASK IPTOS_ECN_NOT_ECT IPTOS_ECN_ECT1
+		    IPTOS_ECN_ECT0 IPTOS_ECN_CE
+		    IPTOS_DSCP_MASK IPTOS_DSCP_EF
+		    IPTOS_DSCP_AF11 IPTOS_DSCP_AF12 IPTOS_DSCP_AF13
+		    IPTOS_DSCP_AF21 IPTOS_DSCP_AF22 IPTOS_DSCP_AF23
+		    IPTOS_DSCP_AF31 IPTOS_DSCP_AF32 IPTOS_DSCP_AF33
+		    IPTOS_DSCP_AF41 IPTOS_DSCP_AF42 IPTOS_DSCP_AF43
+		    IPTOS_CLASS_MASK IPTOS_CLASS_DEFAULT
+		    IPTOS_CLASS_CS0 IPTOS_CLASS_CS1 IPTOS_CLASS_CS2
+		    IPTOS_CLASS_CS3 IPTOS_CLASS_CS4 IPTOS_CLASS_CS5
+		    IPTOS_CLASS_CS6 IPTOS_CLASS_CS7
+		    IPTOS_PREC_MASK IPTOS_PREC_NETCONTROL
+		    IPTOS_PREC_INTERNETCONTROL IPTOS_PREC_CRITIC_ECP
+		    IPTOS_PREC_FLASHOVERRIDE IPTOS_PREC_FLASH
+		    IPTOS_PREC_IMMEDIATE IPTOS_PREC_PRIORITY
+		    IPTOS_PREC_ROUTINE
+                    MAXTTL IPDEFTTL IPFRAGTTL IPTTLDEC IP_MSS IP_MAXPACKET
     );
 
 # Tags:
@@ -34,11 +58,35 @@ BEGIN {
     %EXPORT_TAGS = (
     ALL         => [@EXPORT, @EXPORT_OK],
     protos      => [qw(IP_PROTO_IP IP_PROTO_ICMP IP_PROTO_IGMP IP_PROTO_IPIP
-		       IP_PROTO_TCP IP_PROTO_UDP)],
+		       IP_PROTO_TCP IP_PROTO_EGP IP_PROTO_PUP
+		       IP_PROTO_UDP IP_PROTO_IDP IP_PROTO_TP IP_PROTO_DCCP
+		       IP_PROTO_IPV6 IP_PROTO_ROUTING IP_PROTO_FRAGMENT
+		       IP_PROTO_RSVP IP_PROTO_GRE IP_PROTO_ESP IP_PROTO_AH
+		       IP_PROTO_ICMPV6 IP_PROTO_NONE IP_PROTO_DSTOPTS
+		       IP_PROTO_MTP IP_PROTO_ENCAP IP_PROTO_PIM IP_PROTO_COMP
+		       IP_PROTO_SCTP IP_PROTO_UDPLITE)],
     versions    => [qw(IP_VERSION_IPv4)],
     strip       => [qw(ip_strip)],
     flags       => [qw(IP_FLAG_MOREFRAGS IP_FLAG_DONTFRAG IP_FLAG_CONGESTION)],
-);
+    tos         => [qw(IPTOS_ECN_MASK IPTOS_ECN_NOT_ECT IPTOS_ECN_ECT1
+		       IPTOS_ECN_ECT0 IPTOS_ECN_CE
+		       IPTOS_DSCP_MASK IPTOS_DSCP_EF
+		       IPTOS_DSCP_AF11 IPTOS_DSCP_AF12 IPTOS_DSCP_AF13
+		       IPTOS_DSCP_AF21 IPTOS_DSCP_AF22 IPTOS_DSCP_AF23
+		       IPTOS_DSCP_AF31 IPTOS_DSCP_AF32 IPTOS_DSCP_AF33
+		       IPTOS_DSCP_AF41 IPTOS_DSCP_AF42 IPTOS_DSCP_AF43
+		       IPTOS_CLASS_MASK IPTOS_CLASS_DEFAULT
+		       IPTOS_CLASS_CS0 IPTOS_CLASS_CS1 IPTOS_CLASS_CS2
+		       IPTOS_CLASS_CS3 IPTOS_CLASS_CS4 IPTOS_CLASS_CS5
+		       IPTOS_CLASS_CS6 IPTOS_CLASS_CS7
+		       IPTOS_PREC_MASK IPTOS_PREC_NETCONTROL
+		       IPTOS_PREC_INTERNETCONTROL IPTOS_PREC_CRITIC_ECP
+		       IPTOS_PREC_FLASHOVERRIDE IPTOS_PREC_FLASH
+		       IPTOS_PREC_IMMEDIATE IPTOS_PREC_PRIORITY
+		       IPTOS_PREC_ROUTINE)],
+    misc        => [qw(MAXTTL IPDEFTTL IPFRAGTTL IPTTLDEC IP_MSS
+                       IP_MAXPACKET)],
+    );
 
 }
 
@@ -51,7 +99,29 @@ use constant IP_PROTO_ICMP => 1;       # Internet Control Message Protocol
 use constant IP_PROTO_IGMP => 2;       # Internet Group Management Protocol
 use constant IP_PROTO_IPIP => 4;       # IP in IP encapsulation
 use constant IP_PROTO_TCP  => 6;       # Transmission Control Protocol
+use constant IP_PROTO_EGP  => 8;       # Exterior Gateway Protocol
+use constant IP_PROTO_PUP  => 12;      # PUP protocol
 use constant IP_PROTO_UDP  => 17;      # User Datagram Protocol
+use constant IP_PROTO_IDP  => 22;      # XNS IDP Protocol
+use constant IP_PROTO_TP   => 29;      # SO Transport Protocol Class 4
+use constant IP_PROTO_DCCP => 33;      # Datagram Congestion Control Protocol
+use constant IP_PROTO_IPV6 => 41;      # IPv6 header
+use constant IP_PROTO_ROUTING => 43;   # IPv6 routing header
+use constant IP_PROTO_FRAGMENT => 44;  # IPv6 fragmentation header
+use constant IP_PROTO_RSVP => 46;      # Reservation Protocol
+use constant IP_PROTO_GRE  => 47;      # General Routing Encapsulation
+use constant IP_PROTO_ESP  => 50;      # encapsulating security payload
+use constant IP_PROTO_AH   => 51;      # authentication header
+use constant IP_PROTO_ICMPV6 => 58;    # ICMPv6
+use constant IP_PROTO_NONE => 59;      # IPv6 no next header
+use constant IP_PROTO_DSTOPTS => 60;   # IPv6 destination options
+use constant IP_PROTO_MTP => 92;       # Multicast Transport Protocol
+use constant IP_PROTO_ENCAP => 98;     # Encapsulation Header
+use constant IP_PROTO_PIM => 103;      # Protocol Independent Multicast
+use constant IP_PROTO_COMP => 108;     # Compression Header Protocol
+use constant IP_PROTO_SCTP => 132;     # Stream Control Transmission Protocol
+use constant IP_PROTO_UDPLITE => 136;  # UDP-Lite protocol
+
 
 #
 # Partial list of IP version numbers from RFC 1700
@@ -66,6 +136,60 @@ use constant IP_VERSION_IPv4 => 4;     # IP version 4
 use constant IP_FLAG_MOREFRAGS  => 1;     # More fragments coming
 use constant IP_FLAG_DONTFRAG   => 2;     # Don't fragment me
 use constant IP_FLAG_CONGESTION => 4;     # Congestion present
+
+#
+# ToS/DSCP values
+#
+
+use constant IPTOS_ECN_MASK     => 0x03;
+use constant IPTOS_ECN_NOT_ECT  => 0x00;
+use constant IPTOS_ECN_ECT1     => 0x01;
+use constant IPTOS_ECN_ECT0     => 0x02;
+use constant IPTOS_ECN_CE       => 0x03;
+
+use constant IPTOS_DSCP_MASK    => 0xfc;
+use constant IPTOS_DSCP_AF11    => 0x28;
+use constant IPTOS_DSCP_AF12    => 0x30;
+use constant IPTOS_DSCP_AF13    => 0x38;
+use constant IPTOS_DSCP_AF21    => 0x48;
+use constant IPTOS_DSCP_AF22    => 0x50;
+use constant IPTOS_DSCP_AF23    => 0x58;
+use constant IPTOS_DSCP_AF31    => 0x68;
+use constant IPTOS_DSCP_AF32    => 0x70;
+use constant IPTOS_DSCP_AF33    => 0x78;
+use constant IPTOS_DSCP_AF41    => 0x88;
+use constant IPTOS_DSCP_AF42    => 0x90;
+use constant IPTOS_DSCP_AF43    => 0x98;
+use constant IPTOS_DSCP_EF      => 0xb8;
+
+use constant IPTOS_CLASS_MASK   => 0xe0;
+use constant IPTOS_CLASS_CS0    => 0x00;
+use constant IPTOS_CLASS_CS1    => 0x20;
+use constant IPTOS_CLASS_CS2    => 0x40;
+use constant IPTOS_CLASS_CS3    => 0x60;
+use constant IPTOS_CLASS_CS4    => 0x80;
+use constant IPTOS_CLASS_CS5    => 0xa0;
+use constant IPTOS_CLASS_CS6    => 0xc0;
+use constant IPTOS_CLASS_CS7    => 0xe0;
+use constant IPTOS_CLASS_DEFAULT => 0x00;
+
+use constant IPTOS_PREC_MASK    => 0xe0;
+use constant IPTOS_PREC_NETCONTROL => 0xe0;
+use constant IPTOS_PREC_INTERNETCONTROL => 0xc0;
+use constant IPTOS_PREC_CRITIC_ECP => 0x0a;
+use constant IPTOS_PREC_FLASHOVERRIDE => 0x80;
+use constant IPTOS_PREC_FLASH   => 0x60;
+use constant IPTOS_PREC_IMMEDIATE => 0x40;
+use constant IPTOS_PREC_PRIORITY => 0x20;
+use constant IPTOS_PREC_ROUTINE => 0x00;
+
+# TTL values
+use constant MAXTTL             => 255;
+use constant IPDEFTTL           => 64;
+use constant IPFRAGTTL          => 60;
+use constant IPTTLDEC           => 1;
+
+use constant IP_MSS             => 576;
 
 # Maximum IP Packet size
 use constant IP_MAXPACKET => 65535;
