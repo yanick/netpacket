@@ -2,21 +2,11 @@ package NetPacket::ICMP;
 # ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
 
 use strict;
-use vars qw( @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
+use warnings;
 
+use parent 'NetPacket';
 
-BEGIN {
-    @ISA = qw(Exporter NetPacket);
-
-# Items to export into callers namespace by default
-# (move infrequently used names to @EXPORT_OK below)
-
-    @EXPORT = qw(
-    );
-
-# Other items we are prepared to export if requested
-
-    @EXPORT_OK = qw(icmp_strip icmp_infotype
+our @EXPORT_OK = qw(icmp_strip icmp_infotype
                     ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
                     ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
                     ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
@@ -36,10 +26,8 @@ BEGIN {
                     ICMP_PARAMPROB_OPTABSENT
     );
 
-# Tags:
-
-    %EXPORT_TAGS = (
-    ALL         => [@EXPORT, @EXPORT_OK],
+our %EXPORT_TAGS = (
+    ALL         => [@EXPORT_OK],
     types       => [qw(ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
                        ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT 
                        ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
@@ -60,8 +48,6 @@ BEGIN {
                        ICMP_PARAMPROB_OPTABSENT)],
     strip       => [qw(icmp_strip)],
 );
-
-}
 
 # ICMP Types
 
