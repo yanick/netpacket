@@ -5,7 +5,7 @@ use Test::More;
 
 use NetPacket::IPv6 qw(:protos :extheaders);
 use NetPacket::Ethernet;
-use Socket qw(AF_INET6 inet_pton);
+use Socket 1.87 qw(AF_INET6 inet_pton);
 
 my @test_data = (
   { proto => IP_PROTO_TCP, len => 210, hop_limit => 53,
