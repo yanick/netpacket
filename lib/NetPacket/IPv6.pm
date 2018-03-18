@@ -146,7 +146,7 @@ sub encode {
     my $self = shift;
 
     # adjust the length of the packet and pack extension headers
-    $self->{len} = length($self->{data});
+    $self->{len} = 0;
     my $extheaders = '';
     my $next_header = $self->{proto};
     foreach my $header (reverse @{$self->{extheaders}}) {
@@ -166,6 +166,8 @@ sub encode {
         }
         $next_header = $header->{type};
     }
+
+    $self->{len} += length($self->{data});
 
     my $tmp = $self->{flow_label} & 0x000fffff;
     $tmp |= ($self->{traffic_class} << 20) & 0x0ff00000;
