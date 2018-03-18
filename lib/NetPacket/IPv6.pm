@@ -191,6 +191,16 @@ sub encode {
     return $packet;
 }
 
+sub pseudo_header {
+    my $self = shift;
+    my ($length, $next_header) = @_;
+
+    my $src_ip = inet_pton(AF_INET6, $self->{src_ip});
+    my $dest_ip = inet_pton(AF_INET6, $self->{dest_ip});
+
+    return pack('a16a16Na3C', $src_ip, $dest_ip, $length, 0, $next_header);
+}
+
 #
 # Module initialisation
 #
@@ -230,6 +240,11 @@ is passed to this method.
 Return an IPv6 packet encoded with the instance data specified. This
 will infer the total length of the packet automatically from the 
 payload length and length of any extension headers.
+
+=item C<NetPacket::IPv6-E<gt>pseudo_header([PACKET LENGTH], [PROTOCOL])>
+
+Return an IPv6 "pseudo-header" suitable for computing checksums for
+certain upper-level protocols.
 
 =back
 
@@ -399,6 +414,8 @@ to standard output.
 =over
 
 =item More specific keys for well-defined extension headers.
+
+=item Parse routing extension headers to correctly compute upper-level checksums.
 
 =back
 

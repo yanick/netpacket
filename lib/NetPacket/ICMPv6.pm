@@ -6,7 +6,6 @@ use warnings;
 
 use parent 'NetPacket';
 use NetPacket::IPv6 'IP_PROTO_ICMPv6';
-use Socket 1.87 qw(AF_INET6 inet_pton);
 
 our @EXPORT_OK = qw(icmpv6_strip icmpv6_infotype
                     ICMPv6_UNREACH ICMPv6_TOOBIG ICMPv6_TIMXCEED ICMPv6_PARAMPROB
@@ -270,11 +269,9 @@ sub checksum {
     my ($ipv6) = @_;
 
     # Put the packet together for checksumming
-    my $src_ip = inet_pton(AF_INET6, $ipv6->{src_ip});
-    my $dest_ip = inet_pton(AF_INET6, $ipv6->{dest_ip});
     my $len = length($self->{data}) + 32;
-    my $packet = pack("a16a16NNCCna*", $src_ip, $dest_ip, $len, IP_PROTO_ICMPv6,
-        $self->{type}, $self->{code}, 0, $self->{data});
+    my $packet = $ipv6->pseudo_header($len, IP_PROTO_ICMPv6);
+    $packet .= pack("CCna*", $self->{type}, $self->{code}, 0, $self->{data});
 
     $self->{cksum} = NetPacket::htons(NetPacket::in_cksum($packet));
 }
