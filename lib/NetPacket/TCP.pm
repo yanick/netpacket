@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use parent 'NetPacket';
+use Socket 1.87 qw(AF_INET6 inet_pton);
 
 # TCP Flags
 
@@ -140,14 +141,25 @@ sub checksum {
 
     # Pack pseudo-header for tcp checksum
 
-    $src_ip = gethostbyname($ip->{src_ip});
-    $dest_ip = gethostbyname($ip->{dest_ip});
+    if ($ip->isa('NetPacket::IPv6')) {
+        $src_ip = inet_pton(AF_INET6, $ip->{src_ip});
+        $dest_ip = inet_pton(AF_INET6, $ip->{dest_ip});
 
-    $packet = pack('a4a4nnnnNNnnnna*a*',
+        $packet = pack('a16a16NNnnNNnnnna*a*',
+            $src_ip,$dest_ip,$tcplen,$proto,
+            $self->{src_port}, $self->{dest_port}, $self->{seqnum},
+            $self->{acknum}, $tmp, $self->{winsize}, $zero,
+            $self->{urg}, $self->{options},$self->{data});
+    } else {
+        $src_ip = gethostbyname($ip->{src_ip});
+        $dest_ip = gethostbyname($ip->{dest_ip});
+
+        $packet = pack('a4a4nnnnNNnnnna*a*',
             $src_ip,$dest_ip,$proto,$tcplen,
             $self->{src_port}, $self->{dest_port}, $self->{seqnum},
             $self->{acknum}, $tmp, $self->{winsize}, $zero,
             $self->{urg}, $self->{options},$self->{data});
+    }
 
     # pad packet if odd-sized
     $packet .= "\x00" if length( $packet ) % 2;
