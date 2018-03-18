@@ -6,7 +6,6 @@ use warnings;
 
 use parent 'NetPacket';
 use NetPacket::IP;
-use Socket 1.87 qw(AF_INET6 inet_pton);
 
 our @EXPORT_OK = qw(udp_strip);
 
@@ -85,34 +84,25 @@ sub checksum {
 
     # Pack pseudo-header for udp checksum
 
+    no warnings;
+
     my $packet;
     if ($ip->isa('NetPacket::IPv6')) {
-        my $src_ip = inet_pton(AF_INET6, $ip->{src_ip});
-        my $dest_ip = inet_pton(AF_INET6, $ip->{dest_ip});
-
-        no warnings;
-
-        $packet = pack 'a16a16NNnnnna*' =>
-
-          # fake ip header part
-          $src_ip, $dest_ip, $self->{len}, $proto,
-
-          # proper UDP part
-          $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data};
+        $packet = $ip->pseudo_header($self->{len}, $proto);
     } else {
         my $src_ip = gethostbyname($ip->{src_ip});
         my $dest_ip = gethostbyname($ip->{dest_ip});
 
-        no warnings;
-
-        $packet = pack 'a4a4CCnnnnna*' =>
+        $packet = pack 'a4a4CCn' =>
 
           # fake ip header part
-          $src_ip, $dest_ip, 0, $proto, $self->{len},
-
-          # proper UDP part
-          $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data};
+          $src_ip, $dest_ip, 0, $proto, $self->{len};
     }
+
+    $packet .= pack 'nnnna*' =>
+
+      # proper UDP part
+      $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data};
 
     $packet .= "\x00" if length($packet) % 2;
 
