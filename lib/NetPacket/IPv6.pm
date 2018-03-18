@@ -156,7 +156,13 @@ sub encode {
             $header->{len} = 0;
             $extheaders = pack('CCa6a*', $next_header, $header->{len}, $header->{data}, $extheaders);
         } elsif ($header->{type} == IPv6_EXTHEADER_ESP) {
-            $self->{data} = $header->{data} if defined $header->{data};
+            # Nothing can follow the encrypted ESP extension header
+            $self->{data} = $header->{data};
+            $extheaders = '';
+        } elsif ($header->{type} == IPv6_EXTHEADER_NONEXT) {
+            # Nothing can follow the no-next extension header
+            $self->{data} = '';
+            $extheaders = '';
         } else {
             my $data_bytes = length($header->{data});
             $data_bytes = 6 if $data_bytes < 6;
