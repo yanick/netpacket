@@ -6,7 +6,7 @@ use warnings;
 
 use parent 'NetPacket';
 use NetPacket::IPv6 'IP_PROTO_ICMPv6';
-use Socket qw(AF_INET6 inet_pton);
+use Socket 1.87 qw(AF_INET6 inet_pton);
 
 our @EXPORT_OK = qw(icmpv6_strip icmpv6_infotype
                     ICMPv6_UNREACH ICMPv6_TOOBIG ICMPv6_TIMXCEED ICMPv6_PARAMPROB

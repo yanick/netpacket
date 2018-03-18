@@ -6,7 +6,7 @@ use warnings;
 
 use parent 'NetPacket';
 use NetPacket::IP qw(:protos :tos :misc);
-use Socket qw(AF_INET6 inet_pton inet_ntop);
+use Socket 1.87 qw(AF_INET6 inet_pton inet_ntop);
 
 our @EXPORT_OK = (qw(ipv6_strip ipv6_extheader),
     @{$NetPacket::IP::EXPORT_TAGS{protos}},
