@@ -100,14 +100,15 @@ sub decode {
 
         $self->{extheaders} = [];
         while (ipv6_extheader($next_header)) {
-            last if $next_header == IPv6_EXTHEADER_NONEXT or $next_header == IPv6_EXTHEADER_ESP;
-            my %header = (type => $next_header);
-            if ($next_header == IPv6_EXTHEADER_FRAGMENT) {
+            my $header_type = $next_header;
+            last if $header_type == IPv6_EXTHEADER_NONEXT or $header_type == IPv6_EXTHEADER_ESP;
+            my %header = (type => $header_type);
+            if ($header_type == IPv6_EXTHEADER_FRAGMENT) {
                 ($next_header, undef, $header{data}, $self->{data}) = unpack('CCa6a*', $self->{data});
                 $header{len} = 0;
             } else {
                 ($next_header, $header{len}, $self->{data}) = unpack('CCa*', $self->{data});
-                my $data_len = $header{len} * 8 + 6;
+                my $data_len = $header{len} * ($header_type == IPv6_EXTHEADER_AUTH ? 4 : 8) + 6;
                 ($header{data}, $self->{data}) = unpack("a${data_len}a*", $self->{data});
             }
             push @{$self->{extheaders}}, \%header;
@@ -167,7 +168,7 @@ sub encode {
             my $data_bytes = length($header->{data});
             $data_bytes = 6 if $data_bytes < 6;
             $self->{len} += $data_bytes + 2;
-            $header->{len} = int(($data_bytes - 6) / 8);
+            $header->{len} = int(($data_bytes - 6) / ($header->{type} == IPv6_EXTHEADER_AUTH ? 4 : 8));
             $extheaders = pack("CCa${data_bytes}a*", $next_header, $header->{len}, $header->{data}, $extheaders);
         }
         $next_header = $header->{type};
@@ -317,6 +318,8 @@ The extension header type number.
 =item len
 
 The extension header length, in 8-byte units, minus the first 8-byte unit.
+(For Authentication extension headers, this length is in 4-byte units, minus
+the first two 4-byte units.)
 
 =item data
 
