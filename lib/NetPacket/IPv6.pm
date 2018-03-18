@@ -100,12 +100,11 @@ sub decode {
 
         $self->{extheaders} = [];
         while (ipv6_extheader($next_header)) {
+            last if $next_header == IPv6_EXTHEADER_NONEXT or $next_header == IPv6_EXTHEADER_ESP;
             my %header = (type => $next_header);
             if ($next_header == IPv6_EXTHEADER_FRAGMENT) {
                 ($next_header, undef, $header{data}, $self->{data}) = unpack('CCa6a*', $self->{data});
                 $header{len} = 0;
-            } elsif ($next_header == IPv6_EXTHEADER_ESP) {
-                ...
             } else {
                 ($next_header, $header{len}, $self->{data}) = unpack('CCa*', $self->{data});
                 my $data_len = $header{len} * 8 + 6;
@@ -157,7 +156,7 @@ sub encode {
             $header->{len} = 0;
             $extheaders = pack('CCa6a*', $next_header, $header->{len}, $header->{data}, $extheaders);
         } elsif ($header->{type} == IPv6_EXTHEADER_ESP) {
-            ...
+            $self->{data} = $header->{data} if defined $header->{data};
         } else {
             my $data_bytes = length($header->{data});
             $data_bytes = 6 if $data_bytes < 6;
@@ -288,7 +287,10 @@ The destination IP address for this packet in colon-separated hextet notation.
 =item extheaders
 
 Array of any extension headers for this packet, as a hashref containing the
-fields described below.
+fields described below. An ESP (Encapsulating Security Payload) header will
+not be represented here; as it and any further extension headers and the
+payload data will be encrypted, it will be instead represented as the packet
+payload data itself, with a protocol number of 50 (C<IPv6_EXTHEADER_ESP>).
 
 =item data
 
@@ -384,10 +386,6 @@ to standard output.
 =head1 TODO
 
 =over
-
-=item Decoding and assembly of packets containing the Encapsulating Security
-Payload extension header. Currently the module will throw an exception if this
-is encountered in decoding or encoding.
 
 =item More specific keys for well-defined extension headers.
 
