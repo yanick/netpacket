@@ -317,25 +317,25 @@ length bytes.
 
 =head2 Exports
 
-The C<:protos>, C<:tos>, and C<:misc> tags from L<NetPacket::IP>, as well as
-the exportable items they reference, are re-exported from this module for
-convenience.
-
 =over
 
 =item default
 
 none
 
-=item exportable
-
-IP_VERSION_IPv6
-
 =item tags
 
 The following tags group together related exportable items.
 
 =over
+
+=item C<:protos>
+
+=item C<:tos>
+
+=item C<:misc>
+
+Re-exported from L<NetPacket::IP> for convenience.
 
 =item C<:extheaders>
 
