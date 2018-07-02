@@ -107,8 +107,9 @@ $pkt);
 # Strip header from packet and return the data contained in it
 #
 
-undef &eth_strip;        # Create eth_strip alias
-*eth_strip = \&strip;
+sub eth_strip {
+  goto \&strip;
+}
 
 sub strip {
     my ($pkt) = @_;

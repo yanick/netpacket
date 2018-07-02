@@ -118,8 +118,9 @@ sub decode {
 # packets contain no encapsulated data.
 #
 
-undef &igmp_strip;
-*igmp_strip = \&strip;
+sub igmp_strip {
+  goto \&strip;
+}
 
 sub strip {
     return undef;

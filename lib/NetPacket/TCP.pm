@@ -30,8 +30,9 @@ our %EXPORT_TAGS = (
 # Strip header from packet and return the data contained in it
 #
 
-undef &tcp_strip;
-*tcp_strip = \&strip;
+sub tcp_strip {
+  goto \&strip;
+}
 
 sub strip {
     my ($pkt) = @_;

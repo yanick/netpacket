@@ -46,8 +46,9 @@ sub decode {
 # Strip header from packet and return the data contained in it
 #
 
-undef &udp_strip;
-*udp_strip = \&strip;
+sub udp_strip {
+  goto \&strip;
+}
 
 sub strip {
     return decode(__PACKAGE__,shift)->{data};
