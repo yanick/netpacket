@@ -1,3 +1,4 @@
+CODE_OF_CONDUCT.md
 CONTRIBUTORS
 Changes
 INSTALL
@@ -22,7 +23,8 @@ lib/NetPacket/TCP.pm
 lib/NetPacket/UDP.pm
 lib/NetPacket/USBMon.pm
 t/00-compile.t
-t/000-report-versions-tiny.t
+t/00-report-prereqs.dd
+t/00-report-prereqs.t
 t/bug-37931.t
 t/checksum.t
 t/ethernet.t
