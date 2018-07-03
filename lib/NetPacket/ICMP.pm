@@ -147,8 +147,9 @@ sub decode {
 # Strip a packet of its header and return the data
 #
 
-undef &icmp_strip;
-*icmpstrip = \&strip;
+sub icmpstrip {
+  goto \&strip;
+}
 
 sub strip {
     my ($pkt) = @_;

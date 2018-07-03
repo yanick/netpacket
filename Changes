@@ -8,6 +8,7 @@ revision history for NetPacket
  [DOCUMENTATION]
 
  [ENHANCEMENTS]
+ - Setup aliases at compile time (Nicolas R, GH#11)
 
  [NEW FEATURES]
 

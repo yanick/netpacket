@@ -99,8 +99,9 @@ sub decode {
 # packets contain no encapsulated data.
 #
 
-undef &arp_strip;
-*arp_strip = \&strip;
+sub arp_strip {
+  goto \&strip;
+}
 
 sub strip {
     return undef;

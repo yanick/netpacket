@@ -251,8 +251,9 @@ sub decode {
 # Strip header from packet and return the data contained in it
 #
 
-undef &ip_strip;           # Create ip_strip alias
-*ip_strip = \&strip;
+sub ip_strip { # Create ip_strip alias
+  goto \&strip;
+}
 
 sub strip {
     my ($pkt) = @_;
