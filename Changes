@@ -9,6 +9,7 @@ revision history for NetPacket
 
  [ENHANCEMENTS]
  - Setup aliases at compile time (Nicolas R, GH#11)
+ - add recommended Net::Pcap{,Utils} from README (Zak B. Elep, GH#12)
 
  [NEW FEATURES]
 

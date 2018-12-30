@@ -37,3 +37,4 @@ t/tcp.t
 t/udp-checksum.t
 t/udp.t
 t/usbmon.t
+xt/release/unused-vars.t
