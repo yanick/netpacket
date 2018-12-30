@@ -1,6 +1,7 @@
 package NetPacket::Ethernet;
+our $AUTHORITY = 'cpan:YANICK';
 # ABSTRACT: Assemble and disassemble ethernet packets.
-
+$NetPacket::Ethernet::VERSION = '1.7.0';
 use strict;
 use warnings;
 
@@ -140,7 +141,15 @@ sub encode {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::Ethernet - Assemble and disassemble ethernet packets.
+
+=head1 VERSION
+
+version 1.7.0
 
 =head1 SYNOPSIS
 
@@ -294,12 +303,13 @@ This program is distributed in the hope that it will be useful,
 but without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
 
-
-
 =head1 AUTHOR
 
 Tim Potter E<lt>tpot@samba.orgE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line
