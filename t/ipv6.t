@@ -27,7 +27,7 @@ my @test_data = (
     src_ip => '584c:2ead:4dbf:2a8f:4ef:e5e9:b823:8b33', dest_ip => 'e1c5:2c79:5ab8:701e:d885:c2d:eee9:57ef' },
 );
 
-my @datagrams = map { chomp; length ? join('', map { chr hex } split /\./) : () } <DATA>;
+my @datagrams = map { chomp; length($_) ? join('', map { chr hex } split /\./) : () } <DATA>;
 
 foreach my $datagram (@datagrams) {
   my $test = shift @test_data;

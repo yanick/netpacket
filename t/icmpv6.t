@@ -15,7 +15,7 @@ my @test_data = (
   { type => ICMPv6_NEIGHBORADVERT, code => 0, cksum => 61573, len => 20 },
 );
 
-my @datagrams = map { chomp; length ? join('', map { chr hex } split /\./) : () } <DATA>;
+my @datagrams = map { chomp; length($_) ? join('', map { chr hex } split /\./) : () } <DATA>;
 
 foreach my $datagram (@datagrams) {
   my $test = shift @test_data;
