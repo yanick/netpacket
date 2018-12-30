@@ -12,6 +12,7 @@ revision history for NetPacket
  - add recommended Net::Pcap{,Utils} from README (Zak B. Elep, GH#12)
 
  [NEW FEATURES]
+ - adds back basic support for IPv6. (Dan Book, GH#10)
 
  [STATISTICS]
 

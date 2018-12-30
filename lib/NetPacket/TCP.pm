@@ -140,14 +140,19 @@ sub checksum {
 
     # Pack pseudo-header for tcp checksum
 
-    $src_ip = gethostbyname($ip->{src_ip});
-    $dest_ip = gethostbyname($ip->{dest_ip});
+    if ($ip->isa('NetPacket::IPv6')) {
+        $packet = $ip->pseudo_header($tcplen, $proto);
+    } else {
+        $src_ip = gethostbyname($ip->{src_ip});
+        $dest_ip = gethostbyname($ip->{dest_ip});
 
-    $packet = pack('a4a4nnnnNNnnnna*a*',
-            $src_ip,$dest_ip,$proto,$tcplen,
-            $self->{src_port}, $self->{dest_port}, $self->{seqnum},
-            $self->{acknum}, $tmp, $self->{winsize}, $zero,
-            $self->{urg}, $self->{options},$self->{data});
+        $packet = pack('a4a4nn',$src_ip,$dest_ip,$proto,$tcplen);
+    }
+
+    $packet .= pack('nnNNnnnna*a*',
+        $self->{src_port}, $self->{dest_port}, $self->{seqnum},
+        $self->{acknum}, $tmp, $self->{winsize}, $zero,
+        $self->{urg}, $self->{options},$self->{data});
 
     # pad packet if odd-sized
     $packet .= "\x00" if length( $packet ) % 2;

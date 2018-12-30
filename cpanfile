@@ -1,5 +1,6 @@
 requires "Carp" => "0";
 requires "Exporter" => "0";
+requires "Socket" => "1.87";
 requires "constant" => "0";
 requires "parent" => "0";
 requires "perl" => "v5.10.0";

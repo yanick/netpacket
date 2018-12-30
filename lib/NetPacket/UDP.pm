@@ -85,15 +85,22 @@ sub checksum {
 
     # Pack pseudo-header for udp checksum
 
-    my $src_ip = gethostbyname($ip->{src_ip});
-    my $dest_ip = gethostbyname($ip->{dest_ip});
-
     no warnings;
 
-    my $packet = pack 'a4a4CCnnnnna*' =>
+    my $packet;
+    if ($ip->isa('NetPacket::IPv6')) {
+        $packet = $ip->pseudo_header($self->{len}, $proto);
+    } else {
+        my $src_ip = gethostbyname($ip->{src_ip});
+        my $dest_ip = gethostbyname($ip->{dest_ip});
 
-      # fake ip header part
-      $src_ip, $dest_ip, 0, $proto, $self->{len},
+        $packet = pack 'a4a4CCn' =>
+
+          # fake ip header part
+          $src_ip, $dest_ip, 0, $proto, $self->{len};
+    }
+
+    $packet .= pack 'nnnna*' =>
 
       # proper UDP part
       $self->{src_port}, $self->{dest_port}, $self->{len}, 0, $self->{data};
