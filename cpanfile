@@ -6,6 +6,9 @@ requires "perl" => "v5.10.0";
 requires "strict" => "0";
 requires "warnings" => "0";
 
+recommends "Net::Pcap" => "0";
+recommends "Net::PcapUtils" => "0";
+
 on 'test' => sub {
   requires "ExtUtils::MakeMaker" => "0";
   requires "File::Spec" => "0";
