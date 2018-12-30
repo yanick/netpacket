@@ -1,5 +1,5 @@
 package NetPacket::ICMP;
-# ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets. 
+# ABSTRACT: Assemble and disassemble ICMP (Internet Control Message Protocol) packets.
 
 use strict;
 use warnings;
@@ -29,7 +29,7 @@ our @EXPORT_OK = qw(icmp_strip icmp_infotype
 our %EXPORT_TAGS = (
     ALL         => [@EXPORT_OK],
     types       => [qw(ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
-                       ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT 
+                       ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
                        ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
                        ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ ICMP_IREQREPLY
                        ICMP_MASKREQ ICMP_MASKREPLY)],
@@ -164,17 +164,16 @@ sub strip {
 
 sub encode {
     my $self = shift;
-    my ($ip) = @_;
     my ($packet);
-    
+
     # Checksum the packet
     $self->checksum();
 
     # Put the packet together
-    $packet = pack("CCna*", $self->{type}, $self->{code}, 
+    $packet = pack("CCna*", $self->{type}, $self->{code},
                 $self->{cksum}, $self->{data});
 
-    return($packet); 
+    return($packet);
 }
 
 #
@@ -182,7 +181,6 @@ sub encode {
 
 sub checksum {
     my $self = shift;
-    my ($ip) = @_;
     my ($packet,$zero);
 
     # Put the packet together for checksumming
@@ -215,7 +213,7 @@ __END__
 =head1 DESCRIPTION
 
 C<NetPacket::ICMP> provides a set of routines for assembling and
-disassembling packets using ICMP (Internet Control Message Protocol). 
+disassembling packets using ICMP (Internet Control Message Protocol).
 
 =head2 Methods
 
@@ -230,7 +228,7 @@ is passed to this method.
 
 =item C<NetPacket::ICMP-E<gt>encode()>
 
-Return an ICMP packet encoded with the instance data specified. 
+Return an ICMP packet encoded with the instance data specified.
 
 =back
 
@@ -280,7 +278,7 @@ none
 
 =item exportable
 
-ICMP message types: 
+ICMP message types:
     ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
     ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
     ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
@@ -299,7 +297,7 @@ The following tags group together related exportable items.
   ICMP_ECHOREPLY ICMP_UNREACH ICMP_SOURCEQUENCH
   ICMP_REDIRECT ICMP_ECHO ICMP_ROUTERADVERT
   ICMP_ROUTERSOLICIT ICMP_TIMXCEED ICMP_PARAMPROB
-  ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ 
+  ICMP_TSTAMP ICMP_TSTAMPREPLY ICMP_IREQ
   ICMP_IREQREPLY ICMP_MASKREQ ICMP_MASKREPLY
 
 =item C<:strip>
@@ -316,7 +314,7 @@ All the above exportable items.
 
 =head1 EXAMPLE
 
-The following example prints the ICMP type, code, and checksum 
+The following example prints the ICMP type, code, and checksum
 fields.
 
   #!/usr/bin/perl -w
@@ -352,7 +350,7 @@ fields.
 
 Copyright (c) 2001 Tim Potter and Stephanie Wehner.
 
-Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of 
+Copyright (c) 1995,1996,1997,1998,1999 ANU and CSIRO on behalf of
 the participants in the CRC for Advanced Computational Systems
 ('ACSys').
 
