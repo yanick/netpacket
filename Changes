@@ -4,6 +4,7 @@ revision history for NetPacket
   [ API CHANGES ]
 
   [ BUG FIXES ]
+    - fixes inverted ethernet ports (reported by sanyacomua)
 
   [ DOCUMENTATION ]
 
