@@ -11,3 +11,4 @@ META.yml
 *.tar
 Makefile.PL
 NetPacket-*
+tags
