@@ -4,7 +4,6 @@ revision history for NetPacket
   [ API CHANGES ]
 
   [ BUG FIXES ]
-    - fixes inverted ethernet ports (reported by sanyacomua)
 
   [ DOCUMENTATION ]
 
@@ -13,6 +12,13 @@ revision history for NetPacket
   [ NEW FEATURES ]
 
   [ STATISTICS ]
+
+1.7.1 2019-06-08
+  [ BUG FIXES ]
+    - fixes inverted ethernet ports (reported by sanyacomua)
+
+  [ STATISTICS ]
+    - code churn: 4 files changed, 140 insertions(+), 130 deletions(-)
 
 1.7.0 2018-12-30
   [ ENHANCEMENTS ]
