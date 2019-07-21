@@ -1,6 +1,7 @@
 package NetPacket::ICMPv6;
+our $AUTHORITY = 'cpan:YANICK';
 # ABSTRACT: Assemble and disassemble ICMPv6 (Internet Control Message Protocol for IPv6) packets. 
-
+$NetPacket::ICMPv6::VERSION = '1.7.2';
 use strict;
 use warnings;
 
@@ -285,7 +286,15 @@ sub checksum {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::ICMPv6 - Assemble and disassemble ICMPv6 (Internet Control Message Protocol for IPv6) packets. 
+
+=head1 VERSION
+
+version 1.7.2
 
 =head1 SYNOPSIS
 
@@ -473,5 +482,8 @@ merchantability or fitness for a particular purpose.
 Dan Book E<lt>dbook@cpan.orgE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line
