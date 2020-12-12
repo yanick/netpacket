@@ -269,7 +269,7 @@ sub checksum {
     my ($ipv6) = @_;
 
     # Put the packet together for checksumming
-    my $len = length($self->{data}) + 32;
+    my $len = length($self->{data}) + 4;
     my $packet = $ipv6->pseudo_header($len, IP_PROTO_ICMPv6);
     $packet .= pack("CCna*", $self->{type}, $self->{code}, 0, $self->{data});
 
