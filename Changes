@@ -8,6 +8,7 @@ revision history for NetPacket
   [ DOCUMENTATION ]
 
   [ ENHANCEMENTS ]
+  - Add support for SLL and SLL2 (Linux cooked capture) (Grinnz, GH#18)
 
   [ NEW FEATURES ]
 
