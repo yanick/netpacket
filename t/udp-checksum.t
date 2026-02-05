@@ -1,5 +1,5 @@
 
-use Test::More tests => 2;
+use Test2::Bundle::More;
 
 my $data = <<'END_DATA';
 01005e2a2501003048770072080045000110000040000111cccc53a6443fef2a25017
@@ -32,3 +32,4 @@ $pkt->checksum($ip_pkt);
 
 is $pkt->{cksum} => 32055, 're-computed checksum';
 
+done_testing;

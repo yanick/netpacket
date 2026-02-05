@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test2::Bundle::More;
 
 use NetPacket::ICMPv6 qw(:types :codes);
 use NetPacket::IPv6;

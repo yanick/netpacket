@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test2::Bundle::More;
 
 use NetPacket::Ethernet qw/ :types /;
 
@@ -21,3 +21,5 @@ subtest "don't invert the mac ports" => sub {
     like $packet->{src_mac}, qr'001', 'src_mac';
     like $packet->{dest_mac}, qr'002', 'dest_mac';
 };
+
+done_testing;

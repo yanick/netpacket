@@ -1,12 +1,13 @@
 use strict;
 use warnings;
 
-use Test::More tests => 1;                      # last test to print
+use Test2::Bundle::More;
 
 use NetPacket::ICMP ':ALL';
 
 ok ICMP_MASKREQ(), "ICMP_MASKRED defined";
 
+done_testing;
 
 __END__
 
