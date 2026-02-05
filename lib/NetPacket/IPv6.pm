@@ -1,6 +1,7 @@
 package NetPacket::IPv6;
+our $AUTHORITY = 'cpan:YANICK';
 # ABSTRACT: Assemble and disassemble IPv6 (Internet Protocol version 6) packets.
-
+$NetPacket::IPv6::VERSION = '1.8.0';
 use strict;
 use warnings;
 
@@ -209,7 +210,15 @@ sub pseudo_header {
 
 # autoloaded methods go after the END token (&& pod) below
 
-__END__
+=pod
+
+=head1 NAME
+
+NetPacket::IPv6 - Assemble and disassemble IPv6 (Internet Protocol version 6) packets.
+
+=head1 VERSION
+
+version 1.8.0
 
 =head1 SYNOPSIS
 
@@ -435,5 +444,8 @@ merchantability or fitness for a particular purpose.
 Dan Book E<lt>dbook@cpan.orgE<gt>
 
 =cut
+
+__END__
+
 
 # any real autoloaded methods go after this line

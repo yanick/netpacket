@@ -1,6 +1,7 @@
 package NetPacket::SLL;
+our $AUTHORITY = 'cpan:YANICK';
 # ABSTRACT: Assemble and disassemble Linux cooked capture (SLL) packets.
-
+$NetPacket::SLL::VERSION = '1.8.0';
 use strict;
 use warnings;
 
@@ -91,6 +92,16 @@ sub encode {
 1;
 
 __END__
+
+=pod
+
+=head1 NAME
+
+NetPacket::SLL - Assemble and disassemble Linux cooked capture (SLL) packets.
+
+=head1 VERSION
+
+version 1.8.0
 
 =head1 SYNOPSIS
 
