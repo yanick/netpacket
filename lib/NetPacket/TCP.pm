@@ -178,9 +178,7 @@ sub parse_tcp_options {
   my $opts = $self->{options};
   my @bytes = split //, $opts;
   my %options;
-  my $size;
  ENTRY:
-  $size = $#bytes;
   foreach my $byte (@bytes) {
     my $kind = unpack('C', $byte);
     if($kind == 2) {
