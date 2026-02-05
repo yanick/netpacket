@@ -32,6 +32,7 @@ foreach my $datagram (@datagrams) {
   is length($icmpv6->{data}) => $test->{len}, 'Right message length';
 
   my $q = NetPacket::ICMPv6->decode( $icmpv6->encode( $ipv6 ) );
+  is $q->{cksum}, $test->{cksum}, 'Recalculated message checksum';
 
   foreach my $key (grep { !m/^_/ } keys %$icmpv6) {
     is_deeply $q->{$key}, $icmpv6->{$key}, "Round-trip $key";
