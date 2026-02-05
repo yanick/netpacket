@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test2::Bundle::More;
 
 use NetPacket::IP;
 use NetPacket::Ethernet;
@@ -17,6 +17,8 @@ is $ip->{flags} => 2;
 my $q = NetPacket::IP->decode( $ip->encode );
 
 is $q->{flags} => $ip->{flags};
+
+done_testing;
 
 __DATA__
 0:25:209:6:219:108:0:19:163:164:237:251:8:0:69:0:0:46

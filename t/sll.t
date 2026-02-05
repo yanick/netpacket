@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test2::Bundle::More;
 
 use NetPacket::SLL qw/ :strip :types /;
 use NetPacket::Ethernet qw/ :types /;

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test2::Bundle::More;
 
 use NetPacket::TCP;
 use NetPacket::UDP;
@@ -43,3 +43,5 @@ my $udp = {
 bless $udp, 'NetPacket::UDP';
 
 is NetPacket::UDP::checksum( $udp, $ip ) => 60058, 'UDP padding';
+
+done_testing;

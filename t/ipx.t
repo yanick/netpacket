@@ -3,11 +3,11 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test2::Bundle::More;
 
-plan tests => 14;
+use NetPacket::IPX;
 
-use_ok 'NetPacket::IPX';
+plan tests => 13;
 
 my $packet = ""
 	."\xFF\xFF" # "checksum"

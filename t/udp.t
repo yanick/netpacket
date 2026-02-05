@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test2::Bundle::More;
 
 use NetPacket::Ethernet;
 use NetPacket::IP;
@@ -41,3 +41,4 @@ sub binarize {
     return join '' => map { chr hex } split ' ', $string;
 }
 
+done_testing;

@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 1;    # last test to print
+use Test2::Bundle::More;
 
 use NetPacket::UDP;
 use NetPacket;
@@ -14,3 +14,5 @@ use NetPacket::TCP;
 use NetPacket::USBMon;
 
 pass;
+
+done_testing;

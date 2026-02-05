@@ -3,10 +3,10 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test2::Bundle::More;
 #use Data::Dumper;
 
-use_ok 'NetPacket::IP';
+use NetPacket::IP;
 
 my $raw_packet = <<PACKET; # hex-encoded
 
@@ -26,3 +26,5 @@ my $ip = NetPacket::IP->decode($raw_packet);
 #warn Dumper $ip;
 
 is length $ip->{data}, $ip->{len}- $ip->{hlen}*4;
+
+done_testing;

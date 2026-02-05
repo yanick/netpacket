@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 103;
+use Test2::Bundle::More;
 
 use NetPacket::USBMon qw/:ALL/;
 
@@ -195,3 +195,5 @@ is length $usbmon->{data} => $usbmon->{len_cap};
 
 # Copied from t/tcp.t, uglified.
 sub binarize { return join '' => map { chr hex } split ' ', shift; }
+
+done_testing;
