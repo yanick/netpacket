@@ -1,4 +1,5 @@
 CODE_OF_CONDUCT.md
+CONTRIBUTING.md
 CONTRIBUTORS
 Changes
 INSTALL
@@ -9,6 +10,7 @@ META.yml
 Makefile.PL
 README
 README.mkdn
+SECURITY.md
 SIGNATURE
 cpanfile
 doap.xml
@@ -21,6 +23,8 @@ lib/NetPacket/IGMP.pm
 lib/NetPacket/IP.pm
 lib/NetPacket/IPX.pm
 lib/NetPacket/IPv6.pm
+lib/NetPacket/SLL.pm
+lib/NetPacket/SLL2.pm
 lib/NetPacket/TCP.pm
 lib/NetPacket/UDP.pm
 lib/NetPacket/USBMon.pm
@@ -37,6 +41,8 @@ t/ip_encode.t
 t/ip_trailing.t
 t/ipv6.t
 t/ipx.t
+t/sll.t
+t/sll2.t
 t/tcp.t
 t/udp-checksum.t
 t/udp.t
